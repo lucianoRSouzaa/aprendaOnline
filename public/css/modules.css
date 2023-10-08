@@ -1,0 +1,377 @@
+/* header */
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
+  
+  
+header {
+  background-color: rgb(255, 255, 255);
+  border-bottom: 1px solid rgba(42,42,42,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 98px;
+}
+
+.logo img{
+  width: 150px;
+}
+
+.logo{
+  margin-top: 10px;
+}
+
+/* barra de pesquisa */
+.search-container {
+  margin-top: 30px;
+  gap: 40px;
+}
+
+.search-container a{
+  text-decoration: none;
+  color: #374151;
+}
+
+.search-container a:hover, .search-container a.active{
+  color: #005df1;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+/* Estilos para o campo de entrada de texto */
+#search-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+}
+
+/* Estilos para o botão de pesquisa */
+#search-button {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Estilos para o ícone de pesquisa */
+#search-button i {
+  color: #555;
+  font-size: 18px;
+}
+
+/* Estilos quando o botão é clicado */
+#search-button:active {
+  transform: scale(0.95);
+}
+
+/* Módulos e aulas */
+.box{
+  padding: 40px;
+  background: #f6f6f6;
+  border-radius: 10px;
+  margin-bottom: 20vh;
+}
+
+.box .div-principal {
+  border: none;
+  padding-right: 95px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 4px;
+}
+
+.box .div-principal:hover {
+  background-color: #e7e7e73d;
+}
+
+.box .div-principal .botoes {
+  display: flex;
+  position: absolute;
+  right: 15px;
+  transition: 0.3s;
+  align-items: center;
+}
+
+.box .div-principal .botoes a{
+    color: inherit;
+}
+
+.box .edit-icon{
+  color: black;
+}
+
+.box .edit-icon:hover {
+    color: #3498db; 
+}
+
+.box .fa-trash-alt:hover {
+    color: #e74c3c;
+}
+
+.box .div-principal .botoes i{
+    margin: 0 10px;
+    transform: scale(1.1);
+}
+
+/* tirando formatoções do button que envolve o icone de excluir */
+.delete-form .delete-icon-btn {
+  background: transparent;
+  border: none;
+}
+
+
+
+.div-principal.expandido .botoes i.fa-angle-down {
+  transform: rotate(180deg);
+}
+
+.box .div-principal .info-modulo{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.box .div-principal .info-modulo .texto-principal {
+  margin: 0;
+  font-weight: 600;
+}
+
+.box .div-filhas {
+  margin-left: 16px;
+  display: none;
+  transition: max-height 0.2s ease-out;
+  border-left: 1px solid #d2d2d2;
+}
+
+.box .div-filhas.mostrar {
+  display: block;
+}
+
+.box .div-filhas .subitems {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 37px;
+  list-style: none;
+}
+
+.box .div-filhas .subitems .titulo_modulo {
+  font-size: 16px;
+  line-height: 22px;
+  color: #291616;
+  padding-bottom: 15px;
+}
+
+.box .div-filhas .subitems .titulo_modulo:first-child {
+  padding-top: 20px;
+}
+
+.box .div-filhas .subitems .titulo_modulo:last-child {
+  padding-bottom: 0px;
+}
+
+.box .div-filhas .subitems .titulo_modulo .video-player{
+  height: 120px;
+  width: 250px;
+  background-color: #111827;
+  position: relative;
+}
+
+.box .div-filhas .subitems .titulo_modulo .video-player img{
+  position: absolute;
+}
+
+.box .div-filhas .subitems .titulo_modulo .video-player p{
+  bottom: 7px;
+  position: absolute;
+  color: #ccc;
+}
+
+.box .div-filhas .subitems .titulo_modulo p{
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+.box .div-principal .info-modulo span{
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  font-size: 0.95rem;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  margin-right: 14px;
+}
+
+.box .linha{
+  height: 24px;
+  margin-left: 16px;
+  border-left: 1px solid #d2d2d2;
+}
+
+.box .linha:first-child{
+    height: 0;
+}
+
+.box li .d-flex.justify-content-end{
+  gap: 15px;
+}
+
+.box .d-flex a{
+  transition: 0.3s;
+}
+
+.box .d-flex .btn-add-aula{
+  border-color: #5ea15c;
+  color: #5ea15c;
+}
+
+.box .d-flex .btn-add-aula:hover{
+  color: #FFF;
+  background-color: #94ce93;
+}
+
+.box .d-flex .btn-alt-ordem-aula:hover{
+  border-color: #4288f1;
+  background-color: #7eb2ff;
+}
+
+
+
+.box .d-grid .btn-add-mod{
+  margin-top: 0.8em;
+  font-size: 1.1rem;
+  border-color: #5c8ea1;
+  color: #5c8ea1;
+  transition: 0.3s;
+}
+
+.box .d-grid .btn-add-mod:hover{
+  font-size: 1.15rem;
+  border-color: #5c8ea1;
+  background-color: #5c8ea1;
+  color: white;
+}
+
+/* Modal confirmação exclusão */
+.modal{
+  z-index: 10000;
+  margin-top: 80px;
+}
+.modal .close{
+  position: absolute;
+  right: 18px;
+  top: 18px;
+}
+
+.btn-close{
+  --bs-btn-close-focus-shadow: none;
+}
+
+.modal .modal-dialog {
+  width: 480px;
+}
+
+.modal .image {
+  margin-left: auto;
+  margin-right: auto;
+}
+  
+.modal .content {
+    margin-top: 0.95rem;
+    text-align: center;
+}
+
+.modal .title {
+    color: #111827;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+}
+
+.modal .message {
+    margin-top: 0.3rem;
+    color: #6B7280;
+    font-size: 0.9rem;
+    line-height: 1.25rem;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.modal .actions {
+  margin: 1.1rem 1rem 0.2rem 1rem;
+  display: flex;
+  gap: 20px;
+}
+
+.modal .actions form {
+  flex-grow: 1;
+  display: flex;
+}
+
+.modal .actions form button {
+  flex-grow: 0;
+  width: 100%;
+}
+
+.modal .actions button{
+  flex-grow: 1;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.modal .desactivate {
+    border-width: 1px;
+    border-color: transparent;
+    background-color: #DC2626;
+    color: #ffffff;
+}
+
+.modal .cancel {
+    border: 1px solid #D1D5DB;
+    background-color: #ffffff;
+    color: #374151;
+}
+
+
+.col-table .row .card .card-header{
+  padding: 12px 16px;
+}
+
+/* página de configurações de curso */
+.course-title{
+  margin: 0;
+  padding: 6px 0;
+}
+
+.edit{
+  border-radius: 5px;
+  border: none;
+  background: #2b2b2b;
+  color: #FFF;
+  padding: 7px 12px;
+  text-decoration: none;
+}
+
+.fa-angles-right{
+  margin-left: 5px;
+}

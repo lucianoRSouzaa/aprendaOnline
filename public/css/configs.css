@@ -1,0 +1,46 @@
+.container{
+    height: 80vh;
+}
+
+.card{
+    padding: 15px 40px;
+}
+
+.themes{
+    width: 600px;
+    margin: 0 auto;
+    border: 1px solid #dadada;
+}
+
+hr {
+    margin: 0px;
+    border: none;
+    background-color: #b6b6b6;
+    height: 2px;
+}
+
+.themes .line{
+    border-left: 1px solid #dadada;
+    height: 50px;
+}
+
+.notification-div .themes .theme:hover{
+    cursor: pointer;
+    background: #1d3fff21;
+}
+    
+.themes .theme .fa-sun-o{
+    color: rgb(255, 208, 0);
+}
+    
+.themes .theme .fa-moon{
+    color: rgb(70, 70, 70);
+}
+
+.card div a{
+    width: 350px;
+}
+
+.card div a i{
+    margin-right: 8px;
+}

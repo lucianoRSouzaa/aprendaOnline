@@ -1,0 +1,190 @@
+@extends('layouts.app')
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/modules.css') }}">
+
+    <style>
+        .box .div-principal span{
+            background-image: url("{{ asset('images/indiceModulo.png') }}");
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('js/modules.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.delete-module-icon').click(function() {
+                var moduleSlug = $(this).data('module-slug');
+
+                var form = $('#ModalConfirmacaoExclusaoModulo .modal-content').find('form.delete-form');
+
+                var action = form.attr('action');
+                action = action.replace(':moduleSlug', moduleSlug);
+                form.attr('action', action);
+            });
+
+            $('#ModalConfirmacaoExclusaoModulo').on('hidden.bs.modal', function () {
+                var form = $('#ModalConfirmacaoExclusaoModulo .modal-content').find('form.delete-form');
+                var originalAction = "{{ route('modules.destroy', ['courseSlug' => $course->slug, 'moduleSlug' => ':moduleSlug']) }}";
+                form.attr('action', originalAction);
+            });
+
+            $('.delete-lesson-icon').click(function() {
+                var moduleSlug = $(this).data('module-slug');
+                var lessonSlug = $(this).data('lesson-slug');
+                
+                var form = $('#ModalConfirmacaoExclusaoAula .modal-content').find('form.delete-form');
+
+                var action = form.attr('action');
+                action = action.replace(':lessonSlug', lessonSlug);
+                action = action.replace(':moduleSlug', moduleSlug);
+                form.attr('action', action);
+            });
+
+            $('#ModalConfirmacaoExclusaoAula').on('hidden.bs.modal', function () {
+                var form = $('#ModalConfirmacaoExclusaoAula .modal-content').find('form.delete-form');
+                var originalAction = "{{ route('lessons.destroy', ['moduleSlug' => ':moduleSlug', 'lessonSlug' => ':lessonSlug']) }}";
+                form.attr('action', originalAction);
+            });
+        });
+
+    </script>
+
+@endpush
+
+@section('header')
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <a href="{{ auth()->user()->isCreator() ? route('courses.creator') : route('courses.viewer') }}" class="logo">
+                <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
+            </a>       
+            {{-- @if ($isCourseCompleted === 0)
+                <form action="{{ route('courses.mark-complete', $course) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">{{ trans('markCourseCompleted') }}</button>
+                </form> 
+            @else
+                <form action="{{ route('courses.unmark-complete', $course) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">{{ trans('unmarkCourseCompleted') }}</button>
+                </form> 
+            @endif            --}}
+            <div class="search-container d-flex justify-content-end align-items-center">
+                <a class="active" href="{{ route('modules.index', $course->slug) }}">{{ trans('modulesAndLessons') }}</a>
+                <a href="{{ route('course.data.index', $course->slug) }}">{{ trans('viewCourseData') }}</a>
+                <a href="{{ route('course.config', $course->slug) }}">{{ trans('settings') }}</a>
+            </div>    
+        </div>
+    </div>
+@endsection
+
+@section('main')
+    <div class="modal fade" id="ModalConfirmacaoExclusaoModulo" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">{{ trans('areUSureWantDelete') }}</span>
+                        <p class="message">{{ trans('ifUDeleteModuleLessonsAlsoDeleted') }}</p>
+                    </div>
+                    <div class="actions">
+                        <button class="cancel" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                        <form action="{{ route('modules.destroy', ['courseSlug' => $course->slug, 'moduleSlug' => ':moduleSlug']) }}" method="POST" class="delete-form">
+                            @csrf
+                            @method('DELETE')
+                            <button class="desactivate" type="submit">{{trans('delete')}}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalConfirmacaoExclusaoAula" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">{{ trans('areUSureWantDelete') }}</span>
+                        <p class="message">{{ trans('ifUDeleteLessonVideoAlsoDeleted') }}</p>
+                    </div>
+                    <div class="actions">
+                        <button class="cancel" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                        <form action="{{ route('lessons.destroy', ['moduleSlug' => ':moduleSlug', 'lessonSlug' => ':lessonSlug']) }}" method="POST" class="delete-form">
+                            @csrf
+                            @method('DELETE')
+                            <button class="desactivate" type="submit">{{ trans('delete') }}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="text-center mt-4 mb-2">{{ trans('modulesAndLessons') }}</h2>
+        <div class="box">
+            @foreach ($course->modules as $module)
+                <div class="linha"></div>
+                <div class="div-principal" onclick="toggleDivs(this)">
+                    <div class="botoes">
+                        <a href="{{ route('modules.edit', ['courseSlug' => $course->slug, 'moduleSlug' => $module->slug]) }}" aria-label="Editar módulo"><i class="far fa-edit edit-icon"></i></a>
+                        <i class="far fa-trash-alt delete-module-icon" data-bs-target="#ModalConfirmacaoExclusaoModulo" data-bs-toggle="modal" data-module-slug="{{ $module->slug }}"></i>
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </div>
+                    <div class="info-modulo">
+                        <span>{{ $module->order }}</span>
+                        <p class="texto-principal">{{ $module->title }}</p>
+                    </div>
+                </div>
+                <div class="div-filhas">
+                    <ul class="subitems">
+                        @foreach ($module->lessons as $lesson)
+                        <li class="titulo_modulo d-flex justify-content-between">
+                            <div>
+                                <div class="video-player d-flex align-items-center justify-content-center">
+                                    <img src="{{ asset('images/botao-play.png') }}" alt="">
+                                    <p>{{ trans('clickViewLesson') }}</p>
+                                    <a class="stretched-link" href="{{route("lessons.watch", ['courseSlug' => $course->slug, 'lessonSlug' => $lesson->slug])}}" aria-label="Assistir aula"></a>
+                                </div>
+                                <p class="mb-3">{{ $lesson->title }}</p>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="{{ route('lessons.edit', ['moduleSlug' => $module->slug, 'lessonSlug' => $lesson->slug]) }}" aria-label="Editar aula"><i class="far fa-edit edit-icon"></i></a>
+                                <i class="far fa-trash-alt delete-lesson-icon" data-bs-target="#ModalConfirmacaoExclusaoAula" data-bs-toggle="modal" data-module-slug="{{ $module->slug }}" data-lesson-slug="{{ $lesson->slug }}"></i>
+                            </div>
+                        </li>
+                        @endforeach
+                        <li>
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ route('lessons.create', $module->slug) }}" class="btn btn-add-aula btn-outline-primary">{{ trans('createLesson') }}</a>
+                                <a href="#" class="btn btn-alt-ordem-aula btn-outline-primary">{{ trans('changeOrderLessons') }}</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            @endforeach
+            
+            <div class="d-grid">
+                <a href="{{ route('modules.create', $course->slug) }}" class="btn btn-add-mod btn-outline-primary">{{ trans('createModule') }}</a>
+            </div>
+        </div>
+    </div>
+@endsection

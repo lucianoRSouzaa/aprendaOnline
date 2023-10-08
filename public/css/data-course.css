@@ -1,0 +1,29 @@
+.card-filter{
+    width: 49%;
+    height: 400px;
+    border: solid 1px #9d9da3;
+    margin-right: 10px;
+}
+
+form{
+    width: 100%;
+}
+
+.charts{
+    position: relative;
+}
+
+.col-12 a{
+    width: 24px !important;
+    position: absolute;
+}
+
+.col-12 a.full{
+    top: 23px;
+    right: 4%;
+}
+
+.col-12 a.half{
+    top: 23px;
+    left: 45%;
+}

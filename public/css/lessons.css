@@ -1,0 +1,423 @@
+*{
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+p{
+    margin-bottom: 0 !important;
+}
+
+.row{
+    margin: 0 !important;
+    height: 100vh;
+}
+
+.col-3, .col-video{
+    padding: 0;
+    padding-top: 0.5em;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.col-3{
+    padding-top: 0.5em;
+    background-color: #0c131d;
+}
+
+.col-3.barra::-webkit-scrollbar{
+    background-color: #1d1d1d;
+    width: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.col-3.barra::-webkit-scrollbar-thumb{
+    background-color: #5b5b5b;
+    border-radius: 5px;
+}
+
+.header{
+    text-decoration: none;
+    height: 70px;
+    background-color: #0c131d;
+    padding-left: 1em;
+    font-size: 26px;
+    border-bottom: 1px solid #0c131d;
+}
+
+.col-3 .header{
+    border-bottom: 1px solid #141f31;
+}
+
+.col-3 .header p{
+    margin-left: 0.5em;
+}
+
+.col-3 .curso-nome{
+    font-size: 24px;
+    border-bottom: 1px solid #141f31;
+}
+
+.col-3 .curso-nome .num-aulas{
+    margin-left: 1em;
+    font-size: 20px;
+    color: #6188cc;
+}
+
+.col-3 .curso-nome p{
+    margin-left: 1em;
+}
+
+.col-3 .modulos .text-module{
+    margin-left: 24px;
+}
+
+.col-3 .modulos .fa-angle-down{
+    margin-right: 24px;
+}
+
+.col-3 .modulos .rotate-180 {
+    transform: rotate(180deg);
+}
+
+.col-3 .group-aulas {
+    display: none;
+}
+
+.col-3 .group-aulas.active {
+    display: block;
+}
+
+.col-3 .group-aulas .div-aula{
+    border-bottom: 1px solid #403c64;
+    position: relative;
+}
+
+.col-3 .group-aulas .div-aula.active{
+    background-color: rgba(0, 217, 255, 0.066);
+}
+
+.col-3 .group-aulas .div-aula .ball {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #0f2034;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.8em;
+    margin-left: 8px;
+}
+  
+.group-aulas .div-aula .ball .number {
+    font-size: 20px;
+}
+
+.group-aulas .div-aula .text-aula{
+    width: 63%;
+    margin-left: 4px;
+}
+
+.group-aulas .div-aula form input.ckx{
+    cursor: pointer;
+    appearance: none;
+    outline: none;
+    height: 22px;
+    width: 22px;
+    border: 2px solid #4087e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+
+    position: absolute;
+    right: 20px;
+    bottom: 30px;
+}
+
+.group-aulas .div-aula form input.ckx::before{
+    content: '';
+    position: absolute;
+    height: 12px;
+    width: 7px;
+    background: none;
+    opacity: 0;
+    transition: all 600ms ease-in-out;
+
+    border-right: 2.9px solid #4087e0;
+    border-bottom: 2.9px solid #4087e0;
+    transform: rotate(45deg);
+    top: 1px;
+    margin-left: 0.4px;
+}
+
+.group-aulas .div-aula form input.ckx:checked::before{
+    opacity: 1;
+}
+
+.col-video{
+    background-color: #141f31;
+}
+
+.col-video .header{
+    background-color: #141f31;
+}
+
+.col-video .header .btns-marg{
+    margin-right: 1em;
+}
+
+.col-video .header .btns-marg .btn-outline-primary{
+    border-color: #4087e0;
+    color: #4087e0;
+    margin: 0 3px;
+    transition: all ease-in-out 0.3s;
+}
+
+.col-video .header .btns-marg .btn-outline-primary:hover{
+    background-color: #2a7ee4;
+    color: rgb(236, 236, 236);
+}
+
+.col-video div video.video{
+    width: 100%;
+    height: 78vh;
+}
+
+.col-video .pd{
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+/* ver progresso */
+.btns-marg{
+    position: relative;
+}
+
+.btns-marg .notification-div {
+  background-color: rgb(240, 240, 240);
+  width: 240px;
+  border: 1px solid #ddd;
+  padding-top: 5px;
+  right: 10px;
+  border-radius: 5px;
+  top: 52px;
+  position: absolute;
+  z-index: 20;
+  display: none;
+}
+
+.btns-marg .notification-div.show{
+  display: block;
+}
+
+.notification-div:after {
+  content: '';
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background-color: rgb(240, 240, 240);
+  top: -6px;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  transform: rotate(45deg);
+  right: 10%;
+}
+
+.notification-div .text-center{
+    font-size: 1.4rem;
+    padding: 10px 20px;
+}
+
+.notification-div p {
+  display: block;
+  margin: 0px;
+  padding: 15px 20px;
+  color: #6c7293;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.notification-div hr {
+  margin: 0px;
+  border: none;
+  background-color: #b6b6b6;
+  height: 2px;
+}
+
+/* modal de classificação */
+.modal{
+  z-index: 10000;
+  margin-top: 80px;
+}
+
+.modal .close{
+  position: absolute;
+  right: 18px;
+  top: 18px;
+}
+
+.btn-close{
+  --bs-btn-close-focus-shadow: none;
+}
+
+#RateModal .modal-dialog {
+  width: 480px;
+}
+  
+#RateModal .content {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.modal .title {
+    color: #111827;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+}
+
+#RateModal .message {
+    margin-top: 0.3rem;
+    color: #6B7280;
+    font-size: 1rem;
+    line-height: 1.25rem;
+}
+
+#RateModal .actions {
+    margin: 1.1rem 1rem 0.3rem 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.modal .actions button{
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+#RateModal .actions button{
+    width: 100%;
+}
+
+.modal .cancel {
+    border: 1px solid #D1D5DB;
+    background-color: #ffffff;
+    color: #374151;
+}
+
+#RateModal .comment{
+  margin-top: 18px !important;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#RateModal .comment-start{
+  margin-left: 34px;
+  text-align: start;
+  margin-bottom: 8px;
+  cursor: default;
+  text-decoration: none;
+  color: black;
+}
+
+#RateModal #star{
+  cursor: default !important;
+}
+
+#RateModal #star img{
+  cursor: pointer;
+}
+
+#RateModal textarea{
+  width: 93%;
+  padding-top: 2px;
+  padding-left: 5px;
+  outline: none;
+  border: 1px solid rgb(40, 64, 107);
+  resize: none;
+  border-radius: 10px;
+  color: black;
+}
+
+#RateModal textarea:focus{
+  border-color: rgb(22, 81, 192);
+}
+
+/* modal de denuncia */
+#ModalDenuncia .image {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#ModalDenuncia .content {
+  margin: 0 1rem 0 1rem;
+  margin-top: 0.95rem;
+  text-align: center;
+  color: black;
+}
+
+#ModalDenuncia .content p{
+  text-align: start;
+  margin-bottom: 5px;
+  color: black;
+}
+
+#ModalDenuncia .content select optgroup{
+    color: black;
+}
+
+#ModalDenuncia .content select option{
+    color: black;
+}
+
+#ModalDenuncia .selecao-aula{
+  display: none;
+}
+#ModalDenuncia .selecao-aula.mostrar{
+  display: block;
+}
+
+#ModalDenuncia .selecao-aula select option{
+  max-width: 200px;
+}
+
+#ModalDenuncia .desc-txtarea{
+  padding: 1px 4px;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  outline: none;
+  width: 100%;
+  color: black;
+}
+
+#ModalDenuncia .desc-txtarea:focus{
+  border-color: #86b7fe;
+}
+
+#ModalDenuncia .form-control:focus{
+  box-shadow: none;
+}
+
+#ModalDenuncia .actions {
+  margin: 1.1rem 1rem 0.75rem 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+#ModalDenuncia .actions button{
+  width: 80%;
+}
+
+#ModalDenuncia .desactivate {
+  border-width: 1px;
+  border-color: transparent;
+  background-color: #DC2626;
+  color: #ffffff;
+}

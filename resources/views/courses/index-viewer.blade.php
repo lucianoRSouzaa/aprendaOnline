@@ -1,0 +1,203 @@
+@extends('layouts.app')
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/cursos-page.css') }}">
+
+    <style>
+        .card .card-overlay{
+            width: 50px;
+            height: 50px;
+
+            top: 10px;
+            left: 12px;
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('js/script.js') }}"></script>
+
+    @if (session('creator'))
+        <script>
+            $(document).ready(function () {
+                $('#ModalCreatorErro').modal('show');
+            });
+        </script>
+    @endif
+
+    <script>
+        $(document).ready(function() {
+            $('.coracao').click(function() {
+                $(this).closest('.favoriteForm').submit();
+            });
+        });
+    </script>
+@endpush
+
+
+@section('header')
+    @if (session()->has('creator'))
+        <div class="modal fade" id="ModalCreatorErro" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="d-flex">
+                            <div class="image">
+                                <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                            </div>
+                            <div class="close">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="title">{{ trans('accessDeniedPermissionRequired') }}</span>
+                            <p class="message">{{ session('creator') }}</p>
+                        </div>
+                        <div class="actions">
+                            <button class="desactivate" type="button">{{ trans('cancel') }}</button>
+                            <button class="cancel" type="button">{{ trans('becomeCreator') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <nav class="navbar-dark container">
+        <!-- logo -->
+        <div class="logo">
+            <a href="{{ route('courses.viewer') }}">
+                <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+            </a>
+        </div>
+        <div class="links">
+            <ul class="nav-itens d-flex align-items-center">
+                <!-- itens -->
+                @auth
+                    <li><a href="#">Favoritos</a></li>
+                    <li><a href="{{ route('courses.completed') }}">Cursos concluídos</a></li>
+                    <li class="d-flex align-items-center profile" id="config"><img src="{{ asset($user->image) }}" class="rounded-circle avatar" alt=""><p class="nameUser">{{$user->name}} <i class="fa fa-angle-down" aria-hidden="true"></i></p></li>
+                    <div class="notification-div">
+                        <p class="text-center">Menu</p>
+                        <hr>
+                        @if (session('user_role') === 'viewer')
+                            <a href="{{ route('courses.toggleMode') }}"><i class="fa-solid fa-user-tie fa-lg"></i>{{ trans('toggleModeCreator') }}</a>
+                        @endif
+                        <a href="{{ route('user.show', auth()->user()->id) }}"><i class="fa fa-user fa-lg" aria-hidden="true"></i>{{ trans('profile') }}</a>
+                        <a href="{{ route('configs') }}"><i class="fa fa-cog fa-lg" aria-hidden="true"></i>{{ trans('settings') }}</a>
+                        <div class="themes d-flex">
+                            <div class="theme w-50 d-flex justify-content-center align-items-center">
+                                <i class="fa fa-sun-o fa-xl" aria-hidden="true"></i>
+                            </div>
+                            <span class="line"></span>
+                            <div class="theme w-50 d-flex justify-content-center align-items-center">
+                                <i class="fa-solid fa-moon fa-xl" aria-hidden="true"></i>
+                            </div>                        
+                        </div>
+                        <a href="{{ route('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>{{ trans('logout') }}</a>
+                    </div>
+                @endauth
+                @guest
+                <li><a href="{{ route('home') }}"><i class="fa fa-chevron-left" aria-hidden="true"></i> {{ trans('back') }}</a></li>
+                @endguest
+            </ul>
+        </div>
+
+        <!-- botão do menu responsivo -->
+        <div class="toggle_btn">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+        </div>
+
+        <!-- links dentro do menu responsivo -->
+        <div class="dropdown_menu">
+            <li><a href="#">Cursos</a></li>
+            <li><a href="#">Ferramentas</a></li>
+            <li><a href="#">Suporte</a></li>
+            <li><a href="#" class="gradient-button" data-bs-target="#Modal1" data-bs-toggle="modal">Entrar</a></li>
+        </div>
+    </nav>
+@endsection
+
+@section('main')
+    <div class="container">
+        <div class="search-container">
+            <form action="{{ route('search') }}" method="GET" class="search-bar">
+                <input type="text" name="searchTerm" id="search-input" value="{{ $searchTerm ?? ''  }}" placeholder="{{ trans('searchPlaceholder') }}">
+                <button type="submit" id="search-button"><i class="fa fa-search"></i></button>
+            </form>
+        </div> 
+        <div class="row justify-content-center">
+            @auth
+                <h2>{{ trans('coursesImEnrolledIn') }} </h2>
+                @foreach($subscribedCourses as $subscribedCourse)
+                    <div class="card">
+                        <img class="img-card" src="{{ asset('storage/' . $subscribedCourse->image) }}" alt="Imagem do Card">
+                        <div class="card-content">
+                            <p class="title">{{ $subscribedCourse->title }}</p>
+                            <p>{{ trans('madeBy') }} {{ $subscribedCourse->creator->name }}</p>
+                            <div class="d-flex align-items-center">
+                                <p>{{ trans('ratings') }} {{ number_format($subscribedCourse->average_rating, 1) }}</p>
+                                <img class="star" src="{{ asset('images/star/star-on.png') }}" alt="estrela da classificação">
+                            </div>
+                            
+                            <a href="{{ route('lessons.index', $subscribedCourse->slug) }}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                @endforeach
+
+                <h2>{{ trans('myFavoriteCourses') }} </h2>
+                @foreach($favoriteCourses as $favoriteCourse)
+                    <div class="card">
+                        <div class="card-overlay">
+                            <form class="favoriteForm" action="{{ route('courses.favorite.toggle', $favoriteCourse->slug) }}" method="POST">
+                                @csrf
+                                <img class="coracao coracaoPreenchido" src="{{ asset('images/coracaoPreenchido.png') }}" alt="favoritar">
+                            </form> 
+                        </div>
+                        <img class="img-card" src="{{ asset('storage/' . $favoriteCourse->image) }}" alt="Imagem do Card">
+                        <div class="card-content">
+                            <p class="title">{{ $favoriteCourse->title }}</p>
+                            <p>{{ trans('madeBy') }} {{ $favoriteCourse->creator->name }}</p>
+                            <div class="d-flex align-items-center">
+                                <p>{{ trans('ratings') }} {{ number_format($favoriteCourse->average_rating, 1) }}</p>
+                                <img class="star" src="{{ asset('images/star/star-on.png') }}" alt="estrela da classificação">
+                            </div>
+                            
+                            <a href="{{ route('courses.show', $favoriteCourse->slug) }}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                @endforeach
+            @endauth
+            
+            <h2>{{ trans('discoverSomeCourses') }} </h2>
+            @foreach($courses as $course)
+                <div class="card">
+                    <div class="card-overlay">
+                        <form class="favoriteForm" action="{{ route('courses.favorite.toggle', $course->slug) }}" method="POST">
+                            @csrf
+
+                            @auth
+                                @if (in_array($course->id, $favoriteCourseIds))
+                                    <img class="coracao coracaoPreenchido" src="{{ asset('images/coracaoPreenchido.png') }}" alt="favoritar">
+                                @else
+                                    <img class="coracao" src="{{ asset('images/coracaoVazio.png') }}" alt="favoritar">
+                                @endif
+                            @endauth
+                        </form> 
+                    </div>
+                    <img class="img-card" src="{{ asset('storage/' . $course->image) }}" alt="Imagem do Card">
+                    <div class="card-content">
+                        <p class="title">{{ $course->title }}</p>
+                        <p>{{ trans('madeBy') }} {{ $course->creator->name }}</p>
+                        <div class="d-flex align-items-center">
+                            <p>{{ trans('ratings') }} {{ number_format($course->average_rating, 1) }}</p>
+                            <img class="star" src="{{ asset('images/star/star-on.png') }}" alt="estrela da classificação">
+                        </div>
+                        
+                        <a href="{{ route('courses.show', $course->slug) }}" class="stretched-link"></a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endsection
