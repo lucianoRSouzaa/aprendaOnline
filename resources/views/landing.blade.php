@@ -40,6 +40,22 @@
         </script>
     @endif
 
+    @if (session('forgotPassword'))
+        <script>
+            $(document).ready(function () {
+                $('#ModalForgotPassword').modal('show');
+            });
+        </script>
+    @endif
+
+    @if (session('resetPassword'))
+        <script>
+            $(document).ready(function () {
+                $('#ModalResetPassword').modal('show');
+            });
+        </script>
+    @endif
+
     @if (session('successVerification'))
         <script>
             $(document).ready(function () {
@@ -135,6 +151,86 @@
         </div>
     </div>
 </div>
+@endif
+
+@if (session()->has('forgotPassword'))
+    <div class="modal fade password" id="ModalForgotPassword" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="{{ route('password.email') }}" method="post">
+                    @csrf
+                        <div class="d-flex">
+                            <div class="image">
+                                <img src="{{ asset('images/confirmation.png') }}" alt="" srcset="">
+                            </div>
+                            <div class="close">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="title">Esqueceu sua senha?</span>
+                            <p class="message">{{ session('forgotPassword') }}</p>
+                            <input type="email" name="email" placeholder="Insira seu email...">
+                        </div>
+                        <div class="actions">
+                            <button class="cancel" type="button">{{ trans('cancel') }}</button>
+                            <button class="btn btns-restaurar restore" type="submit">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+@if (session()->has('resetPassword'))
+    <div class="modal fade password password-reset" id="ModalResetPassword" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('password.update') }}">
+                    @csrf
+                        <input type="hidden" name="token" value="{{ session('token') }}">
+                        <div class="d-flex">
+                            <div class="image">
+                                <img src="{{ asset('images/confirmation.png') }}" alt="" srcset="">
+                            </div>
+                            <div class="close">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Endereço de Email</label>
+                                <input type="email" name="email" value="{{ old('email') }}" required autofocus>
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Nova Senha</label>
+                                <input type="password" name="password" required>
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        
+                            <div class="mb-3">
+                                <label class="form-label">Confirmação de Senha</label>
+                                <input type="password" name="password_confirmation" required>
+                            </div>
+                        </div>
+                        <div class="actions mt-3">
+                            <button class="cancel" type="button">{{ trans('cancel') }}</button>
+                            <button class="btn btns-restaurar restore" type="submit">Redefinir Senha</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endif
 
     <nav class="navbar-dark fixed-top">
@@ -268,14 +364,6 @@
                         <label>{{ trans('password') }}</label>
                         <input value="{{ old('password') }}" type="password" id="login_password" name="password" required>
 
-                        
-                        @unless($errors->has('erroLogin'))
-                            <div class="d-flex justify-content-center">
-                                <a data-bs-target="#ModalCad" data-bs-toggle="modal" id="link-sem-conta-md-login" class="link-cad-modal">{{ trans('dontHaveAccountYetCreateOneNow') }}</a>
-                            </div>
-                        @endunless
-                        
-
                         <!--<div class="checkbox">
                             <input id="remember" type="checkbox" />
                             <label for="remember">Remember me on this computer</label>
@@ -283,6 +371,16 @@
                         @error('erroLogin')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
+
+                        @if (session()->has('forgotPasswordText'))
+                            <div class="d-flex justify-content-center mt-2">
+                                <a href="{{ route('password.request') }}" class="link-cad-modal">Esqueceu sua senha?</a>
+                            </div>
+                        @else
+                            <div class="d-flex justify-content-center">
+                                <a data-bs-target="#ModalCad" data-bs-toggle="modal" id="link-sem-conta-md-login" class="link-cad-modal">{{ trans('dontHaveAccountYetCreateOneNow') }}</a>
+                            </div>
+                        @endif
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" type="submit">{{ trans('login') }}</button>

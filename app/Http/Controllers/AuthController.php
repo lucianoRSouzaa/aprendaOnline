@@ -35,6 +35,13 @@ class AuthController extends Controller
             }
         }
 
+        // Verifique se o email existe no banco de dados
+        $userWithEmail = User::where('email', $request->input('email'))->first();
+
+        if ($userWithEmail) {
+            session()->flash('forgotPasswordText', 'Esqueceu sua senha?');
+        }
+
         return redirect()->back()->withInput()->withErrors([
             'erroLogin' => 'E-mail ou senha errado(s)',
             'modal' => 'login',

@@ -17,6 +17,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConfigsController; 
 use App\Http\Controllers\CourseDataController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\ForgotPasswordController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -148,3 +149,9 @@ Route::get('/{locale?}', [ConfigsController::class, 'setLang'])->where('locale',
 
 // rota para verificação de email
 Route::get('/verify-email/{token}', [EmailController::class, 'verifyEmail'])->name('verification.verify');
+
+// rotas de esqueci minha senha
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');

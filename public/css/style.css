@@ -375,37 +375,45 @@
   }
 
 /* Modal erro */
-#ModalErro{
+#ModalErro, .password{
   margin-top: 80px;
 }
-#ModalErro .close{
+#ModalErro .close, .password .close{
   position: absolute;
   right: 18px;
   top: 18px;
 }
 
-#ModalErro .modal-dialog {
+#ModalErro .modal-dialog, .password .modal-dialog{
   width: 480px;
 }
 
-#ModalErro .image {
+#ModalErro .image, .password .image{
   margin-left: auto;
   margin-right: auto;
 }
   
-#ModalErro .content {
+#ModalErro .content, .password .content{
     margin-top: 0.95rem;
     text-align: center;
 }
 
-#ModalErro .title {
+.password-reset .content{
+  text-align: start;
+}
+
+.password .content label{
+  margin-left: 22px;
+}
+
+#ModalErro .title, .password .title{
     color: #111827;
     font-size: 1.3rem;
     font-weight: 600;
     line-height: 1.5rem;
 }
 
-#ModalErro .message {
+#ModalErro .message, .password .message{
     margin-top: 0.3rem;
     color: #6B7280;
     font-size: 0.9rem;
@@ -414,14 +422,14 @@
     margin-right: 16px;
 }
 
-#ModalErro .actions {
+#ModalErro .actions, .password .actions{
     margin: 1.1rem 1rem 1.5rem 1rem;
     display: flex;
     justify-content: center;
     gap: 20px;
 }
 
-#ModalErro .actions button{
+#ModalErro .actions button, .password .actions button{
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-size: 1rem;
@@ -432,17 +440,37 @@
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-#ModalErro .desactivate {
+#ModalErro .desactivate, .password .desactivate{
     border-width: 1px;
     border-color: transparent;
     background-color: #DC2626;
     color: #ffffff;
 }
 
-#ModalErro .cancel {
+#ModalErro .cancel, .password .cancel{
     border: 1px solid #D1D5DB;
     background-color: #ffffff;
     color: #374151;
+}
+
+.password .restore {
+  border-width: 1px;
+  border-color: transparent;
+  background-color: #0d6efd;
+  color: #ffffff;
+}
+
+.password form input[type="email"],
+.password form input[type="password"] {
+  display: block;
+  width: 93%;
+  outline: none;
+  margin: 0 auto;
+  padding: 8px 10px;
+  border: 1px solid rgb(201, 201, 201);
+  color: #666;
+  border-radius: 23px;
+  margin-bottom: 12px;
 }
 
 /* modal termo de responsabilidade */

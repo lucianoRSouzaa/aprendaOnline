@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\RoleEnum;
+use App\Notifications\ResetPasswordNotification;
 
 class User extends Authenticatable
 {
@@ -139,5 +140,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class, 'course_completions', 'user_id', 'course_id')
             ->withTimestamps();
+    }
+
+    // para modificar email padrão de modificar senha
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }
