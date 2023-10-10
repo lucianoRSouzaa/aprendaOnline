@@ -175,7 +175,7 @@
                         <li>
                             <div class="d-flex justify-content-end">
                                 <a href="{{ route('lessons.create', $module->slug) }}" class="btn btn-add-aula btn-outline-primary">{{ trans('createLesson') }}</a>
-                                <a href="#" class="btn btn-alt-ordem-aula btn-outline-primary">{{ trans('changeOrderLessons') }}</a>
+                                <a href="{{ route('lesson.order', $module->slug) }}" class="btn btn-alt-ordem-aula btn-outline-primary">{{ trans('changeOrderLessons') }}</a>
                             </div>
                         </li>
                     </ul>

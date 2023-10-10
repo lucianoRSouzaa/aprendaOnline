@@ -319,4 +319,29 @@ class LessonController extends Controller
 
         return redirect()->route('lessons.watch', ['courseSlug' => $course->slug, 'lessonSlug' => $lesson->slug]);
     }
+
+    public function alterOrder($moduleSlug)
+    {
+        $module = Module::where('slug', $moduleSlug)->firstOrFail();
+        $lessons = $module->lessons()->orderBy('order')->get();
+
+        $moduleTitle = $module->title;
+
+        $course = $module->course;
+
+        return view('lessons.alterOrder', compact('lessons', 'course', 'moduleTitle'));
+    }
+
+    public function reorder(Request $request)
+    {
+        // Recendo dados da nova ordem (input hidden)
+        $newOrder = json_decode($request->input('novaOrdem'));
+
+        // Atualize a ordem das aulas no banco de dados
+        foreach ($newOrder as $position => $lessonId) {
+            Lesson::where('id', $lessonId)->update(['order' => $position + 1]);
+        }
+
+        return redirect()->back()->with('success', 'Ordem das aulas atualizada com sucesso');
+    }
 }

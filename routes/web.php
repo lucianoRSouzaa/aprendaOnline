@@ -66,6 +66,10 @@ Route::middleware(['auth', 'userVerified'])->group(function () {
     Route::put('modules/{moduleSlug}/lessons/{lessonSlug}', [LessonController::class, 'update'])->name('lessons.update');
     Route::delete('modules/{moduleSlug}/lessons/{lessonSlug}', [LessonController::class, 'destroy'])->name('lessons.destroy');
     Route::get('course/{courseSlug}/lessons/{lessonSlug}/watch', [LessonController::class, 'show'])->name('lessons.watch');
+    // rota para ver página de alterar ordem das aulas
+    Route::get('/module/{module}/lessons/alter/order', [LessonController::class, 'alterOrder'])->name('lesson.order');
+    // rota para reordenar ordem no banco de dados
+    Route::post('/reorder-aulas', [LessonController::class, 'reorder'])->name('lesson.reorder');
 
     // Rota referente a favoritação
     Route::post('/courses/{courseSlug}/favorite', [FavoriteController::class, 'toggleFavorite'])->name('courses.favorite.toggle');
