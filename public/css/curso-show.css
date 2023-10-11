@@ -249,10 +249,6 @@ main .row{
   top: 18px;
 }
 
-.btn-close{
-  --bs-btn-close-focus-shadow: none;
-}
-
 #RateModal .modal-dialog {
   width: 480px;
 }
@@ -734,4 +730,72 @@ main .row{
 
 .fa-circle-xmark{
   margin-right: 8px;
+}
+
+/* Modal compartilhar */
+#shareModal{
+  z-index: 10000;
+  margin-top: 80px;
+}
+
+#shareModal .modal-content{
+  width: 554px !important;
+}
+
+
+#shareModal #share-container span {
+  display: block;
+  margin: 3rem auto;
+  font-size: 50px;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+#shareModal #share-buttons i {
+  font-size: 45px;
+  margin: 20px;
+}
+
+#shareModal .facebook {
+  color: #3b5998;
+}
+#shareModal .twitter {
+  color: #55acee;
+}
+#shareModal .linkedin {
+  color: #0077b5;
+}
+#shareModal .reddit {
+  color: #cb2027;
+}
+#shareModal .whatsapp {
+  color: #25D366;
+}
+#shareModal .telegram {
+  color: #229ED9;
+}
+#shareModal .facebook, #shareModal .twitter, #shareModal .linkedin, #shareModal .reddit, #shareModal .whatsapp, #shareModal .telegram {
+  opacity: 0.6;
+}
+#shareModal .facebook:hover, #shareModal .twitter:hover, #shareModal .linkedin:hover, #shareModal .reddit:hover, #shareModal .whatsapp:hover, #shareModal .telegram:hover {
+  opacity: 0.9;
+}
+
+#shareModal .input-div{
+  margin: 0 auto;
+  width: 95%;
+  padding: 7px 20px;
+  border: 1px solid #e4e4e4;
+  border-radius: 20px;
+}
+
+#shareModal .input-div input{
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+#shareModal .input-div button{
+  padding: 5px 15px;
+  border-radius: 100px;
 }

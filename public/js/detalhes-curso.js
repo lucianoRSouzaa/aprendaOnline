@@ -62,3 +62,34 @@ $('.avaliacao-bar').each(function() {
 });
 
 
+// Modal de compartilhar
+const link = window.location.href;
+console.log(courseTitle)
+const msg = encodeURIComponent(`Confira este curso incrível: ${courseTitle}`);
+const title = encodeURIComponent(courseTitle);
+
+const fb = document.querySelector('.facebook');
+fb.href = `https://www.facebook.com/share.php?u=${link}`;
+
+const twitter = document.querySelector('.twitter');
+twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=aprendaOnline,estudos`;
+
+const linkedIn = document.querySelector('.linkedin');
+linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
+
+const reddit = document.querySelector('.reddit');
+reddit.href = `http://www.reddit.com/submit?url=${link}&title=${title}`;
+
+const whatsapp = document.querySelector('.whatsapp');
+whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
+
+const telegram = document.querySelector('.telegram');
+telegram.href = `https://telegram.me/share/url?url=${link}&text=${msg}`;
+
+$('#copy-btn').click(function() {
+    navigator.clipboard.writeText(window.location.href).then(function() {
+        console.log('Copiado com sucesso!');
+    }, function(err) {
+        console.error('Erro ao copiar: ', err);
+    });
+});

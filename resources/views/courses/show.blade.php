@@ -32,6 +32,10 @@
 
 @push('scripts')
     <script src="{{ asset('js/jquery.raty.js') }}"></script>
+    <script>
+        const courseTitle = '{{ $course->title }}';
+        $('#input-href-page').val(window.location.href);
+    </script>
     <script src="{{ asset('js/detalhes-curso.js') }}"></script>
     <script>
         $('#starAvarage').raty({ 
@@ -99,6 +103,46 @@
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="modal fade" id="shareModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalToggleLabel">Compartilhar</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="content">                        
+                        <div id="share-buttons">
+
+                            <!-- facebook -->
+                            <a class="facebook" target="blank"><i class="fab fa-facebook"></i></a>
+                            
+                            <!-- twitter -->
+                            <a class="twitter" target="blank"><i class="fab fa-twitter"></i></a>
+                            
+                            <!-- linkedin -->
+                            <a class="linkedin" target="blank"><i class="fab fa-linkedin"></i></a>
+                            
+                            <!-- reddit -->
+                            <a class="reddit" target="blank"><i class="fab fa-reddit"></i></a>
+                          
+                            <!-- whatsapp-->
+                            <a class="whatsapp" target="blank"><i class="fab fa-whatsapp"></i></a>
+                          
+                            <!-- telegram-->
+                            <a class="telegram" target="blank"><i class="fab fa-telegram"></i></a>
+                          
+                            <div class="input-div d-flex align-items-center mt-2 mb-2 justify-content-between">
+                                <input type="text" value="" id="input-href-page">
+                                <button id="copy-btn" class="btn btn-primary">copiar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal fade" id="ModalDenuncia" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
@@ -180,7 +224,7 @@
                     <img class="more-png" src="{{ asset('images/tres_pontos.png') }}" alt="icone de opções">
                 </div>
                 <div id="dropdown-options" class="dropdown-options">
-                    <div class="compart">
+                    <div class="compart" data-bs-toggle="modal" data-bs-target="#shareModal">
                         <img src="{{ asset('images/share-svg.svg') }}" alt="">
                         <p>{{ trans('share') }}</p>
                     </div>
