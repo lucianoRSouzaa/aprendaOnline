@@ -86,7 +86,8 @@ class CourseController extends Controller
     {
         if (Gate::allows('manage-courses')) {
             $categories = Category::all();
-            return view('courses.create', compact('categories'));
+            $userEmail = auth()->user()->email;
+            return view('courses.create', compact('categories', 'userEmail'));
         }
 
         session()->flash('creator', 'Você precisa ser um criador para criar um curso!');
@@ -105,9 +106,18 @@ class CourseController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|mimes:jpeg,png,jpg,gif',
             'category' => 'required|exists:categories,id',
+            'email' => 'required|email',
+            'learn' => 'array',
         ]);
+
+        if (empty(array_filter($request->input('learn')))) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors(['learn' => 'Pelo menos um campo de aprendizado deve ser preenchido']);
+        }
 
         // Gere um nome único para o arquivo da imagem usando md5()
         $uniqueFileName = md5(uniqid()) . '.' . $validatedData['image']->getClientOriginalExtension();
@@ -133,9 +143,11 @@ class CourseController extends Controller
         $course->slug = $uniqueSlug;
         $course->user_id = Auth::id();
         $course->category_id = $validatedData['category'];
+        $course->contact_email = $validatedData['email'];
+        $course->what_students_learn = json_encode($request->input('learn'));
         $course->save();
 
-        return redirect()->route('courses.creator')->with('success', 'Curso excluído com sucesso');
+        return redirect()->route('courses.creator')->with('success', 'Curso criado com sucesso');
     }
 
     public function show($slug, Request $request)
@@ -169,9 +181,6 @@ class CourseController extends Controller
         // categoria do curso
         $category = $course->category->name;
 
-        // Calculando a média das notas
-        $averageRating = $ratings->avg('rating');
-
         // Calculando a média das classificações por nota
         $allRatings = $course->ratings;
         $averageRatingsPerScore = $allRatings->groupBy('rating')->map(function ($group) use ($allRatings) {
@@ -184,7 +193,9 @@ class CourseController extends Controller
             $userIsSubscribed = $course->isUserSubscribed(auth()->user());
         }
 
-        return view('courses.show', compact('course', 'modules', 'ratings', 'averageRating', 'averageRatingsPerScore', 'userIsSubscribed', 'user', 'category', 'admin', 'starFilter'));
+        $whatWillLeran = json_decode($course->what_students_learn);
+
+        return view('courses.show', compact('course', 'modules', 'ratings', 'averageRatingsPerScore', 'userIsSubscribed', 'user', 'category', 'admin', 'starFilter', 'whatWillLeran'));
     }
 
     public function showDeleted($slug)
@@ -283,7 +294,7 @@ class CourseController extends Controller
         $course->slug = $uniqueSlug;
         $course->save();
 
-        return redirect()->route('courses.creator')->with('success', 'Curso excluído com sucesso');
+        return redirect()->route('courses.creator')->with('success', 'Curso editado com sucesso');
     }
 
     public function destroy($slug)
