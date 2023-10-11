@@ -119,6 +119,13 @@ class CourseController extends Controller
                 ->withErrors(['learn' => 'Pelo menos um campo de aprendizado deve ser preenchido']);
         }
 
+        $learnData = $request->input('learn');
+
+        // Remove valores nulos do array
+        $cleanedLearnData = array_filter($learnData, function ($value) {
+            return $value !== null;
+        });
+
         // Gere um nome único para o arquivo da imagem usando md5()
         $uniqueFileName = md5(uniqid()) . '.' . $validatedData['image']->getClientOriginalExtension();
 
@@ -144,7 +151,7 @@ class CourseController extends Controller
         $course->user_id = Auth::id();
         $course->category_id = $validatedData['category'];
         $course->contact_email = $validatedData['email'];
-        $course->what_students_learn = json_encode($request->input('learn'));
+        $course->what_students_learn = json_encode($cleanedLearnData);
         $course->save();
 
         return redirect()->route('courses.creator')->with('success', 'Curso criado com sucesso');
@@ -248,13 +255,15 @@ class CourseController extends Controller
 
         $categories = Category::all();
 
+        $whatWillLeran = json_decode($course->what_students_learn);
+
         // Verifique se o usuário autenticado é o criador do curso
         // if ($course->creator_id !== Auth::id()) {
         //     abort(403, 'Unauthorized');
         // }
 
         // Renderize a view edit para editar o curso
-        return view('courses.edit', compact('course', 'categories'));
+        return view('courses.edit', compact('course', 'categories', 'whatWillLeran'));
     }
 
     public function update(Request $request, $slug)
@@ -269,11 +278,30 @@ class CourseController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif',
             'category_id' => 'required|exists:categories,id',
+            'contact_email' => 'required|email',
+            'learn' => 'array',
         ]);
 
+        $learnData = $request->input('learn');
+
+        // Remove valores nulos do array
+        $cleanedLearnData = array_filter($learnData, function ($value) {
+            return $value !== null;
+        });
+
+        if (empty($cleanedLearnData)) {
+            return redirect()
+                ->back()
+                ->withErrors(['learn' => 'Pelo menos um campo de aprendizado deve ser preenchido'])
+                ->withInput();
+        }
+
         if ($request->hasFile('image')) {
+            // Exclua a imagem antiga
+            Storage::disk('public')->delete($course->image);
+
             $imageFile = $request->file('image');
             $imageName = md5(uniqid()) . '.' . $imageFile->getClientOriginalExtension();
             $imagePath = $imageFile->storeAs('images', $imageName, 'public');
@@ -292,6 +320,7 @@ class CourseController extends Controller
         }
 
         $course->slug = $uniqueSlug;
+        $course->what_students_learn = json_encode($cleanedLearnData);
         $course->save();
 
         return redirect()->route('courses.creator')->with('success', 'Curso editado com sucesso');
