@@ -341,4 +341,65 @@ class CourseController extends Controller
 
         return view('courses.data.configs', compact('course', 'isCourseCompleted', 'status'));
     }
+
+    public function search(Request $request)
+    {
+        $user = auth()->user();
+        $selectedCategories = $request->input('categories', []) ?? null;
+        $courseTitleSearch = null;
+        $author = $request->input('author') ?? null;
+        $selectedRating = $request->input('rating', null) ?? null;
+        $selectedSort = $request->input('sort', null);
+
+        $courses = Course::query();
+        $categories = Category::all();
+
+        // Aplicando filtros
+        if ($request->filled('title')) {
+            $courseTitleSearch = $request->input('title');
+            $courses->where('title', 'like', '%' . $request->input('title') . '%');
+        }
+
+        if (!empty($author)) {
+            $courses->whereHas('creator', function ($creatorQuery) use ($author) {
+                $creatorQuery->where('name', 'like', '%' . $author . '%');
+            });
+        }
+
+        if (!empty($selectedCategories)) {
+            // aplicando filtro para várias categorias
+            $courses->whereHas('category', function ($query) use ($selectedCategories) {
+                $query->whereIn('category_id', $selectedCategories);
+            });
+        }
+
+        if ($selectedRating !== null) {
+            // Filtrando os cursos com base na avaliação
+            $courses->where('average_rating', '>=', $selectedRating);
+        }
+
+        if ($selectedSort !== null) {
+            if ($selectedSort === 'popularity') {
+                // Ordenar por popularidade (cursos com mais inscrições)
+                $courses->withCount('subscriptions')->orderByDesc('subscriptions_count');
+            } elseif ($selectedSort === 'rating') {
+                // Ordenar por melhores avaliações
+                $courses->orderBy('average_rating', 'desc');
+            } elseif ($selectedSort === 'newest') {
+                // Ordenar por cursos mais recentes
+                $courses->orderBy('created_at', 'desc');
+            } elseif ($selectedSort === 'oldest') {
+                // Ordenar por cursos mais antigos
+                $courses->orderBy('created_at', 'asc');
+            }
+        }
+
+        // Executando a consulta
+        $filteredCourses = $courses->paginate(12)->appends(['title' => $courseTitleSearch, 'author' => $author, 'categories' => $selectedCategories, 'rating' => $selectedRating, 'sort' => $selectedSort]);
+
+        // quantidade
+        $filteredCoursesQtd = $filteredCourses->count();
+
+        return view('courses.search', compact('filteredCourses', 'user', 'filteredCoursesQtd', 'courseTitleSearch', 'author', 'categories', 'selectedCategories', 'selectedRating', 'selectedSort'));
+    }
 }

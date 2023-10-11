@@ -82,11 +82,16 @@
 @section('main')
     <div class="container">
         <div class="search-container">
-            <form action="curso.php" method="POST" class="search-bar">
+            <form action="{{ route('courses.search') }}" method="GET" class="search-bar">
                 <input type="text" name="searchTerm" id="search-input" placeholder="{{ trans('searchPlaceholder') }}">
                 <button type="submit" id="search-button" aria-label="Pesquisar"><i class="fa fa-search"></i></button>
             </form>
         </div> 
+
+        <div class="d-flex justify-content-center search-link-page">
+            <a href="{{ route('courses.search') }}">Ir para página de pesquisa personalizada</a>
+        </div>
+
         <div class="row justify-content-center">
             @foreach($courses as $course)
                 <div class="card">

@@ -143,9 +143,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // Rotas abertas de cursos
 Route::get('/courses/viewer', [CourseController::class, 'indexViewer'])->name('courses.viewer');
 Route::get('/courses/{courseSlug}', [CourseController::class, 'show'])->name('courses.show');
-
-// Rota para pesquisa
-Route::get('/courses/search', [SearchController::class, 'search'])->name('search');
+// Rota para pesquisa de cursos
+Route::get('/courses/page/search', [CourseController::class, 'search'])->name('courses.search');
 
 // rota de configurações
 Route::get('/configs', [ConfigsController::class, 'index'])->name('configs');
