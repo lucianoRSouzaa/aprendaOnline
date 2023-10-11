@@ -41,8 +41,14 @@
         $('#starAvarage').raty({ 
             path: '/images/star',
             readOnly: true,
-            score: {{ number_format($averageRating, 2) }},
+            score: {{ number_format($course->average_rating, 2) }},
         });
+
+        @if($starFilter)
+            $('html, body').animate({
+                scrollTop: $(document).height()
+            }, 500);
+        @endif
     </script>
 @endpush
 
@@ -246,7 +252,7 @@
         </div>
         <div class="row align-items-center">
             <div class="col-md-8 col-sm-12">
-                <div class="box">
+                <div class="box mt-4">
                     @foreach ($modules as $module)
                         <div class="div-principal" onclick="toggleDivs(this)">
                             <div class="botoes">
@@ -273,6 +279,21 @@
             </div>
         </div>
 
+        <div class="learn_title mb-4">
+            <h2>O que você irá aprender:</h2>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-md-8 col-sm-12">
+                <div class="box box-learn">
+                    <ul class="learn-list">
+                        @foreach ($whatWillLeran as $learn)
+                            <li><img src="{{ asset('images/list-content.png') }}" alt="Icone">{{ $learn }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div class="avaliacoes_title mb-4">
             <h2>{{ trans('rates') }}:</h2>
         </div>
@@ -282,7 +303,7 @@
                     <h3>{{ trans('ratings') }}</h3>
                     <div class="d-flex align-items-center flex-column">
                         <div class="box-estrelas-avaliacoes d-flex align-items-center">
-                            <p class="avarage">{{ number_format($averageRating, 1) }}</p>
+                            <p class="avarage">{{ number_format($course->average_rating, 1) }}</p>
                             <div id="starAvarage">
 
                             </div>
@@ -292,7 +313,7 @@
                 </div>
                 <div class="box-filtrar">
                     <h3 class="mb-2">{{ trans('filterBy') }}</h3>
-                    <form action="{{ route('course.data.reviews', $course->slug) }}" method="GET" id="formStarFilter">
+                    <form action="{{ route('courses.show', $course->slug) }}" method="GET" id="formStarFilter">
                         <input type="hidden" name="starFilter" id="starFilter">
                     </form>
                     @for ($score = 5; $score >= 1; $score--)
@@ -343,7 +364,7 @@
                             <h4 class="text-center">Nenhum registro @if($starFilter)encontrados com {{$starFilter}} estrelas @endif</h4>
                             @if($starFilter)
                             <div class="d-flex justify-content-center">
-                                <a class="cancel-search" href="{{ route("course.data.reviews", $course->slug) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i>Cancelar pesquisa</a>
+                                <a class="cancel-search" href="{{ route("courses.show", $course->slug) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i>Cancelar pesquisa</a>
                             </div>
                             @endif
                         </div>

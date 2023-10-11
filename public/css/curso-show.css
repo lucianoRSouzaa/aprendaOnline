@@ -419,7 +419,7 @@ main .row{
 /* MÓDULOS E AULAS */
 .modulos_aulas_title{
   margin-left: 3%;
-  margin-top: 11vh;
+  margin-top: 6vh;
 }
 
 .modulos_aulas_title h2{
@@ -438,7 +438,6 @@ main .row{
 }
 
 .box{
-  margin-top: 4vh;
   padding: 40px;
   background: #f6f6f6;
   border-radius: 8px;
@@ -552,10 +551,44 @@ main .row{
   height: 0;
 }
 
+/* O QUE IRÁ APRENDER */
+.learn_title{
+  margin-left: 3%;
+}
+
+.learn_title h2{
+  display: inline-block;
+  position: relative;
+}
+
+.learn_title h2::before{
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: 0;
+  height: 1px;
+  background-color: #0000FF;
+}
+
+.box.box-learn{
+  padding: 25px;
+}
+
+.box ul.learn-list {
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.box ul.learn-list li img{
+  margin-bottom: 4px;
+  margin-right: 3px;
+  width: 30px;
+}
+
 /* AVALIAÇÕES */
 .avaliacoes_title{
   margin-left: 3%;
-  margin-top: 11vh;
 }
 
 .avaliacoes_title.page-data-reviews{
