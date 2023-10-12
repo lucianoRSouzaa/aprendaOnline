@@ -62,6 +62,11 @@ class UserController extends Controller
                             return stripos($subscription->course->title, $searchTerm) !== false;
                         });
                     break;
+                case 'criados':
+                        $coursesCreated = $coursesCreated->filter(function ($created) use ($searchTerm) {
+                            return stripos($created->title, $searchTerm) !== false;
+                        });
+                    break;
                 case 'favoritado':
                         $user->favorites = $user->favorites->filter(function ($favorite) use ($searchTerm) {
                             return stripos($favorite->course->title, $searchTerm) !== false;

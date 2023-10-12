@@ -18,24 +18,37 @@
             var totalCards =  {{ $user->subscriptions->count() }}
             var totalCardsFavs =  {{ $user->favorites->count() }}
             var totalCardsComplet =  {{ $user->completions->count() }}
+            @if($coursesCreated)
+                var totalCardsCreated = {{ $coursesCreated->count() }}
+            @endif
     
-            var inscritosSlider = createSlider('slider', 'prev', 'next', 'counter', totalCards);
-    
-            $('#inscrito').click(function(){
-                inscritosSlider.updateTotalCards({{ $user->subscriptions->count() }});
-            })
-    
-            var favoritosSlider = createSlider('sliderFavs', 'prevFavs', 'nextFavs', 'counterFavs', totalCardsFavs);
-    
-            $('#favoritado').click(function(){
-                favoritosSlider.updateTotalCards({{ $user->favorites->count() }});
-            })
-    
-            var completadoSlider = createSlider('sliderComplet', 'prevComplet', 'nextComplet', 'counterComplet', totalCardsComplet);
-    
-            $('#concluido').click(function(){
-                completadoSlider.updateTotalCards({{ $user->completions->count() }});
-            })
+            if (totalCards > 0) {
+                var inscritosSlider = createSlider('slider', 'prev', 'next', 'counter', totalCards);
+                $('#inscrito').click(function(){
+                    inscritosSlider.updateTotalCards({{ $user->subscriptions->count() }});
+                })
+            }
+            if (totalCardsFavs > 0) {
+                var favoritosSlider = createSlider('sliderFavs', 'prevFavs', 'nextFavs', 'counterFavs', totalCardsFavs);
+                $('#favoritado').click(function(){
+                    favoritosSlider.updateTotalCards({{ $user->favorites->count() }});
+                })
+            }
+            if (totalCardsComplet > 0) {
+                var completadoSlider = createSlider('sliderComplet', 'prevComplet', 'nextComplet', 'counterComplet', totalCardsComplet);
+                $('#concluido').click(function(){
+                    completadoSlider.updateTotalCards({{ $user->completions->count() }});
+                })
+            }
+            
+            @if($coursesCreated)
+                if (totalCardsCreated > 0) {
+                    var cursosCriadosSlider = createSlider('sliderCreated', 'prevCreated', 'nextCreated', 'counterCreated', totalCardsCreated);
+                    $('#criados').click(function(){
+                        cursosCriadosSlider.updateTotalCards({{ $coursesCreated->count() }});
+                    })
+                }
+            @endif
     
             function createSlider(sliderId, prevId, nextId, counterId, totalCards) {
                 var atual = totalCards < 5 ? totalCards : 5;
@@ -120,6 +133,9 @@
             <section class="col-12 nav-div">
                 <ul class="d-flex nav gap-5">
                     <li id="inscrito" class="active">{{ trans('enrolledCourses') }}</li>
+                    @if ($user->isCreator())
+                        <li id="criados">{{ trans('coursesCreated') }}</li>
+                    @endif
                     <li id="concluido">{{ trans('completedCourses') }}</li>
                     <li id="favoritado">{{ trans('favoriteCourses') }}</li>
                     <li id="denuncias">{{ trans('reportsMade') }}</li>
@@ -166,6 +182,40 @@
                     <h4 class="text-center mt-1">{{ trans('noRegistration') }}</h4>
                 @endif                
             </section>
+
+            @if ($user->isCreator())
+            <section id="cursos-criados" class="col-12 show-div">
+                @if ($role == "criados")
+                    <div class="result-pesquisa">
+                        <h5>{{ trans('registersFoundFromTerm') }} {{ $searchTerm }}</h5>
+                        <a href="{{ route('user.show', ['id' => $user->id]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
+                    </div>
+                @endif
+
+                @if ($coursesCreated->count() > 0)
+                    
+                    <div class="d-flex">
+                        <i id="prevCreated" class="fa-solid fa-angle-left prev"></i>
+                        <i id="nextCreated" class="fa-solid fa-angle-right next"></i>
+                    </div>
+                
+                    <div class="slider" id="sliderCreated">
+                        @foreach ($coursesCreated as $created)
+                            <div class="card">
+                                <img class="img-card" src="{{ asset('storage/' . $created->image) }}" alt="Imagem do Card">
+                                <div class="card-content">
+                                    <p class="title">{{ $created->title }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                
+                    <p class="text-center mt-3 counter" id="counterCreated"></p>
+                @else
+                    <h4 class="text-center mt-1">{{ trans('noCreated') }}</h4>
+                @endif                
+            </section>
+            @endif
 
             <section id="cursos-concluidos" class="col-12 show-div">
                 @if ($role == "concluido")

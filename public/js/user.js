@@ -22,6 +22,12 @@ $(document).ready(function() {
         role.val('inscrito');
     });
 
+    $('#criados').click(function() {
+        setActiveNavItem($(this));
+        setActiveSection($('#cursos-criados'));
+        role.val('criados');
+    });
+
     $('#concluido').click(function() {
         setActiveNavItem($(this));
         setActiveSection($('#cursos-concluidos'));
