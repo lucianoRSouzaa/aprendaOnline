@@ -352,6 +352,13 @@ header {
     color: #374151;
 }
 
+.modal .success {
+  border-width: 1px;
+  border-color: transparent;
+  color: #ffffff;
+  background-color: #198754;
+}
+
 
 .col-table .row .card .card-header{
   padding: 12px 16px;

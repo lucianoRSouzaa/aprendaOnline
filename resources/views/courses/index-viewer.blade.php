@@ -17,19 +17,23 @@
 @push('scripts')
     <script src="{{ asset('js/script.js') }}"></script>
 
-    @if (session('creator'))
-        <script>
-            $(document).ready(function () {
-                $('#ModalCreatorErro').modal('show');
-            });
-        </script>
-    @endif
-
     <script>
         $(document).ready(function() {
             $('.coracao').click(function() {
                 $(this).closest('.favoriteForm').submit();
             });
+
+            @if (session('creator'))
+                $('#ModalCreatorErro').modal('show');
+            @endif
+
+            @if (session()->has('success'))
+                $('#ModalSucess').modal('show');
+            @endif
+
+            @if (session()->has('error'))
+                $('#ModalError').modal('show');
+            @endif
         });
     </script>
 @endpush
@@ -119,6 +123,61 @@
 @endsection
 
 @section('main')
+
+@if (session()->has('success'))
+    <div class="modal fade" id="ModalSucess" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/sucess.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">Sucesso!</span>
+                        <p class="message">{{ session('success') }}</p>
+                    </div>
+                    <div class="actions">
+                        <button class="cancel btns-restaurar" data-bs-dismiss="modal" type="button">Fechar</button>
+                        <button class="btn success btns-restaurar" data-bs-dismiss="modal" type="button">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+@if (session()->has('error'))
+    <div class="modal fade" id="ModalError" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/warning.png') }}" alt="Icone de perigo" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">Ação não permitida!</span>
+                        <p class="message">{{ session('error') }}</p>
+                    </div>
+                    <div class="actions">
+                        <button class="cancel" data-bs-dismiss="modal" aria-label="Close" type="button">Fechar</button>
+                        <button class="desactivate" data-bs-dismiss="modal" aria-label="Close" type="button">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
     <div class="container">
         <div class="search-container">
             <form action="{{ route('courses.search') }}" method="GET" class="search-bar">

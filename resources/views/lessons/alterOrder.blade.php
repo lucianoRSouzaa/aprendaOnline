@@ -7,6 +7,14 @@
         .box .div-principal span{
             background-image: url("{{ asset('images/indiceModulo.png') }}");
         }
+        header {
+            background-color: rgb(255, 255, 255);
+            border-bottom: 1px solid rgba(42,42,42,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 98px;
+        }
     </style>
 @endpush
 
@@ -20,16 +28,12 @@
                 var novaOrdem = sortable.toArray();
                 $('#novaOrdem-input').val(JSON.stringify(novaOrdem));
             });
-        });
-    </script>
 
-    @if (session('success'))
-    <script>
-        $(document).ready(function () {
-            $('#ModalSucess').modal('show');
+            @if (session('success'))
+                $('#ModalSucess').modal('show');
+            @endif
         });
     </script>
-    @endif
 @endpush
 
 @section('header')
@@ -48,6 +52,7 @@
 @endsection
 
 @section('main')
+
 @if (session()->has('success'))
 <div class="modal fade" id="ModalSucess" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog">
@@ -66,7 +71,8 @@
                     <p class="message">{{ session('success') }}</p>
                 </div>
                 <div class="actions">
-                    <button class="btn success success btns-restaurar" data-bs-dismiss="modal" type="submit">Ok</button>
+                    <button class="cancel btns-restaurar" data-bs-dismiss="modal" type="button">Fechar</button>
+                    <button class="btn success success btns-restaurar" data-bs-dismiss="modal" type="button">Ok</button>
                 </div>
             </div>
         </div>

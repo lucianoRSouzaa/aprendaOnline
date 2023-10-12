@@ -15,7 +15,7 @@ class SubscriptionController extends Controller
 
         // Verificar se o usuário que quer se inscrever é o criador do curso
         if ($user->id === $course->user_id) {
-            return redirect()->route('courses.creator')->with('errorInscri', 'Você não pode se inscrever no seu próprio curso.');
+            return redirect()->route('courses.viewer')->with('error', 'Você não pode se inscrever em seu próprio curso.');
         }
 
         // verificando se o usuário já está inscrito no curso
@@ -25,7 +25,7 @@ class SubscriptionController extends Controller
             $user->subscriptions()->create(['course_id' => $course->id]);
         }
 
-        return redirect()->route('courses.viewer');
+        return redirect()->route('courses.viewer')->with('success', 'Inscrição no curso "' . $course->title . '" realizada com sucesso');
     }
 
     public function unsubscribe($courseSlug) 
@@ -40,7 +40,7 @@ class SubscriptionController extends Controller
             $user->subscriptions()->where('course_id', $course->id)->delete();
         }
     
-        return redirect()->route('courses.viewer');
+        return redirect()->route('courses.viewer')->with('success', 'Inscrição no curso "' . $course->title . '" cancelada com sucesso');
     }
     
 }

@@ -103,6 +103,6 @@ class ReportController extends Controller
 
         $report->save();
 
-        return redirect()->back()->with('success', 'Denúncia enviada com sucesso!');
+        return redirect()->route('courses.show', $course->slug)->with('success', 'Denúncia do curso "' . $course->title . '" enviada com sucesso! A avaliação ocorrerá em até 7 dias. Agradecemos sua paciência.');
     }
 }

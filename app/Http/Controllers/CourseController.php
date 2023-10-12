@@ -365,7 +365,7 @@ class CourseController extends Controller
     {
         $course->update(['is_completed' => false]);
 
-        return redirect()->route('course.config', $course->slug)->with('success', 'Curso marcado como concluído!');
+        return redirect()->route('course.config', $course->slug)->with('success', 'Curso desmarcado como concluído!');
     }
 
     public function config($courseSlug) 

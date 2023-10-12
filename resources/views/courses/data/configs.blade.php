@@ -4,6 +4,16 @@
     <link rel="stylesheet" href="{{ asset('css/modules.css') }}">
 @endpush
 
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            @if (session('success'))
+                $('#ModalSucess').modal('show');
+            @endif
+        });
+    </script>
+@endpush
+
 @section('header')
     <div class="container">
         <div class="d-flex justify-content-between">
@@ -20,6 +30,63 @@
 @endsection
 
 @section('main')
+
+@if (session()->has('success'))
+<div class="modal fade" id="ModalSucess" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex">
+                    <div class="image">
+                        <img src="{{ asset('images/sucess.png') }}" alt="" srcset="">
+                    </div>
+                    <div class="close">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="content">
+                    <span class="title">Sucesso!</span>
+                    <p class="message">{{ session('success') }}</p>
+                </div>
+                <div class="actions">
+                    <button class="cancel btns-restaurar" data-bs-dismiss="modal" type="button">Fechar</button>
+                    <button class="btn success success btns-restaurar" data-bs-dismiss="modal" type="button">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+<div class="modal fade" id="ModalConfirmacaoExclusao" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex">
+                    <div class="image">
+                        <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                    </div>
+                    <div class="close">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="content">
+                    <span class="title">{{ trans('areUSureWantDelete') }}</span>
+                    <p class="message">{{ trans('ifUdeleteThisCourse') }} ({{$course->title}}), {{ trans('allHisModulesAndLessonsAlsoDeleted') }}</p>
+                </div>
+                <div class="actions">
+                    <button class="cancel" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                    <form action="{{ route('courses.destroy', $course->slug) }}" method="POST" class="delete-form">
+                        @csrf
+                        @method('DELETE')
+                        <button class="desactivate" type="submit">{{ trans('delete') }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -47,7 +114,7 @@
                                 <i class="fa-solid fa-pen fa-xs"></i>
                                 Editar curso
                             </a>
-                            <a href="{{ route('courses.edit', $course->slug) }}" class="config-btns btn btn-danger">
+                            <a class="config-btns btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalConfirmacaoExclusao">
                                 <i class="fa-regular fa-trash-can"></i>
                                 Excluir curso
                             </a>

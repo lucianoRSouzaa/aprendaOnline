@@ -108,7 +108,7 @@
                     </div>
                     <div class="actions">
                         <button class="cancel btns-restaurar" data-bs-dismiss="modal" type="button">Fechar</button>
-                        <button class="btn success btns-restaurar" data-bs-dismiss="modal" type="submit">Ok</button>
+                        <button class="btn success btns-restaurar" data-bs-dismiss="modal" type="button">Ok</button>
                     </div>
                 </div>
             </div>

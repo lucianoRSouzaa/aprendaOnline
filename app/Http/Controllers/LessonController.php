@@ -117,7 +117,7 @@ class LessonController extends Controller
         // despachando o evento que atualiza qtd de aulas do curso
         event(new LessonCreated($lesson));
 
-        return redirect()->route('modules.index', ['courseSlug' => $module->course->slug]);
+        return redirect()->route('modules.index', ['courseSlug' => $module->course->slug])->with('success', 'Aula criada com sucesso');
     }
 
     public function edit($moduleSlug, $lessonSlug)
@@ -172,7 +172,7 @@ class LessonController extends Controller
         $lesson->slug = $uniqueSlug;
         $lesson->save();
 
-        return redirect()->route('modules.index', ['courseSlug' => $module->course->slug]);
+        return redirect()->route('modules.index', ['courseSlug' => $module->course->slug])->with('success', 'Aula editada com sucesso');
     }
 
     public function destroy($moduleSlug, $lessonSlug)
@@ -195,7 +195,7 @@ class LessonController extends Controller
             $remainingLesson->save();
         }
 
-        return redirect()->route('modules.index', ['courseSlug' => $module->course->slug]);
+        return redirect()->route('modules.index', ['courseSlug' => $module->course->slug])->with('success', 'Aula excluída com sucesso');
     }
 
     public function show($courseSlug, $lessonSlug)
@@ -269,6 +269,8 @@ class LessonController extends Controller
                         'user_id' => $user->id,
                         'completed_at' => now(),
                     ]);
+
+                    return redirect()->route('courses.completed', $course->slug)->with('success', 'Parabéns! Você completou o curso "' . $course->title . '" com sucesso. Continue aprendendo e alcançando novos marcos. Seu esforço e dedicação são verdadeiramente inspiradores!');
                 }
             }
 
@@ -300,10 +302,7 @@ class LessonController extends Controller
             }
         }
 
-        // =============================================================
-        // AINDA NÃO FEITO: rota para quando o usuário terminar o curso
-        // =============================================================
-        return route('sucesso');
+        return redirect()->route('lessons.index', $course->slug);
     }
 
     public function unmarkLessonCompleted(Request $request)

@@ -14,12 +14,12 @@ class CourseRatingsController extends Controller
         
         // Verificar se o usuário está inscrito no curso
         if (!$course->isUserSubscribed(auth()->user())) {
-            return redirect()->back()->with('error', 'Você deve estar inscrito no curso para avaliá-lo.');
+            return redirect()->route('courses.show', $course->slug)->with('error', 'Você deve estar inscrito no curso para avaliá-lo.');
         }
 
         // Verificar se o usuário já classificou o curso
         if ($course->hasUserRated(auth()->user())) {
-            return redirect()->back()->with('error', 'Você já classificou este curso.');
+            return redirect()->route('courses.show', $course->slug)->with('error', 'Você já classificou este curso.');
         }
         
         // Validar os dados recebidos do formulário
@@ -45,6 +45,6 @@ class CourseRatingsController extends Controller
         $course->average_rating = $averageRating;
         $course->save();
 
-        return redirect()->back()->with('success', 'Avaliação realizada com sucesso.');
+        return redirect()->route('courses.show', $course->slug)->with('success', 'Avaliação realizada com sucesso.');
     }
 }
