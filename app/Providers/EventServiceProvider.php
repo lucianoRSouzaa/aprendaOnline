@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Event;
 use App\Events\LessonCreated;
 use App\Events\LessonDeleted;
 use App\Events\CourseDeleted;
+use App\Events\RestoreOrderEvent;
 use App\Listeners\UpdateTotalLessonsOnLessonCreated;
 use App\Listeners\UpdateTotalLessonsOnLessonDeleted;
 use App\Listeners\UpdateTotalLessonsOnCourseDeleted;
+use App\Listeners\RestoreOrderListener;
 
 
 class EventServiceProvider extends ServiceProvider
@@ -34,6 +36,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CourseDeleted::class => [
             UpdateTotalLessonsOnCourseDeleted::class,
+        ],
+        RestoreOrderEvent::class => [
+            RestoreOrderListener::class,
         ],
     ];
 

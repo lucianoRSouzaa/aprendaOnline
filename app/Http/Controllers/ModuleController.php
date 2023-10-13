@@ -11,14 +11,20 @@ class ModuleController extends Controller
 {
     public function index($courseSlug)
     {
-        $course = Course::where('slug', $courseSlug)->firstOrFail();
-        $modules = $course->modules()->orderBy('order')->get();
+        $course = Course::where('slug', $courseSlug)
+            ->with(['modules' => function ($query) {
+                $query->orderBy('order');
+            }, 'modules.lessons' => function ($query) {
+                $query->orderBy('order');
+            }])
+            ->firstOrFail();
+
         $module = null;
 
         $user = auth()->user();
         $nameUser = $user->name;
 
-        return view('modules.index', compact('course', 'modules', 'nameUser', 'module'));
+        return view('modules.index', compact('course', 'nameUser', 'module'));
     }
 
     public function create($courseSlug)
@@ -62,15 +68,20 @@ class ModuleController extends Controller
 
     public function edit($courseSlug, $moduleSlug)
     {
-        $course = Course::where('slug', $courseSlug)->firstOrFail();
+        $course = Course::where('slug', $courseSlug)
+            ->with(['modules' => function ($query) {
+                $query->orderBy('order');
+            }, 'modules.lessons' => function ($query) {
+                $query->orderBy('order');
+            }])
+            ->firstOrFail();
+            
         $module = $course->modules()->where('slug', $moduleSlug)->firstOrFail();
-
-        $modules = $course->modules()->orderBy('order')->get();
 
         $user = auth()->user();
         $nameUser = $user->name;
 
-        return view('modules.index', compact('course', 'module', 'nameUser', 'modules'));
+        return view('modules.index', compact('course', 'module', 'nameUser'));
     }
 
     public function update(Request $request, $courseSlug, $moduleSlug)

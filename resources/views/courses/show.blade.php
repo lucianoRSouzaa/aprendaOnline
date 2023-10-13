@@ -242,7 +242,7 @@
                                 <p class="mt-3">{{ trans('selectLessonUWantReport') }}</p>
                                 <select class="form-control" name="selecao-aula" id="select-aula-option">
                                     <option selected disabled value="">--{{ trans('select') }}--</option>
-                                    @foreach ($modules as $module)
+                                    @foreach ($course->modules as $module)
                                         <optgroup label="{{$module->title}}">
                                             @foreach ($module->lessons as $lesson)
                                                 <option value="{{ $lesson->id }}">{{ $lesson->title }}</option>
@@ -320,7 +320,7 @@
         <div class="row align-items-center">
             <div class="col-md-8 col-sm-12">
                 <div class="box mt-4">
-                    @foreach ($modules as $module)
+                    @foreach ($course->modules as $module)
                         <div class="div-principal" onclick="toggleDivs(this)">
                             <div class="botoes">
                                 <i class="fa fa-angle-down" aria-hidden="true"></i>

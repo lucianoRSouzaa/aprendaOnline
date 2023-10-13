@@ -169,11 +169,14 @@ class CourseController extends Controller
             $admin = true;
         }
 
-        // Obtendo o curso com base no slug
-        $course = Course::where('slug', $slug)->firstOrFail();
-
-        // Obtendo os módulos relacionados ao curso
-        $modules = $course->modules;
+        // Obtendo o curso com base no slug e seus módulos e suas aulas
+        $course = Course::where('slug', $slug)
+            ->with(['modules' => function ($query) {
+                $query->orderBy('order');
+            }, 'modules.lessons' => function ($query) {
+                $query->orderBy('order');
+            }])
+            ->firstOrFail();
 
         $ratingsQuery  = $course->ratings();
 
@@ -202,25 +205,35 @@ class CourseController extends Controller
 
         $whatWillLeran = json_decode($course->what_students_learn);
 
-        return view('courses.show', compact('course', 'modules', 'ratings', 'averageRatingsPerScore', 'userIsSubscribed', 'user', 'category', 'admin', 'starFilter', 'whatWillLeran'));
+        return view('courses.show', compact('course', 'ratings', 'averageRatingsPerScore', 'userIsSubscribed', 'user', 'category', 'admin', 'starFilter', 'whatWillLeran'));
     }
 
-    public function showDeleted($slug)
+    public function showDeleted($slug, Request $request)
     {
+        $starFilter = null;
         $userIsSubscribed = null;
         $user = null;
         $admin = true;
 
         // Obtendo o curso denunciado com base no slug
-        $course = Course::withTrashed()->where('slug', $slug)->firstOrFail();
-
-        // Obtendo os módulos e suas aulas (excluídos) relacionados ao curso
-        $modules = $course->modules()->with(['lessons' => function ($query) {
-            $query->withTrashed();
-        }])->withTrashed()->get();
+        $course = Course::where('slug', $slug)
+            ->with(['modules' => function ($query) {
+                $query->withTrashed();
+                $query->orderBy('order');
+            }, 'modules.lessons' => function ($query) {
+                $query->withTrashed();
+                $query->orderBy('order');
+            }])
+            ->firstOrFail();
 
         // Obtendo as avaliações do curso
         $ratings = $course->ratings;
+
+        if ($request->has('starFilter')) {
+            // Aqui, você pode aplicar o filtro com base no valor enviado pelo formulário.
+            $starFilter = $request->input('starFilter');
+            $ratingsQuery->where('rating', $starFilter);
+        }
 
         $user = auth()->user();
 
@@ -241,7 +254,9 @@ class CourseController extends Controller
             $userIsSubscribed = $course->isUserSubscribed(auth()->user());
         }
 
-        return view('courses.show', compact('course', 'modules', 'ratings', 'averageRating', 'averageRatingsPerScore', 'userIsSubscribed', 'user', 'category', 'admin'));
+        $whatWillLeran = json_decode($course->what_students_learn);
+
+        return view('courses.show', compact('course', 'ratings', 'averageRating', 'averageRatingsPerScore', 'userIsSubscribed', 'starFilter', 'user', 'category', 'admin', 'whatWillLeran'));
     }
 
     public function edit($slug)

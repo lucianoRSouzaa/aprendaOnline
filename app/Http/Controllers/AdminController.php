@@ -12,6 +12,7 @@ use App\Models\Lesson;
 use App\Http\Controllers\FileController;
 
 use App\Events\CourseDeleted;
+use App\Events\RestoreOrderEvent;
 
 
 class AdminController extends Controller
@@ -145,9 +146,11 @@ class AdminController extends Controller
             'modules' => function ($query) {
                 // carregando os módulos excluídos
                 $query->withTrashed(); 
+                $query->orderBy('order');
                 // e suas aulas
                 $query->with(['lessons' => function ($query) {
                     $query->withTrashed(); 
+                    $query->orderBy('order');
                 }]);
             },
         ])->withTrashed();
@@ -188,6 +191,8 @@ class AdminController extends Controller
 
                 $modulo->restore();
 
+                event(new RestoreOrderEvent($modulo));
+
                 break;
             case 'aula':
 
@@ -206,6 +211,8 @@ class AdminController extends Controller
                 }
 
                 $lesson->restore();
+
+                event(new RestoreOrderEvent($lesson));
 
                 break;
             default:
