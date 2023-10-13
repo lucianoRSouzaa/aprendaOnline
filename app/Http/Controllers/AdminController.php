@@ -210,7 +210,10 @@ class AdminController extends Controller
                     return redirect()->back()->with('error', 'Não é possível restaurar a aula : "' . $lesson->title . '" porque o módulo dessa aula (' . $module->title . ') está excluído, se você deseja restaurar essa aula, restaure o módulo primeiro.');
                 }
 
+                $video = $lesson->video()->withTrashed()->first();
+
                 $lesson->restore();
+                $video->restore();
 
                 event(new RestoreOrderEvent($lesson));
 

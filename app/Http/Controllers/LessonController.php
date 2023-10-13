@@ -21,11 +21,16 @@ class LessonController extends Controller
     {
         $user = Auth::user();
 
-        $course = Course::where('slug', $courseSlug)->firstOrFail();
-        $modules = $course->modules()->with('lessons')->get();
+        $course = Course::where('slug', $courseSlug)
+            ->with(['modules' => function ($query) {
+                $query->orderBy('order');
+            }, 'modules.lessons' => function ($query) {
+                $query->orderBy('order');
+            }])
+            ->firstOrFail();
 
         // Calcula a quantidade total de aulas em todos os módulos
-        $qtdLessons = $modules->sum(function ($module) {
+        $qtdLessons = $course->modules->sum(function ($module) {
             return $module->lessons->count();
         });
 
@@ -67,7 +72,7 @@ class LessonController extends Controller
             }
         }
 
-        return view('lessons.index', compact('course', 'modules', 'qtdLessons', 'user', 'completedLessonsCount', 'perCent'));
+        return view('lessons.index', compact('course', 'qtdLessons', 'user', 'completedLessonsCount', 'perCent'));
     }
 
     public function create($moduleSlug)
@@ -202,11 +207,16 @@ class LessonController extends Controller
     {
         $user = Auth::user();
 
-        $course = Course::where('slug', $courseSlug)->firstOrFail();
-        $modules = $course->modules()->with('lessons')->get();
+        $course = Course::where('slug', $courseSlug)
+            ->with(['modules' => function ($query) {
+                $query->orderBy('order');
+            }, 'modules.lessons' => function ($query) {
+                $query->orderBy('order');
+            }])
+            ->firstOrFail();
 
         // Calcula a quantidade total de aulas em todos os módulos
-        $qtdLessons = $modules->sum(function ($module) {
+        $qtdLessons = $course->modules->sum(function ($module) {
             return $module->lessons->count();
         });
 
@@ -222,7 +232,7 @@ class LessonController extends Controller
         // para exibir o vídeo
         $lesson = Lesson::where('slug', $lessonSlug)->firstOrFail();
 
-        return view('lessons.show', compact('course', 'modules', 'lesson', 'qtdLessons', 'user', 'completedLessonsCount', 'perCent'));
+        return view('lessons.show', compact('course', 'lesson', 'qtdLessons', 'user', 'completedLessonsCount', 'perCent'));
     }
 
     public function showDeleted($courseSlug, $lessonSlug)

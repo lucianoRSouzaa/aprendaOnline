@@ -67,7 +67,7 @@
                             <p class="mt-3">{{ trans('selectLessonUWantReport') }}</p>
                             <select class="form-control" name="selecao-aula" id="select-aula-option">
                                 <option selected disabled value="">--{{ trans('select') }}--</option>
-                                @foreach ($modules as $module)
+                                @foreach ($course->modules as $module)
                                     <optgroup label="{{$module->title}}">
                                         @foreach ($module->lessons as $lesson)
                                             <option value="{{ $lesson->id }}">{{ $lesson->title }}</option>
@@ -109,7 +109,7 @@
             @php
                 $lessonCount = 1;
             @endphp
-            @foreach ($modules as $module)
+            @foreach ($course->modules as $module)
                 <div class="d-flex align-items-center justify-content-between mt-3 pb-3 modulos" onclick="toggleLessons({{ $module->id }})">
                     <div class="ml-3 text-module">
                         <p>{{ $module->title }}</p>
