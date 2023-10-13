@@ -58,8 +58,8 @@
                             <p class="message">{{ session('creator') }}</p>
                         </div>
                         <div class="actions">
-                            <button class="desactivate" type="button">{{ trans('cancel') }}</button>
-                            <button class="cancel" type="button">{{ trans('becomeCreator') }}</button>
+                            <button class="desactivate" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                            <a href="{{ route('user.edit', $user->id) }}" class="cancel text-center">{{ trans('becomeCreator') }}</a>
                         </div>
                     </div>
                 </div>

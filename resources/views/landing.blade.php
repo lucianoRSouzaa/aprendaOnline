@@ -93,7 +93,7 @@
                     </div>
                     <div class="actions">
                         <button class="desactivate" id="authButton" type="button">{{ trans('authenticate') }}</button>
-                        <button class="cancel" type="button">{{ trans('cancel') }}</button>
+                        <button class="cancel" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
                     </div>
                 </div>
             </div>

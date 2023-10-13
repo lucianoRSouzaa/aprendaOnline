@@ -25,6 +25,7 @@
     "ifUdeleteThisCourse": "Se você excluir este curso: ",
     "allHisModulesAndLessonsAlsoDeleted": "todos os módulos e aulas dele também serão excluídos!",
     "accessDeniedAuthRequired": "Acesso Negado - Autenticação Requerida",
+    "accessDenied": "Acesso Negado",
     "authenticate": "Autenticar",
     "register": "Cadastrar",
     "welcome": "Bem vindo!",

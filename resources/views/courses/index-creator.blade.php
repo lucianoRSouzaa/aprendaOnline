@@ -26,13 +26,19 @@
     <script src="{{ asset('js/creator.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
 
-    @if (session()->has('success'))
-        <script>
-            $(document).ready(function () {
-                $('#ModalSucess').modal('show');
-            });
-        </script>
-    @endif
+    
+    <script>
+        $(document).ready(function () {
+            @if (session()->has('success'))
+                $('#ModalSucess').modal('show');ModalCreatorErro
+            @endif
+
+            @if (session()->has('creator'))
+                $('#ModalCreatorErro').modal('show');
+            @endif
+        });
+    </script>
+    
 @endpush
 
 
@@ -109,6 +115,33 @@
                     <div class="actions">
                         <button class="cancel btns-restaurar" data-bs-dismiss="modal" type="button">Fechar</button>
                         <button class="btn success btns-restaurar" data-bs-dismiss="modal" type="button">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+@if (session()->has('creator'))
+    <div class="modal fade" id="ModalCreatorErro" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">{{ trans('accessDenied') }}</span>
+                        <p class="message">{{ session('creator') }}</p>
+                    </div>
+                    <div class="actions">
+                        <button class="desactivate" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                        <button class="cancel" data-bs-dismiss="modal" type="button">Ok</button>
                     </div>
                 </div>
             </div>

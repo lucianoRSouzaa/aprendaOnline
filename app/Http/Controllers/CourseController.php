@@ -84,24 +84,15 @@ class CourseController extends Controller
 
     public function create()
     {
-        if (Gate::allows('manage-courses')) {
-            $categories = Category::all();
-            $userEmail = auth()->user()->email;
-            return view('courses.create', compact('categories', 'userEmail'));
-        }
+        $categories = Category::all();
+        $userEmail = auth()->user()->email;
 
-        session()->flash('creator', 'Você precisa ser um criador para criar um curso!');
-        return redirect()->route('courses.viewer');
+        return view('courses.create', compact('categories', 'userEmail'));
     }
 
 
     public function store(Request $request)
     {
-        if (Gate::denies('manage-courses')) {
-            session()->flash('creator', 'Você precisa ser um criador para criar um curso!');
-            return redirect()->route('courses.viewer');
-        }
-
         // Valide os dados do formulário
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
@@ -261,11 +252,6 @@ class CourseController extends Controller
 
     public function edit($slug)
     {
-        if (Gate::denies('manage-courses')) {
-            session()->flash('creator', 'Você precisa ser um criador para criar um curso!');
-            return redirect()->route('courses.viewer');
-        }
-
         $course = Course::where('slug', $slug)->firstOrFail();
 
         $categories = Category::all();
@@ -283,11 +269,6 @@ class CourseController extends Controller
 
     public function update(Request $request, $slug)
     {
-        if (Gate::denies('manage-courses')) {
-            session()->flash('creator', 'Você precisa ser um criador para criar um curso!');
-            return redirect()->route('courses.viewer');
-        }
-
         $course = Course::where('slug', $slug)->firstOrFail();
 
         $data = $request->validate([
@@ -343,11 +324,6 @@ class CourseController extends Controller
 
     public function destroy($slug)
     {
-        if (Gate::denies('manage-courses')) {
-            session()->flash('creator', 'Você precisa ser um criador para criar um curso!');
-            return redirect()->route('courses.viewer');
-        }
-
         // Verifique se o usuário autenticado é o criador do curso
         // if ($course->creator_id !== Auth::id()) {
         //     abort(403, 'Unauthorized');

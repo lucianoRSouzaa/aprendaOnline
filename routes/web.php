@@ -24,50 +24,50 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'userVerified'])->group(function () { 
     // Rotas para CRUD de cursos
-    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
-    Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
-    Route::get('/courses/{courseSlug}/edit', [CourseController::class, 'edit'])->name('courses.edit');
-    Route::put('/courses/{courseSlug}', [CourseController::class, 'update'])->name('courses.update');
-    Route::delete('/courses/{courseSlug}', [CourseController::class, 'destroy'])->name('courses.destroy');
+    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create')->middleware('check.course.access');
+    Route::post('/courses', [CourseController::class, 'store'])->name('courses.store')->middleware('check.course.access');
+    Route::get('/courses/{courseSlug}/edit', [CourseController::class, 'edit'])->name('courses.edit')->middleware('check.course.access', 'check.course.user');
+    Route::put('/courses/{courseSlug}', [CourseController::class, 'update'])->name('courses.update')->middleware('check.course.access');
+    Route::delete('/courses/{courseSlug}', [CourseController::class, 'destroy'])->name('courses.destroy')->middleware('check.course.access');
     // Rota para o criador do curso dizer que o curso ficou 100% completo
-    Route::post('/courses/{course}/complete', [CourseController::class, 'markComplete'])->name('courses.mark-complete');
+    Route::post('/courses/{course}/complete', [CourseController::class, 'markComplete'])->name('courses.mark-complete')->middleware('check.course.access');
     // Rota para o criador do curso desdizer que o curso ficou 100% completo (voltar atrás)
-    Route::post('/courses/{course}/uncomplete', [CourseController::class, 'unmarkComplete'])->name('courses.unmark-complete');
+    Route::post('/courses/{course}/uncomplete', [CourseController::class, 'unmarkComplete'])->name('courses.unmark-complete')->middleware('check.course.access');
     // Rota para usuário ver os cursos concluídos por ele
     Route::get('/courses/completed', [CourseController::class, 'CompletedCourses'])->name('courses.completed');
     // rota para criador de curso
     Route::get('/courses/creator', [CourseController::class, 'indexCreator'])->name('courses.creator')->middleware('auth');
     Route::get('/courses/creator/toggle/mode', [CourseController::class, 'toggleMode'])->name('courses.toggleMode')->middleware('auth', 'can:manage-courses');
     // rota para configurações do curso
-    Route::get('/course/{course}/config', [CourseController::class, 'config'])->name('course.config');
+    Route::get('/course/{courseSlug}/config', [CourseController::class, 'config'])->name('course.config')->middleware('check.course.access', 'check.course.user');
 
     // rotas para criador de curso ver dados do seu curso
-    Route::get('/course/data/index/{course}', [CourseDataController::class, 'index'])->name('course.data.index');
-    Route::get('/course/{course}/data/overview', [CourseDataController::class, 'courseOverview'])->name('course.data.overview');
-    Route::get('/course/{course}/data/reviews', [CourseDataController::class, 'courseReviews'])->name('course.data.reviews'); 
-    Route::get('/course/{course}/data/progress', [CourseDataController::class, 'studentProgress'])->name('course.data.progress');
-    Route::get('/course/{course}/data/performance', [CourseDataController::class, 'coursePerformance'])->name('course.data.performance');
-    Route::post('/course/{course}/data/performance', [CourseDataController::class, 'coursePerformance'])->name('course.data.performance.form');  
+    Route::get('/course/data/index/{courseSlug}', [CourseDataController::class, 'index'])->name('course.data.index')->middleware('check.course.access', 'check.course.user');
+    Route::get('/course/{courseSlug}/data/overview', [CourseDataController::class, 'courseOverview'])->name('course.data.overview')->middleware('check.course.access', 'check.course.user');
+    Route::get('/course/{courseSlug}/data/reviews', [CourseDataController::class, 'courseReviews'])->name('course.data.reviews')->middleware('check.course.access', 'check.course.user');
+    Route::get('/course/{courseSlug}/data/progress', [CourseDataController::class, 'studentProgress'])->name('course.data.progress')->middleware('check.course.access', 'check.course.user');
+    Route::get('/course/{courseSlug}/data/performance', [CourseDataController::class, 'coursePerformance'])->name('course.data.performance')->middleware('check.course.access', 'check.course.user');
+    Route::post('/course/{courseSlug}/data/performance', [CourseDataController::class, 'coursePerformance'])->name('course.data.performance.form')->middleware('check.course.access', 'check.course.user');
     
     // Rotas para CRUD de módulos
-    Route::get('/{courseSlug}/modules', [ModuleController::class, 'index'])->name('modules.index');
-    Route::get('/{courseSlug}/modules/create', [ModuleController::class, 'create'])->name('modules.create');
-    Route::post('/{courseSlug}/modules', [ModuleController::class, 'store'])->name('modules.store');
-    Route::get('/{courseSlug}/modules/{moduleSlug}', [ModuleController::class, 'show'])->name('modules.show');
-    Route::get('/{courseSlug}/modules/{moduleSlug}/edit', [ModuleController::class, 'edit'])->name('modules.edit');
-    Route::put('/{courseSlug}/modules/{moduleSlug}', [ModuleController::class, 'update'])->name('modules.update');
-    Route::delete('/{courseSlug}/modules/{moduleSlug}', [ModuleController::class, 'destroy'])->name('modules.destroy');
+    Route::get('/{courseSlug}/modules', [ModuleController::class, 'index'])->name('modules.index')->middleware('check.course.access', 'check.course.user');
+    Route::get('/{courseSlug}/modules/create', [ModuleController::class, 'create'])->name('modules.create')->middleware('check.course.access', 'check.course.user');
+    Route::post('/{courseSlug}/modules', [ModuleController::class, 'store'])->name('modules.store')->middleware('check.course.access', 'check.course.user');
+    // Route::get('/{courseSlug}/modules/{moduleSlug}', [ModuleController::class, 'show'])->name('modules.show');
+    Route::get('/{courseSlug}/modules/{moduleSlug}/edit', [ModuleController::class, 'edit'])->name('modules.edit')->middleware('check.course.access', 'check.course.user');
+    Route::put('/{courseSlug}/modules/{moduleSlug}', [ModuleController::class, 'update'])->name('modules.update')->middleware('check.course.access', 'check.course.user');
+    Route::delete('/{courseSlug}/modules/{moduleSlug}', [ModuleController::class, 'destroy'])->name('modules.destroy')->middleware('check.course.access', 'check.course.user');
 
     // Rotas para CRUD de aulas (lessons)
     Route::get('modules/{courseSlug}/lessons', [LessonController::class, 'index'])->name('lessons.index');
-    Route::get('modules/{moduleSlug}/lessons/create', [LessonController::class, 'create'])->name('lessons.create');
-    Route::post('modules/{moduleSlug}/lessons', [LessonController::class, 'store'])->name('lessons.store');
-    Route::get('modules/{moduleSlug}/lessons/{lessonSlug}/edit', [LessonController::class, 'edit'])->name('lessons.edit');
-    Route::put('modules/{moduleSlug}/lessons/{lessonSlug}', [LessonController::class, 'update'])->name('lessons.update');
-    Route::delete('modules/{moduleSlug}/lessons/{lessonSlug}', [LessonController::class, 'destroy'])->name('lessons.destroy');
+    Route::get('modules/{moduleSlug}/lessons/create', [LessonController::class, 'create'])->name('lessons.create')->middleware('check.course.access', 'check.course.user');
+    Route::post('modules/{moduleSlug}/lessons', [LessonController::class, 'store'])->name('lessons.store')->middleware('check.course.access', 'check.course.user');
+    Route::get('modules/{moduleSlug}/lessons/{lessonSlug}/edit', [LessonController::class, 'edit'])->name('lessons.edit')->middleware('check.course.access', 'check.course.user');
+    Route::put('modules/{moduleSlug}/lessons/{lessonSlug}', [LessonController::class, 'update'])->name('lessons.update')->middleware('check.course.access', 'check.course.user');
+    Route::delete('modules/{moduleSlug}/lessons/{lessonSlug}', [LessonController::class, 'destroy'])->name('lessons.destroy')->middleware('check.course.access', 'check.course.user');
     Route::get('course/{courseSlug}/lessons/{lessonSlug}/watch', [LessonController::class, 'show'])->name('lessons.watch');
     // rota para ver página de alterar ordem das aulas
-    Route::get('/module/{module}/lessons/alter/order', [LessonController::class, 'alterOrder'])->name('lesson.order');
+    Route::get('/module/{moduleSlug}/lessons/alter/order', [LessonController::class, 'alterOrder'])->name('lesson.order')->middleware('check.course.access', 'check.course.user');
     // rota para reordenar ordem no banco de dados
     Route::post('/reorder-aulas', [LessonController::class, 'reorder'])->name('lesson.reorder');
 

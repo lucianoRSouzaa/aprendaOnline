@@ -25,6 +25,7 @@
     "ifUdeleteThisCourse": "If you delete this course: ",
     "allHisModulesAndLessonsAlsoDeleted": "All his modules and lessons will also be deleted!",
     "accessDeniedAuthRequired": "Access Denied - Authentication Required",
+    "accessDenied": "Access Denied",
     "authenticate": "Authenticate",
     "register": "Register",
     "welcome": "Welcome!",
