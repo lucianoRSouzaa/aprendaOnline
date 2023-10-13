@@ -13,11 +13,12 @@ class ModuleController extends Controller
     {
         $course = Course::where('slug', $courseSlug)->firstOrFail();
         $modules = $course->modules()->orderBy('order')->get();
+        $module = null;
 
         $user = auth()->user();
         $nameUser = $user->name;
 
-        return view('modules.index', compact('course', 'modules', 'nameUser'));
+        return view('modules.index', compact('course', 'modules', 'nameUser', 'module'));
     }
 
     public function create($courseSlug)
@@ -29,6 +30,10 @@ class ModuleController extends Controller
 
     public function store(Request $request, $courseSlug)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
         $course = Course::where('slug', $courseSlug)->firstOrFail();
 
         $lastModule = $course->modules()->latest('order')->first();
@@ -60,14 +65,22 @@ class ModuleController extends Controller
         $course = Course::where('slug', $courseSlug)->firstOrFail();
         $module = $course->modules()->where('slug', $moduleSlug)->firstOrFail();
 
-        return view('modules.edit', compact('course', 'module'));
+        $modules = $course->modules()->orderBy('order')->get();
+
+        $user = auth()->user();
+        $nameUser = $user->name;
+
+        return view('modules.index', compact('course', 'module', 'nameUser', 'modules'));
     }
 
     public function update(Request $request, $courseSlug, $moduleSlug)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
         $course = Course::where('slug', $courseSlug)->firstOrFail();
         $module = $course->modules()->where('slug', $moduleSlug)->firstOrFail();
-
         
         $module->title = $request->input('title');
 

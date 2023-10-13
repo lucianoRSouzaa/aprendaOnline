@@ -51,6 +51,14 @@
             @if (session()->has('success'))
                 $('#ModalSucess').modal('show');
             @endif
+
+            @if ($errors->has('title'))
+                $('#ModalCriarModulo').modal('show');
+            @endif
+
+            @if ($module)
+                $('#ModalAlterarModulo').modal('show');
+            @endif
         });
 
     </script>
@@ -63,17 +71,6 @@
             <a href="{{ auth()->user()->isCreator() ? route('courses.creator') : route('courses.viewer') }}" class="logo">
                 <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
             </a>       
-            {{-- @if ($isCourseCompleted === 0)
-                <form action="{{ route('courses.mark-complete', $course) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-primary">{{ trans('markCourseCompleted') }}</button>
-                </form> 
-            @else
-                <form action="{{ route('courses.unmark-complete', $course) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">{{ trans('unmarkCourseCompleted') }}</button>
-                </form> 
-            @endif            --}}
             <div class="search-container d-flex justify-content-end align-items-center">
                 <a class="active" href="{{ route('modules.index', $course->slug) }}">{{ trans('modulesAndLessons') }}</a>
                 <a href="{{ route('course.data.index', $course->slug) }}">{{ trans('viewCourseData') }}</a>
@@ -140,6 +137,59 @@
             </div>
         </div>
     </div>
+
+    @if ($module)
+        <div class="modal fade modal-modulo" id="ModalAlterarModulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('modules.update', ['courseSlug' => $course->slug, 'moduleSlug' => $module->slug]) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                        <div class="modal-header justify-content-center">
+                            <h1 class="modal-title fs-3 text-light" id="exampleModalLabel">Cadastro de módulos</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="titulo">Título:</label><br>
+                            <input class="form-control" type="text" name="title" id="title" value="{{ $module->title }}">
+                            @error('title')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{ route('modules.index', $course->slug) }}" class="btn btn-outline-primary">Cancelar</a>
+                            <button type="submit" class="btn gradient">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @else
+        <div class="modal fade modal-modulo" id="ModalCriarModulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('modules.store', $course->slug) }}" method="POST">
+                    @csrf
+                        <div class="modal-header justify-content-center">
+                            <h1 class="modal-title fs-3 text-light" id="exampleModalLabel">Cadastro de módulos</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="title">Título:</label><br>
+                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title') }}">
+                            @error('title')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn gradient">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="modal fade" id="ModalConfirmacaoExclusaoAula" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
         <div class="modal-dialog">
@@ -215,7 +265,7 @@
             @endforeach
             
             <div class="d-grid">
-                <a href="{{ route('modules.create', $course->slug) }}" class="btn btn-add-mod btn-outline-primary">{{ trans('createModule') }}</a>
+                <a data-bs-target="#ModalCriarModulo" data-bs-toggle="modal" class="btn btn-add-mod btn-outline-primary">{{ trans('createModule') }}</a>
             </div>
         </div>
     </div>
