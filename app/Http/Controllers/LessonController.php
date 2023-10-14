@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 use App\Events\LessonCreated;
 use App\Events\LessonDeleted;
@@ -180,10 +181,15 @@ class LessonController extends Controller
         return redirect()->route('modules.index', ['courseSlug' => $module->course->slug])->with('success', 'Aula editada com sucesso');
     }
 
-    public function destroy($moduleSlug, $lessonSlug)
+    public function destroy(Request $request, $moduleSlug, $lessonSlug)
     {
         $module = Module::where('slug', $moduleSlug)->firstOrFail();
         $lesson = $module->lessons()->where('slug', $lessonSlug)->firstOrFail();
+
+        $password = $request->input('password');
+        if (!Hash::check($password, auth()->user()->password)) {
+            return redirect()->back()->with('error', 'A senha inserida está incorreta.');
+        }
 
         $video = Video::find($lesson->video_id);
 

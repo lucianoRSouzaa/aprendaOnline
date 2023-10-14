@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\Report;
 use App\Models\Course;
@@ -164,8 +165,13 @@ class AdminController extends Controller
         return view('admin.todos-cursos', compact('cursos', 'searchTerm'));
     }
 
-    public function restore($id, $type)
+    public function restore(Request $request, $id, $type)
     {
+        $password = $request->input('password');
+        if (!Hash::check($password, auth()->user()->password)) {
+            return redirect()->back()->with('errorPassword', 'A senha inserida está incorreta.');
+        }
+
         $course = null;
 
         switch ($type) {
@@ -230,8 +236,13 @@ class AdminController extends Controller
         return redirect()->back()->with('success', ucfirst($type) . ' restaurado com sucesso!');
     }
 
-    public function deletePermanently($id, $type)
+    public function deletePermanently(Request $request, $id, $type)
     {
+        $password = $request->input('password');
+        if (!Hash::check($password, auth()->user()->password)) {
+            return redirect()->back()->with('errorPassword', 'A senha inserida está incorreta.');
+        }
+
         switch ($type) {
             case 'curso':
 
@@ -326,6 +337,6 @@ class AdminController extends Controller
                 return redirect()->back()->with('error', 'Invalid type provided.');
         }
 
-        return redirect()->back()->with('success', ucfirst($type) . ' permanently deleted.');
+        return redirect()->back()->with('success', ucfirst($type) . ' excluído permanetemente!');
     }
 }

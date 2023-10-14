@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 use App\Events\CourseDeleted;
 
@@ -258,11 +259,6 @@ class CourseController extends Controller
 
         $whatWillLeran = json_decode($course->what_students_learn);
 
-        // Verifique se o usuário autenticado é o criador do curso
-        // if ($course->creator_id !== Auth::id()) {
-        //     abort(403, 'Unauthorized');
-        // }
-
         // Renderize a view edit para editar o curso
         return view('courses.edit', compact('course', 'categories', 'whatWillLeran'));
     }
@@ -322,19 +318,14 @@ class CourseController extends Controller
         return redirect()->route('courses.creator')->with('success', 'Curso editado com sucesso');
     }
 
-    public function destroy($slug)
+    public function destroy(Request $request, $slug)
     {
-        // Verifique se o usuário autenticado é o criador do curso
-        // if ($course->creator_id !== Auth::id()) {
-        //     abort(403, 'Unauthorized');
-        // }
-
         $course = Course::where('slug', $slug)->firstOrFail();
 
-        // Deleta a imagem associada ao curso, se existir
-        // if ($course->image) {
-        //     Storage::disk('public')->delete($course->image);
-        // }
+        $password = $request->input('password');
+        if (!Hash::check($password, auth()->user()->password)) {
+            return redirect()->back()->with('error', 'A senha inserida está incorreta.');
+        }
 
         // Exclui o curso do banco de dados
         $course->delete();

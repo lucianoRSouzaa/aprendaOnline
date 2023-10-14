@@ -12,92 +12,90 @@
   <script>
       $(document).ready(function() {
 
-          $('#ModalConfirmacaoExclusao').on('hidden.bs.modal', function () {
-            var form = $('#ModalConfirmacaoExclusao .modal-content').find('form.delete-form');
-            var originalAction = "{{ route('admin.delete-permanently', ['id' => ':id', 'type' => ':type']) }}";
-            form.attr('action', originalAction);
-          });
+            $('#ModalConfirmacaoExclusao').on('hidden.bs.modal', function () {
+                var form = $('#ModalConfirmacaoExclusao .modal-content').find('form.delete-form');
+                var originalAction = "{{ route('admin.delete-permanently', ['id' => ':id', 'type' => ':type']) }}";
+                form.attr('action', originalAction);
+            });
 
-          $('#ModalConfirmacaoRestaurar').on('hidden.bs.modal', function () {
-            var form = $('#ModalConfirmacaoRestaurar .modal-content').find('form.restore-form');
-            var originalAction = "{{ route('admin.restore', ['id' => ':id', 'type' => ':type']) }}";
-            form.attr('action', originalAction);
-          });
+            $('#ModalConfirmacaoRestaurar').on('hidden.bs.modal', function () {
+                var form = $('#ModalConfirmacaoRestaurar .modal-content').find('form.restore-form');
+                var originalAction = "{{ route('admin.restore', ['id' => ':id', 'type' => ':type']) }}";
+                form.attr('action', originalAction);
+            });
+
+            @if (session('success'))
+                $('#ModalSucess').modal('show');
+            @endif
+
+            @if (session('error'))
+                $('#ModalError').modal('show');
+            @endif
+
+            @if (session()->has('errorPassword'))
+                $('#ModalErrorPassword').modal('show');
+            @endif
       });
   </script>
-
-  @if (session('success'))
-  <script>
-      $(document).ready(function () {
-          $('#ModalSucess').modal('show');
-      });
-  </script>
-  @endif
-
-  @if (session('error'))
-  <script>
-    $(document).ready(function () {
-        $('#ModalError').modal('show');
-    });
-  </script>
-  @endif
 @endpush
 
 @section('main')
 <div class="modal fade" id="ModalConfirmacaoExclusao" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-body">
-              <div class="d-flex">
-                  <div class="image">
-                      <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
-                  </div>
-                  <div class="close">
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-              </div>
-              <div class="content">
-                  <span class="title">Você tem certeza que deseja excluir?</span>
-                  <p id="text-confirmation" class="message"></p>
-              </div>
-              <div class="actions">
-                  <button class="cancel" data-bs-dismiss="modal" type="button">Cancelar</button>
-                  <form action="{{ route('admin.delete-permanently', ['id' => ':id', 'type' => ':type']) }}" method="POST" class="delete-form">
-                      @csrf
-                      <button class="desactivate" type="submit">Deletar</button>
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="{{ route('admin.delete-permanently', ['id' => ':id', 'type' => ':type']) }}" method="POST" class="delete-form">
+                    @csrf
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">Você tem certeza que deseja excluir?</span>
+                        <p id="text-confirmation" class="message"></p>
+                        <input class="input-password mt-1" type="password" name="password" required placeholder="Insira sua senha para confirmar a exclusão">
+                    </div>
+                    <div class="actions">
+                        <button class="cancel" data-bs-dismiss="modal" type="button">Cancelar</button>
+                        <button class="desactivate" type="submit">Deletar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="ModalConfirmacaoRestaurar" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-body">
-              <div class="d-flex">
-                  <div class="image">
-                      <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
-                  </div>
-                  <div class="close">
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-              </div>
-              <div class="content">
-                  <span class="title">Você tem certeza que deseja restaurar?</span>
-                  <p id="text-confirmation-restaurar" class="message"></p>
-              </div>
-              <div class="actions">
-                  <button class="cancel" data-bs-dismiss="modal" type="button">Cancelar</button>
-                  <form action="{{ route('admin.restore', ['id' => ':id', 'type' => ':type']) }}" method="POST" class="restore-form">
-                      @csrf
-                      <button class="desactivate restore" type="submit">Restaurar</button>
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="{{ route('admin.restore', ['id' => ':id', 'type' => ':type']) }}" method="POST" class="restore-form">
+                @csrf
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/confirmation.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">Você tem certeza que deseja restaurar?</span>
+                        <p id="text-confirmation-restaurar" class="message"></p>
+                        <input class="input-password mt-1" type="password" name="password" required placeholder="Insira sua senha para confirmar a restauração">
+                    </div>
+                    <div class="actions">
+                        <button class="cancel" data-bs-dismiss="modal" type="button">Cancelar</button>
+                        <button class="desactivate restore" type="submit">Restaurar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @if (session()->has('success'))
@@ -115,7 +113,7 @@
               </div>
               <div class="content">
                   <span class="title">{{ session('success') }}</span>
-                  <p class="message">Todos os registros foram apagados, é como se eles nunca tivessem existidos!</p>
+                  <p class="message">Sua ação foi concluída com sucesso. O registro foi processado conforme sua solicitação.</p>
               </div>
               <div class="actions">
                   <button class="cancel btns-restaurar" data-bs-dismiss="modal" type="button">Cancelar</button>
@@ -151,6 +149,33 @@
           </div>
       </div>
   </div>
+</div>
+@endif
+
+@if (session()->has('errorPassword'))
+<div class="modal fade" id="ModalErrorPassword" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex">
+                    <div class="image">
+                        <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                    </div>
+                    <div class="close">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="content">
+                    <span class="title">Ação não concluída!</span>
+                    <p class="message">{{ session('errorPassword') }}</p>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-outline-danger" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                    <button class="cancel" data-bs-dismiss="modal" type="button">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endif
 

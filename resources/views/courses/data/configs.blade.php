@@ -10,6 +10,10 @@
             @if (session('success'))
                 $('#ModalSucess').modal('show');
             @endif
+            
+            @if (session()->has('error'))    
+                $('#ModalError').modal('show');
+            @endif
         });
     </script>
 @endpush
@@ -30,6 +34,33 @@
 @endsection
 
 @section('main')
+
+@if (session()->has('error'))
+    <div class="modal fade" id="ModalError" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">Ação não concluída</span>
+                        <p class="message">{{ session('error') }}</p>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-outline-danger" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                        <button class="cancel" data-bs-dismiss="modal" type="button">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
 
 @if (session()->has('success'))
 <div class="modal fade" id="ModalSucess" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
@@ -62,26 +93,27 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="d-flex">
-                    <div class="image">
-                        <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                <form action="{{ route('courses.destroy', $course->slug) }}" method="POST" class="delete-form">
+                @csrf
+                @method('DELETE')
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
                     </div>
-                    <div class="close">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="content">
+                        <span class="title">{{ trans('areUSureWantDelete') }}</span>
+                        <p class="message">{{ trans('ifUdeleteThisCourse') }} ({{$course->title}}), {{ trans('allHisModulesAndLessonsAlsoDeleted') }}</p>
+                        <input class="input-password mt-1" type="password" name="password" required placeholder="Insira sua senha para confirmar a exclusão">
                     </div>
-                </div>
-                <div class="content">
-                    <span class="title">{{ trans('areUSureWantDelete') }}</span>
-                    <p class="message">{{ trans('ifUdeleteThisCourse') }} ({{$course->title}}), {{ trans('allHisModulesAndLessonsAlsoDeleted') }}</p>
-                </div>
-                <div class="actions">
-                    <button class="cancel" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
-                    <form action="{{ route('courses.destroy', $course->slug) }}" method="POST" class="delete-form">
-                        @csrf
-                        @method('DELETE')
+                    <div class="actions">
+                        <button class="cancel" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
                         <button class="desactivate" type="submit">{{ trans('delete') }}</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

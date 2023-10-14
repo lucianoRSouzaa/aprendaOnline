@@ -310,6 +310,23 @@ header {
     line-height: 1.25rem;
     margin-left: 16px;
     margin-right: 16px;
+    margin-bottom: 2px;
+}
+
+.modal .input-password{
+  width: 86%;
+  border: none;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 17px;
+  padding: 7px 0 4px 0;
+  border-image: linear-gradient(to right, rgba(192, 0, 0, 0.747),rgba(221, 189, 5, 0.747));
+  border-image-slice: 1;
+  margin-bottom: 4px;
+}
+
+.modal .input-password:focus {
+padding-bottom: 5px;
 }
 
 .modal .actions {

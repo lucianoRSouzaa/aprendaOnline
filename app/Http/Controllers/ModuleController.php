@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Module;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class ModuleController extends Controller
 {
@@ -110,11 +111,15 @@ class ModuleController extends Controller
         return redirect()->route('modules.index', $course->slug)->with('success', 'Módulo atualizado com sucesso.');
     }
 
-    public function destroy($courseSlug, $moduleSlug)
+    public function destroy(Request $request, $courseSlug, $moduleSlug)
     {
         $course = Course::where('slug', $courseSlug)->firstOrFail();
         $module = $course->modules()->where('slug', $moduleSlug)->firstOrFail();
 
+        $password = $request->input('password');
+        if (!Hash::check($password, auth()->user()->password)) {
+            return redirect()->back()->with('error', 'A senha inserida está incorreta.');
+        }
         $module->delete();
 
         // Atualizando a ordem dos módulos restantes
