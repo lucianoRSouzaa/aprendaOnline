@@ -60,23 +60,34 @@
     <nav class="navbar-dark container">
         <!-- logo -->
         <div class="logo">
+            @auth
             <a href="{{ route('courses.creator') }}" aria-label="Ir para o menu da página de criadores de conteúdo">
                 <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
             </a>
+            @endauth
+            @guest
+            <a href="{{ route('courses.viewer') }}" aria-label="Ir para o menu da página de criadores de conteúdo">
+                <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+            </a>
+            @endguest
         </div>
         <div class="links">
             <ul class="nav-itens d-flex align-items-center">
                 <!-- itens -->
                 <li><a href="#">{{ trans('myCourses') }}</a></li>
                 <li><a href="#">{{ trans('support') }}</a></li>
+                @auth
                 <li class="d-flex align-items-center profile" id="config"><img src="{{ asset($user->image) }}" class="rounded-circle avatar" alt=""><p class="nameUser">{{$user->name}} <i class="fa fa-angle-down" aria-hidden="true"></i></p></li>
+                @endauth
                 <div class="notification-div">
                     <p class="text-center">Menu</p>
                     <hr>
                     @if (!session()->has('user_role'))
                         <a href="{{ route('courses.toggleMode') }}"><i class="fa-solid fa-user-graduate fa-lg"></i>{{ trans('toggleModeStudent') }}</a>
                     @endif
+                    @auth
                     <a href="{{ route('user.show', auth()->user()->id) }}"><i class="fa fa-user fa-lg" aria-hidden="true"></i>{{ trans('profile') }}</a>
+                    @endauth
                     <a href="{{ route('configs') }}"><i class="fa fa-cog fa-lg" aria-hidden="true"></i>{{ trans('settings') }}</a>
                     <div class="themes d-flex">
                         <div class="theme w-50 d-flex justify-content-center align-items-center">

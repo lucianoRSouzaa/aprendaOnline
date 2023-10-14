@@ -186,8 +186,13 @@ p{
 }
 
 .col-video .pd{
-    padding-left: 18px;
-    padding-right: 18px;
+    padding-left: 22px;
+    padding-right: 22px;
+}
+
+.description{
+  margin-left: 5px;
+  text-align: justify;
 }
 
 /* ver progresso */

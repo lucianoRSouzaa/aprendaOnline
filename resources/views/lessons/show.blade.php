@@ -161,6 +161,7 @@
                 </video>
             </div>
             <h2 class="pd">{{$lesson->title}}</h2>
+            <p class="description pd mb-4">{{$lesson->description}}</p>
         </div>
     </div>
 @endsection
