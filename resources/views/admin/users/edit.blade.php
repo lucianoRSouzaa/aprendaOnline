@@ -7,21 +7,21 @@
 @push('scripts')
     <script src="{{ asset('js/user.js') }}"></script>
 
-    @if (session()->has('changePassword'))
-        <script>
-            $(document).ready(function () {
+    <script>
+        $(document).ready(function() {
+            @if (session()->has('changePassword'))
                 $('#ModalMudarSenha').modal('show');
-            });
-        </script>
-    @endif
+            @endif
 
-    @if (session()->has('success'))
-        <script>
-            $(document).ready(function () {
+            @if (session()->has('success'))
                 $('#ModalSucess').modal('show');
-            });
-        </script>
-    @endif
+            @endif
+
+            @if ($errors->has('password'))
+                $('#ModalConfirmarSenha').modal('show');
+            @endif
+        });
+    </script>
 @endpush
 
 @section('main')
@@ -43,7 +43,10 @@
                         <div class="content">
                             <span class="title">Você tem certeza que deseja modificar sua senha?</span>
                             <p class="message">Insira sua senha para continuar:</p>
-                            <input class="input-password" type="password" name="password" placeholder="Senha">
+                            <input class="input-password" type="password" name="password" placeholder="Senha" value="{{ old('password') }}">
+                            @error('password')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="actions">
                             <button class="restore" type="submit">Continuar</button>
@@ -144,7 +147,7 @@
     </div>
 @endif
 
-    <a href="{{ route('user.show', $user->id) }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar</a>
+    <a href="{{ route('user.show', $user->email) }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar</a>
     <div class="container d-flex flex-column justify-content-center edit-page">
         <div class="card shadow-sm">
             <form action="{{ route('user.update', $user) }}" method="post" enctype="multipart/form-data">

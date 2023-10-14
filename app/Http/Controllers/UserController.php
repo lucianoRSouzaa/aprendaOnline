@@ -33,9 +33,9 @@ class UserController extends Controller
         return view('admin.users.index', compact('users', 'searchTerm'));
     }
 
-    public function show($id, Request $request)
+    public function show($email, Request $request)
     {
-        $user = User::find($id);
+        $user = User::where('email', $email)->firstOrFail();
 
         $coursesCreated = null;
         if ($user->role == "creator") {
@@ -93,9 +93,9 @@ class UserController extends Controller
         return view('admin.users.show', compact('user', 'coursesCreated', 'role' , 'searchTerm'));
     }
 
-    public function edit($id)
+    public function edit($email)
     {
-        $user = User::find($id);
+        $user = User::where('email', $email)->firstOrFail();
 
         return view('admin.users.edit', compact('user'));
     }
@@ -105,7 +105,7 @@ class UserController extends Controller
         // Verificação se há intenção de alterar a senha
         if ($request->has('password')) {
             if (!Hash::check($request->input('password'), $user->password)) {
-                return redirect()->back()->withErrors(['password' => 'Senha incorreta.']);
+                return redirect()->route('user.edit', $user->email)->withErrors(['password' => 'Senha incorreta.'])->withInput();
             }
             else {
                 return redirect()->back()->with('changePassword', 'Digite sua nova senha:');
@@ -122,7 +122,7 @@ class UserController extends Controller
 
             $user->save();
 
-            return redirect()->route('user.edit', $user->id)->with('success', 'Senha alterada com sucesso!');
+            return redirect()->route('user.edit', $user->email)->with('success', 'Senha alterada com sucesso!');
         }
 
         $request->validate([
@@ -156,6 +156,6 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('user.edit', $user->id)->with('success', 'Dados atualizados com sucesso!');
+        return redirect()->route('user.edit', $user->email)->with('success', 'Dados atualizados com sucesso!');
     }
 }

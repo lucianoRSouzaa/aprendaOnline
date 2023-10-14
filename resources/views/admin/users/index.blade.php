@@ -90,7 +90,7 @@
                           <td>{{ $user->name }}</td>
                           <td>{{ $user->role }}</td>
                           <td>{{ $user->created_at->format('d-m-Y H:i') }}</td>
-                          <td class="centralizado"><a href="{{ route('user.show', $user->id) }}"><img src="{{ asset('images/entrar.png') }}" alt="Ver mais"></a></td>
+                          <td class="centralizado"><a href="{{ route('user.show', $user->email) }}"><img src="{{ asset('images/entrar.png') }}" alt="Ver mais"></a></td>
                       </tr>
                   @endforeach
               </tbody>

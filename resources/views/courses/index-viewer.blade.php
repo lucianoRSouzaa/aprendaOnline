@@ -59,7 +59,7 @@
                         </div>
                         <div class="actions">
                             <button class="desactivate" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
-                            <a href="{{ route('user.edit', $user->id) }}" class="cancel text-center">{{ trans('becomeCreator') }}</a>
+                            <a href="{{ route('user.edit', $user->email) }}" class="cancel text-center">{{ trans('becomeCreator') }}</a>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                         @if (session('user_role') === 'viewer')
                             <a href="{{ route('courses.toggleMode') }}"><i class="fa-solid fa-user-tie fa-lg"></i>{{ trans('toggleModeCreator') }}</a>
                         @endif
-                        <a href="{{ route('user.show', auth()->user()->id) }}"><i class="fa fa-user fa-lg" aria-hidden="true"></i>{{ trans('profile') }}</a>
+                        <a href="{{ route('user.show', auth()->user()->email) }}"><i class="fa fa-user fa-lg" aria-hidden="true"></i>{{ trans('profile') }}</a>
                         <a href="{{ route('configs') }}"><i class="fa fa-cog fa-lg" aria-hidden="true"></i>{{ trans('settings') }}</a>
                         <div class="themes d-flex">
                             <div class="theme w-50 d-flex justify-content-center align-items-center">

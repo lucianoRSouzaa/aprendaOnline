@@ -91,9 +91,9 @@ Route::middleware(['auth', 'userVerified'])->group(function () {
     Route::post('/lesson/unmark', [LessonController::class, 'unmarkLessonCompleted'])->name('lesson.unmark');
 
     // rota para ver perfil
-    Route::get('user/show/{id}', [UserController::class, 'show'])->name('user.show');
+    Route::get('user/show/{email}', [UserController::class, 'show'])->name('user.show');
     // rota para modificar dados de usuário
-    Route::get('user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::get('user/edit/{email}', [UserController::class, 'edit'])->name('user.edit');
     // rota para modificar
     Route::put('user/update/{user}', [UserController::class, 'update'])->name('user.update');
 });

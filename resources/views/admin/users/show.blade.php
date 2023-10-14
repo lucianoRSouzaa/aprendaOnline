@@ -124,7 +124,7 @@
                     </div>
                 </div>
                 @if (!auth()->user()->isAdmin())
-                    <a href="{{ route('user.edit', $user->id) }}" class="edit-perfil">
+                    <a href="{{ route('user.edit', $user->email) }}" class="edit-perfil">
                         <i class="fa-solid fa-pen fa-xs"></i>
                         {{ trans('editData') }}
                     </a>
@@ -143,7 +143,7 @@
                 </ul>
             </section>
             
-            <form action="{{ route('user.show', ['id' => $user->id]) }}" method="GET">
+            <form action="{{ route('user.show', ['email' => $user->email]) }}" method="GET">
                 <input id="role" name="role" type="hidden" value="inscrito">
                 <div class="input-group">
                     <input type="text" class="form-control" id="search_term" name="search_term" placeholder="{{ trans('searchPlaceholderNameCourse') }}" @if($searchTerm) value="{{ $searchTerm }}" @endif>
