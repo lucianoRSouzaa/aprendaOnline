@@ -171,8 +171,8 @@
                         <p class="message">{{ session('error') }}</p>
                     </div>
                     <div class="actions">
-                        <button class="btn btn-outline-danger" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
-                        <button class="cancel" data-bs-dismiss="modal" type="button">Ok</button>
+                        <button class="cancel" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                        <button class="desactivate" data-bs-dismiss="modal" type="button">Ok</button>
                     </div>
                 </div>
             </div>

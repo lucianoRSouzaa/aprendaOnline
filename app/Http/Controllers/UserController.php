@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 use App\Models\User;
 
@@ -96,6 +97,16 @@ class UserController extends Controller
     public function edit($email)
     {
         $user = User::where('email', $email)->firstOrFail();
+
+        if (Gate::denies('edit-profile', $user->email)) {
+            $message = 'Desculpe, parece que você está tentando editar um perfil que não é seu. Por favor, verifique se você selecionou o perfil correto.';
+            
+            if (auth()->user()->isCreator() && session('user_role') != 'viewer') {
+                return redirect()->route('courses.creator')->with('error', $message);
+            }else{
+                return redirect()->route('courses.viewer')->with('error', $message);
+            }
+        }
 
         return view('admin.users.edit', compact('user'));
     }

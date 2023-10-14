@@ -123,12 +123,12 @@
                         <p>{{ trans('userType') }} {{ $user->role }}</p>
                     </div>
                 </div>
-                @if (!auth()->user()->isAdmin())
+                @can('edit-profile', $user->email)
                     <a href="{{ route('user.edit', $user->email) }}" class="edit-perfil">
                         <i class="fa-solid fa-pen fa-xs"></i>
                         {{ trans('editData') }}
                     </a>
-                @endif
+                @endcan
             </section>
             <section class="col-12 nav-div">
                 <ul class="d-flex nav gap-5">
