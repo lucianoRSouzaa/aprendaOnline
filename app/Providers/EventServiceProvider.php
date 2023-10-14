@@ -11,10 +11,13 @@ use App\Events\LessonCreated;
 use App\Events\LessonDeleted;
 use App\Events\CourseDeleted;
 use App\Events\RestoreOrderEvent;
+use App\Events\LoginSuccessful;
+
 use App\Listeners\UpdateTotalLessonsOnLessonCreated;
 use App\Listeners\UpdateTotalLessonsOnLessonDeleted;
 use App\Listeners\UpdateTotalLessonsOnCourseDeleted;
 use App\Listeners\RestoreOrderListener;
+use App\Listeners\LoginSuccessfulListener;
 
 
 class EventServiceProvider extends ServiceProvider
@@ -39,6 +42,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         RestoreOrderEvent::class => [
             RestoreOrderListener::class,
+        ],
+        LoginSuccessful::class => [
+            LoginSuccessfulListener::class,
         ],
     ];
 

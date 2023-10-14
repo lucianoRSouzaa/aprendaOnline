@@ -11,6 +11,8 @@ use App\Models\User;
 
 use App\Http\Controllers\EmailController;
 
+use App\Events\LoginSuccessful;
+
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -25,6 +27,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            event(new LoginSuccessful(Auth::user()->id));
 
             if (auth()->user()->isCreator()) {
                 return redirect()->intended(route('courses.creator'));
