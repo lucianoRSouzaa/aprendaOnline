@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\User;
 use App\Models\Report;
 use App\Models\Course;
 use App\Models\Module;
@@ -23,8 +24,9 @@ class AdminController extends Controller
         $qtdDenuncia = Report::where('status', 'pendente')->count();
         $qtdTotalExcluido = Course::onlyTrashed()->count() + Module::onlyTrashed()->count() + Lesson::onlyTrashed()->count();
         $qtdCursos = Course::withTrashed()->count();
+        $qtdUsers = User::all()->count();
 
-        return view('admin.dashboard', compact('qtdDenuncia', 'qtdTotalExcluido', 'qtdCursos'));
+        return view('admin.dashboard', compact('qtdDenuncia', 'qtdTotalExcluido', 'qtdCursos', 'qtdUsers'));
     }
 
     public function deletes()

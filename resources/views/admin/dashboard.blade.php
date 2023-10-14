@@ -114,11 +114,11 @@
 
           <div class="card">
             <div class="card-inner">
-              <p class="txt-principal">DADOS</p>
-              <span class="material-icons-outlined text-white">shopping_cart</span>
+              <p class="txt-principal">Usuários</p>
+              <span class="material-icons-outlined text-white">person</span>
             </div>
-            <span class="txt-principal font-weight-bold">79</span>
-            <a href="https://www.google.com.br/?gws_rd=ssl" class="stretched-link"></a>
+            <span class="txt-principal font-weight-bold">{{ $qtdUsers }}</span>
+            <a href="{{ route("admin.user.index") }}" class="stretched-link"></a>
           </div>
 
         </div>
