@@ -47,9 +47,98 @@ body {
     padding: 0 30px 0 30px;
     box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
   }
+
+  .header-right{
+    gap: 35px;
+    padding-right: 12px;
+  }
+
+  .header-right #config{
+    cursor: pointer;
+  }
   
   .menu-icon {
     display: none;
+  }
+
+  .notification-div {
+    background-color: rgb(240, 240, 240);
+    width: 240px;
+    border: 1px solid #ddd;
+    padding-top: 5px;
+    right: 22px;
+    border-radius: 5px;
+    top: 60px;
+    position: absolute;
+    z-index: 20;
+    display: none;
+  }
+  
+  .notification-div.show{
+    display: block;
+  }
+  
+  .notification-div:after {
+    content: '';
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    background-color: rgb(240, 240, 240);
+    top: -6px;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    transform: rotate(45deg);
+    right: 10%;
+  }
+  
+  .notification-div a, .notification-div p {
+    display: block;
+    margin: 0px;
+    padding: 15px 20px;
+    color: #6c7293;
+    text-decoration: none;
+  }
+  
+  .notification-div a:not(:first-child):hover {
+    cursor: pointer;
+    background: #1d3fff21;
+  }
+  
+  .notification-div a:not(:last-child) {
+    border-bottom: 1px solid #dadada;
+  }
+  
+  .notification-div .themes{
+    border-bottom: 1px solid #dadada;
+  }
+  
+  .notification-div hr {
+    margin: 0px;
+    border: none;
+    background-color: #b6b6b6;
+    height: 2px;
+  }
+  
+  .notification-div a i{
+    margin-right: 8px;
+  }
+  
+  .notification-div .themes .line{
+    border-left: 1px solid #dadada;
+    height: 50px;
+  }
+  
+  .notification-div .themes .theme:hover{
+  cursor: pointer;
+  background: #1d3fff21;
+  }
+  
+  .themes .theme .fa-sun-o{
+  color: rgb(255, 208, 0);
+  }
+  
+  .themes .theme .fa-moon{
+  color: rgb(70, 70, 70);
   }
   
   
@@ -296,3 +385,49 @@ body {
       display: none;
     }
   }
+
+/* Gráficos */
+.card-filter{
+  width: 48%;
+  height: 400px;
+  border: solid 1px #9d9da3;
+  margin-left: 12px;
+}
+
+form{
+  width: 100%;
+}
+
+.chartsDiv{
+  position: relative;
+}
+
+.row a{
+  width: 24px !important;
+  position: absolute;
+}
+
+.row a.full{
+  top: 25px;
+  right: 4%;
+}
+
+.row a.full2{
+  top: 455px;
+  right: 4%;
+}
+
+.row a.half{
+  top: 23px;
+  left: 45%;
+}
+
+.row a.half2{
+  right: 4%;
+  top: 23px;
+}
+
+.row a.half2full{
+  top: 455px;
+  left: 45%;
+}

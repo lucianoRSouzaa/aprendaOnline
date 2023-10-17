@@ -1,3 +1,53 @@
+
+// botões de gráfico interativo no dashboard
+$('.filter-btns').click(function() {
+
+  var periodValue = '';
+  switch($(this).attr('id')) {
+      case 'hours24':
+          periodValue = 'hours_24';
+          break;
+      case 'days14':
+          periodValue = 'days_14';
+          break;
+      case 'months3':
+          periodValue = 'months_3';
+          break;
+      case 'months12':
+          periodValue = 'months_11';
+          break;
+  }
+
+  $('#period').val(periodValue);
+  $('#form1').submit();
+});
+
+$('.filter-btns2').click(function() {
+
+  var periodValue = '';
+  switch($(this).attr('id')) {
+      case 'days_5':
+          periodValue = 'days_5';
+          break;
+      case 'days_14':
+          periodValue = 'days_14';
+          break;
+      case 'months_3':
+          periodValue = 'months_3';
+          break;
+      case 'months_12':
+          periodValue = 'months_11';
+          break;
+  }
+
+  $('#period2').val(periodValue);
+  $('#form2').submit();
+});
+
+$('#config').click(function() {
+  $('.notification-div').toggleClass('show');
+});
+
 // SIDEBAR TOGGLE do dashboard
 var sidebarOpen = false;
 var sidebar = document.getElementById("sidebar");

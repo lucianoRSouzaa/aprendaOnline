@@ -10,23 +10,205 @@ use App\Models\Report;
 use App\Models\Course;
 use App\Models\Module;
 use App\Models\Lesson;
+use App\Models\Login;
 
 use App\Http\Controllers\FileController;
 
 use App\Events\CourseDeleted;
 use App\Events\RestoreOrderEvent;
 
+use Carbon\Carbon;
+
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $qtdDenuncia = Report::where('status', 'pendente')->count();
         $qtdTotalExcluido = Course::onlyTrashed()->count() + Module::onlyTrashed()->count() + Lesson::onlyTrashed()->count();
         $qtdCursos = Course::withTrashed()->count();
         $qtdUsers = User::all()->count();
 
-        return view('admin.dashboard', compact('qtdDenuncia', 'qtdTotalExcluido', 'qtdCursos', 'qtdUsers'));
+        // gráfico de login diário
+        $period = null;
+        $countDate = null;
+        $titleLine = null;
+
+        $period2 = null;
+        $countDate2 = null;
+        $titleLine2 = null;
+
+        $periods = [
+            'hours_24' => 'nas últimas 24 horas',
+            'days_5' => 'nos últimos 5 dias',
+            'days_14' => 'nos últimos 14 dias',
+            'months_3' => 'nos últimos 4 meses',
+            'months_11' => 'nos últimos 12 meses',
+        ];
+
+        if ($request->has('period') && $request->input('period') != null) {
+
+            $period = $request->input('period');
+
+            if ($period == 'hours_24'){
+                $startDate = now()->subHours(24);
+                $endDate = now();
+            }
+            elseif ($period == 'days_14') {
+                $startDate = now()->subDays(14);
+                $endDate = now();
+            }
+            else{
+                $startDate = now()->subMonth(preg_replace("/[^0-9]/", "", $period));
+                $endDate = now()->endOfMonth();
+            }
+
+            $titleLine = $periods[$period];
+
+            $logins = Login::whereBetween('login_time', [$startDate, $endDate])->get();
+
+            $countDate = $this->calculateCounts($logins, $startDate, $endDate, $period);
+        }
+
+        if ($request->has('period2') && $request->input('period2') != null) {
+
+            $period2 = $request->input('period2');
+
+            if ($period2 == 'days_5' || $period2 == 'days_14'){
+                $startDate2 = now()->subDays(preg_replace("/[^0-9]/", "", $period2));
+                $endDate2 = now();
+            }
+            else {
+                $startDate2 = now()->subMonth(preg_replace("/[^0-9]/", "", $period2));
+                $endDate2 = now()->endOfMonth();
+            }
+
+            $titleLine2 = $periods[$period2];
+
+            $registers = User::whereBetween('created_at', [$startDate2, $endDate2])->get();
+
+            $countDate2 = $this->calculateCounts($registers, $startDate2, $endDate2, $period2);
+        }
+
+        return view('admin.dashboard', compact('qtdDenuncia', 'qtdTotalExcluido', 'qtdCursos', 'qtdUsers', 'period', 'countDate', 'titleLine', 'period2', 'titleLine2', 'countDate2'));
+    }
+
+    private function calculateCounts($data, $startDate, $endDate, $period)
+    {
+        if ($period === 'months_3' || $period === 'months_11'){
+            return $this->calculateMonthlyCounts($data, $startDate, $endDate);
+        }
+        elseif ($period === 'days_14' || $period == 'days_5') {
+            return $this->calculateDailyCounts($data, $startDate, $endDate);
+        } 
+        else {
+            return $this->calculateHoursCounts($data, $startDate, $endDate);
+        }
+    }
+
+    private function calculateHoursCounts($logins, $startDate, $endDate)
+    {
+        foreach ($logins as $login) {
+            // Obtenha a data/hora da conclusão da lição.
+            $loginTime = Carbon::parse($login->login_time);
+
+            // Obtém a hora do dia
+            $hourOfDay = $loginTime->format('H') . ':00'; 
+
+            $loginTimes[] = $hourOfDay;
+        }
+
+        $hourCounts = array_count_values($loginTimes);
+
+        $totalHours = 24;
+
+        // Inicialize um novo array com valores padrão zero.
+        $filledHourCounts = [];
+        for ($i = 0; $i < $totalHours; $i++) {
+            $j = $i . ':00';
+            $filledHourCounts[$j] = 0;
+        }
+
+        // Substitua os valores padrão com os valores reais onde estiverem definidos.
+        foreach ($hourCounts as $hour => $count) {
+            $filledHourCounts[$hour] = $count;
+        }
+
+        return $filledHourCounts;
+    }
+
+    private function calculateDailyCounts($logins, $startDate, $endDate)
+    {
+        // Inicialize um array vazio para armazenar as contagens diárias
+        $dailyCounts = [];
+
+        // Percorra cada dia no intervalo de datas
+        $currentDate = clone $startDate;
+        while ($currentDate->lte($endDate)) {
+            $formattedDate = $currentDate->format('d/m');
+            $dailyCounts[$formattedDate] = 0; // Inicialize com zero inscrições
+
+            // Verifique se há inscrições para este dia
+            foreach ($logins as $subscription) {
+                if ($subscription->created_at->format('d/m') === $formattedDate) {
+                    $dailyCounts[$formattedDate]++;
+                }
+            }
+
+            // Avance para o próximo dia
+            $currentDate->addDay();
+        }
+
+        return $dailyCounts;
+    }
+
+    private function translateMonth($month)
+    {
+        $monthTranslations = [
+            'January' => 'Janeiro',
+            'February' => 'Fevereiro',
+            'March' => 'Março',
+            'April' => 'Abril',
+            'May' => 'Maio',
+            'June' => 'Junho',
+            'July' => 'Julho',
+            'August' => 'Agosto',
+            'September' => 'Setembro',
+            'October' => 'Outubro',
+            'November' => 'Novembro',
+            'December' => 'Dezembro',
+        ];
+
+        return $monthTranslations[$month];
+    }
+
+    private function calculateMonthlyCounts($logins, $startDate, $endDate)
+    {
+        $monthlyCounts = [];
+
+        // Percorra cada mês no intervalo de datas
+        $currentDate = clone $startDate;
+        while ($currentDate->lte($endDate)) {
+            $startOfMonth = $currentDate->copy()->startOfMonth();
+            $endOfMonth = $currentDate->copy()->endOfMonth();
+            $formattedMonth = $startOfMonth->format('F'); // Nome do mês
+            $translatedMonth = $this->translateMonth($formattedMonth);
+        
+            // Inicialize com zero inscrições para este mês
+            $monthlyCounts[$translatedMonth] = 0;
+        
+            // Verifique se há inscrições para este mês
+            foreach ($logins as $subscription) {
+                if ($subscription->created_at->between($startOfMonth, $endOfMonth)) {
+                    $monthlyCounts[$translatedMonth]++;
+                }
+            }
+        
+            // Avance para o próximo mês
+            $currentDate->addMonth();
+        }
+
+        return $monthlyCounts;
     }
 
     public function deletes()

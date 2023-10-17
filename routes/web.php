@@ -101,6 +101,7 @@ Route::middleware(['auth', 'userVerified'])->group(function () {
 // rotas do administrador
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::post('/admin', [AdminController::class, 'index'])->name('admin.dashboard.form');
     // rotas para denuncias
     Route::get('/admin/reports/table', [ReportController::class, 'reportsTable'])->name('admin.reports');
     Route::get('/admin/reports/slides', [ReportController::class, 'reportsSlides'])->name('admin.reports.slides');
