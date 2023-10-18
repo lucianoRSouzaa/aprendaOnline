@@ -41,6 +41,10 @@ Route::middleware(['auth', 'userVerified'])->group(function () {
     // rota para configurações do curso
     Route::get('/course/{courseSlug}/config', [CourseController::class, 'config'])->name('course.config')->middleware('check.course.access', 'check.course.user');
 
+    Route::get('/marking-notifications-as-read', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+    });
+
     // rotas para criador de curso ver dados do seu curso
     Route::get('/course/data/index/{courseSlug}', [CourseDataController::class, 'index'])->name('course.data.index')->middleware('check.course.access', 'check.course.user');
     Route::get('/course/{courseSlug}/data/overview', [CourseDataController::class, 'courseOverview'])->name('course.data.overview')->middleware('check.course.access', 'check.course.user');
@@ -106,6 +110,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/reports/table', [ReportController::class, 'reportsTable'])->name('admin.reports');
     Route::get('/admin/reports/slides', [ReportController::class, 'reportsSlides'])->name('admin.reports.slides');
     Route::get('/admin/reports/slide/{report}', [ReportController::class, 'show'])->name('admin.reports.slide');
+    // rota de aceitar e recusar denuncia
+    Route::get('/admin/reports/{report}/accept', [ReportController::class, 'acceptReporting'])->name('admin.reports.accept');
+    Route::get('/admin/reports/{report}/decline', [ReportController::class, 'declineReporting'])->name('admin.reports.decline');
+    
     // rota que dá acesso as exclusões
     Route::get('/admin/deletes', [AdminController::class, 'deletes'])->name('admin.deletes');
     // rota para ver exclusões (de curso, módulos e aulas)

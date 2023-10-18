@@ -79,7 +79,23 @@
                     </div>
                     <a href="{{ route('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>{{ trans('logout') }}</a>
                 </div>
+                <li id="notifications" class="notifications"><i class="fa-solid fa-bell fa-lg"></i>@if(auth()->user()->unreadNotifications->count() > 0)<span class="ball"></span>@endif</li>
             </ul>
+        </div>
+
+        {{-- sidebar de notificações não lidas --}}
+        <div id="sidebar" class="sidebar">
+            <div class="d-flex justify-content-between title-notifications">
+                <h4>Notificações</h4>
+                <i id="fechar-notifications" class="fa-solid fa-xmark fa-xl"></i>
+            </div>
+            <div id="notifications-container">
+                @foreach (auth()->user()->unreadNotifications as $notification)
+                    <div class="notification @if($notification->type == 'App\Notifications\ReportRejected') recusada @elseif($notification->type == 'App\Notifications\ReportAccepted') aceita @endif">
+                        <p>{{ $notification->data['data'] }}</p>
+                    </div>
+                @endforeach
+            </div>
         </div>
 
         <!-- botão do menu responsivo -->
@@ -183,7 +199,7 @@
     <div class="container">
         <div class="search-container">
             <form action="{{ route('courses.search') }}" method="GET" class="search-bar">
-                <input type="text" name="searchTerm" id="search-input" placeholder="{{ trans('searchPlaceholder') }}">
+                <input type="text" name="title" id="search-input" placeholder="{{ trans('searchPlaceholder') }}">
                 <button type="submit" id="search-button" aria-label="Pesquisar"><i class="fa fa-search"></i></button>
             </form>
         </div> 

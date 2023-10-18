@@ -108,7 +108,7 @@
             <div class="modal-body">
                 <div class="d-flex">
                     <div class="image">
-                        <img src="{{ asset('images/sucess.png') }}" alt="" srcset="">
+                        <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
                     </div>
                     <div class="close">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
