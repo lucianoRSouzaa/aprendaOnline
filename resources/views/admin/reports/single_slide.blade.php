@@ -32,11 +32,11 @@
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-center align-items-center gap-5">
-                <a class="d-flex justify-content-center align-items-center confirm-btn" href="#">
+                <a class="d-flex justify-content-center align-items-center confirm-btn" href="{{ route('admin.reports.accept', $report->id) }}">
                     <img class="confirm" src="{{ asset('images/correto.png') }}" alt="icone de confirmar denuncia">
                     <p>Confirmar</p>
                 </a>
-                <a class="d-flex justify-content-center align-items-center cancel-btn" href="#">
+                <a class="d-flex justify-content-center align-items-center cancel-btn" href="{{ route('admin.reports.decline', $report->id) }}">
                     <img class="cancel" src="{{ asset('images/cancelar.png') }}" alt="icone de confirmar denuncia">
                     <p>Recusar</p>
                 </a>

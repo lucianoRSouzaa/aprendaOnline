@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Report;
 use App\Models\Course;
 
+use App\Notifications\ReportRejected;
+use App\Notifications\ReportAccepted;
+
 class ReportController extends Controller
 {
     public function reportsTable(Request $request){
@@ -104,5 +107,33 @@ class ReportController extends Controller
         $report->save();
 
         return redirect()->route('courses.show', $course->slug)->with('success', 'Denúncia do curso "' . $course->title . '" enviada com sucesso! A avaliação ocorrerá em até 7 dias. Agradecemos sua paciência.');
+    }
+
+    public function acceptReporting($reportId)
+    {
+        $report = Report::findOrFail($reportId);
+        $report->load('user', 'course');
+
+        $report->update(['status' => 'aceita']);
+
+        $madeBy = $report->user;
+
+        $madeBy->notify(new ReportAccepted($report->course->title));
+
+        return redirect()->route('admin.reports')->with('success', 'Denúncia aceita com sucesso!');
+    }
+
+    public function declineReporting($reportId)
+    {
+        $report = Report::findOrFail($reportId);
+        $report->load('user', 'course');
+
+        $report->update(['status' => 'recusada']);
+
+        $madeBy = $report->user;
+
+        $madeBy->notify(new ReportRejected($report->course->title));
+
+        return redirect()->route('admin.reports')->with('success', 'Denúncia recusada com sucesso!');
     }
 }

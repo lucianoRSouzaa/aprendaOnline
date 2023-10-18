@@ -246,22 +246,32 @@ class LessonController extends Controller
         $user = Auth::user();
 
         // Obtendo o curso denunciado com base no slug
-        $course = Course::withTrashed()->where('slug', $courseSlug)->firstOrFail();
-
-        // Obtendo os módulos e suas aulas (excluídos) relacionados ao curso
-        $modules = $course->modules()->with(['lessons' => function ($query) {
-            $query->withTrashed();
-        }])->withTrashed()->get();
+        $course = Course::where('slug', $courseSlug)
+            ->with(['modules' => function ($query) {
+                $query->orderBy('order');
+            }, 'modules.lessons' => function ($query) {
+                $query->orderBy('order');
+            }])
+            ->firstOrFail();
 
         // Calcula a quantidade total de aulas em todos os módulos
-        $qtdLessons = $modules->sum(function ($module) {
+        $qtdLessons = $course->modules->sum(function ($module) {
             return $module->lessons->count();
         });
+
+        // obtém a quantidade de aulas concluídas pelo usuário
+        $completedLessonsCount = $user->completedLessonsInCourseByUser($course);
+
+        $perCent = 0;
+
+        if ($qtdLessons > 0) {
+            $perCent = round(($completedLessonsCount / $qtdLessons) * 100);
+        }
 
         // para exibir o vídeo
         $lesson = Lesson::withTrashed()->where('slug', $lessonSlug)->firstOrFail();
 
-        return view('lessons.show', compact('course', 'modules', 'lesson', 'qtdLessons', 'user'));
+        return view('lessons.show', compact('course', 'lesson', 'qtdLessons', 'user', 'completedLessonsCount', 'perCent'));
     }
 
     public function markLessonCompleted(Request $request)
