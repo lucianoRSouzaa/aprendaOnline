@@ -431,3 +431,69 @@ form{
   top: 455px;
   left: 45%;
 }
+
+/* notificações */
+.notifications{
+  position: relative;
+  cursor: pointer;
+}
+
+.notifications .ball{
+  position: absolute;
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  background-color: #3498db;
+  left: 0;
+  bottom: -14px;
+}
+
+/* sidebar notification */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  height: 100%;
+  width: 320px;
+  padding: 20px 0;
+  background-color: #f1f1f1;
+  box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
+  transition: all 0.8s ease;
+  z-index: 100;
+  border-left: 1px solid #0000000e;
+}
+.sidebar.open {
+  right: 0;
+}
+
+.sidebar div .fa-xmark{
+  padding-top: 12px;
+  padding-right: 18px;
+  cursor: pointer;
+}
+
+.title-notifications{
+  border-bottom: 1px solid #a7a7a7;
+  padding-bottom: 12px;
+}
+
+.title-notifications h4{
+  margin-left: 15px;
+  margin-bottom: 0;
+}
+
+.sidebar .notification:not(:last-of-type){
+  border-bottom: 2px solid #f1f1f1;
+}
+
+.sidebar .notification p{
+  margin: 0;
+}
+
+.sidebar .notification{
+  padding: 18px 5px 18px 8px;
+}
+
+.sidebar .notify{
+  background-color: rgba(223, 108, 0, 0.356);
+}

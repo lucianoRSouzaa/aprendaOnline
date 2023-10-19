@@ -48,6 +48,27 @@ $('#config').click(function() {
   $('.notification-div').toggleClass('show');
 });
 
+// sidebar notifications
+const navBar = document.getElementById("sidebar-notify"),
+    menuBtn = document.getElementById("notifications"),
+    fecharBtn = document.getElementById("fechar-notifications");
+
+menuBtn.addEventListener("click", mostrar);
+
+function mostrar() {
+  navBar.classList.add("open");
+
+  fetch('/marking-notifications-as-read')
+    .then(response => response.json())
+    .then(data => console.log(data));
+}
+
+fecharBtn.addEventListener("click", fechar);
+
+function fechar() {
+  navBar.classList.remove("open");
+}
+
 // SIDEBAR TOGGLE do dashboard
 var sidebarOpen = false;
 var sidebar = document.getElementById("sidebar");

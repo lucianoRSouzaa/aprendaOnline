@@ -13,7 +13,7 @@
             <div class="search-container d-flex justify-content-end align-items-center">
                 <a href="{{ route('modules.index', $course->slug) }}">{{ trans('modulesAndLessons') }}</a>
                 <a class="active" href="{{ route('course.data.index', $course->slug) }}">{{ trans('viewCourseData') }}</a>
-                <a href="#">{{ trans('settings') }}</a>
+                <a href="{{ route('course.config', $course->slug) }}">{{ trans('settings') }}</a>
             </div>    
         </div>
     </div>

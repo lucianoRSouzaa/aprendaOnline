@@ -97,7 +97,7 @@
           <span class="material-icons-outlined">search</span>
         </div>
         <div class="header-right d-flex">
-          <span class="material-icons-outlined">notifications</span>
+          <span id="notifications" class="material-icons-outlined notifications">notifications @if(auth()->user()->unreadNotifications->count() > 0)<span class="ball"></span>@endif</span>
           <span id="config" class="material-icons-outlined">account_circle</span>
           <div class="notification-div">
             <p class="text-center">Menu</p>
@@ -113,6 +113,20 @@
             </div>
             <a href="{{ route('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>{{ trans('logout') }}</a>
         </div>
+        </div>
+        {{-- sidebar de notificações não lidas --}}
+        <div id="sidebar-notify" class="sidebar">
+          <div class="d-flex justify-content-between title-notifications">
+              <h4>Notificações</h4>
+              <i id="fechar-notifications" class="fa-solid fa-xmark fa-xl"></i>
+          </div>
+          <div id="notifications-container">
+              @foreach (auth()->user()->unreadNotifications as $notification)
+                  <div class="notification notify">
+                      <p>{{ $notification->data['data'] }}</p>
+                  </div>
+              @endforeach
+          </div>
         </div>
       </header>
       <!-- End Header -->

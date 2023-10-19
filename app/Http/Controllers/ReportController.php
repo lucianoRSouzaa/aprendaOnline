@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Report;
 use App\Models\Course;
+use App\Models\User;
 
 use App\Notifications\ReportRejected;
 use App\Notifications\ReportAccepted;
+use App\Notifications\NewReport;
 
 class ReportController extends Controller
 {
@@ -105,6 +107,9 @@ class ReportController extends Controller
         }
 
         $report->save();
+
+        $admin = User::where('role', 'admin')->firstOrFail();
+        $admin->notify(new NewReport($report));
 
         return redirect()->route('courses.show', $course->slug)->with('success', 'Denúncia do curso "' . $course->title . '" enviada com sucesso! A avaliação ocorrerá em até 7 dias. Agradecemos sua paciência.');
     }
