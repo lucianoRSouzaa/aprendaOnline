@@ -30,7 +30,7 @@ class CheckCourseUser
         }
         
 
-        if ($course && $course->user_id == auth()->user()->id) {
+        if (($course && $course->user_id == auth()->user()->id) || auth()->user()->isAdmin()) {
             return $next($request);
         }
 

@@ -333,6 +333,9 @@ class CourseController extends Controller
         // despachando o evento que atualiza qtd de aulas do curso
         event(new CourseDeleted($course));
 
+        if (auth()->user()->isAdmin()) {
+            return redirect()->back()->with('success', 'Curso excluído com sucesso');
+        }
         return redirect()->route('courses.creator')->with('success', 'Curso excluído com sucesso');
     }  
     

@@ -206,6 +206,9 @@ class LessonController extends Controller
             $remainingLesson->save();
         }
 
+        if (auth()->user()->isAdmin()) {
+            return redirect()->back()->with('success', 'Aula excluída com sucesso');
+        }
         return redirect()->route('modules.index', ['courseSlug' => $module->course->slug])->with('success', 'Aula excluída com sucesso');
     }
 
