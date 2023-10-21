@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'userVerified' => \App\Http\Middleware\CustomVerified::class,
         'check.course.access' => \App\Http\Middleware\CheckCourseAccess::class,
         'check.course.user' => \App\Http\Middleware\CheckCourseUser::class,
+        'check.suspension' => \App\Http\Middleware\CheckSuspension::class,
     ];
 }

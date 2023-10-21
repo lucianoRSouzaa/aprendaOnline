@@ -88,7 +88,8 @@
                     </div>
                     <div id="notifications-container">
                         @foreach (auth()->user()->unreadNotifications as $notification)
-                            <div class="notification @if($notification->type == 'App\Notifications\ReportRejected') recusada @elseif($notification->type == 'App\Notifications\ReportAccepted') aceita @endif">
+                            {{-- @if($notification->type == 'App\Notifications\ReportRejected') recusada --}}
+                            <div class="notification @if($notification->type == 'App\Notifications\ReportAccepted') aceita @else recusada @endif">
                                 <p>{{ $notification->data['data'] }}</p>
                             </div>
                         @endforeach

@@ -10,6 +10,9 @@ use App\Models\User;
 use App\Notifications\ReportRejected;
 use App\Notifications\ReportAccepted;
 use App\Notifications\NewReport;
+use App\Notifications\FirstReportNotification;
+use App\Notifications\SecondReportNotification;
+use App\Notifications\ThirdReportNotification;
 
 class ReportController extends Controller
 {
@@ -119,10 +122,23 @@ class ReportController extends Controller
         $report = Report::findOrFail($reportId);
         $report->load('user', 'course');
 
+        $userReported = $report->course->creator;
+        $userReported->update(['report_count' => $userReported->report_count + 1]);
+
+        if ($userReported->report_count == 1) {
+            $userReported->notify(new FirstReportNotification($report->course->title));
+        } elseif ($userReported->report_count == 2) {
+            $userReported->notify(new SecondReportNotification($report->course->title));
+        } elseif ($userReported->report_count == 3) {
+            $userReported->suspend(7);
+            $userReported->notify(new ThirdReportNotification($report->course->title));
+        } elseif ($userReported->report_count == 4) {
+            $userReported->ban();
+        }
+
         $report->update(['status' => 'aceita']);
 
         $madeBy = $report->user;
-
         $madeBy->notify(new ReportAccepted($report->course->title));
 
         return redirect()->route('admin.reports')->with('success', 'Denúncia aceita com sucesso!');
@@ -136,7 +152,6 @@ class ReportController extends Controller
         $report->update(['status' => 'recusada']);
 
         $madeBy = $report->user;
-
         $madeBy->notify(new ReportRejected($report->course->title));
 
         return redirect()->route('admin.reports')->with('success', 'Denúncia recusada com sucesso!');

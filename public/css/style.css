@@ -261,7 +261,7 @@
     margin-top: 20px;
   }
 
-  #ModalLogin, #ModalSucess, #ModalVerification{
+  #ModalLogin, #ModalSucess, #ModalVerification, #ModalSuspended{
     margin-top: 70px;
   }
 
@@ -440,7 +440,7 @@
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-#ModalErro .desactivate, .password .desactivate{
+#ModalErro .desactivate, .password .desactivate, #ModalSuspended .desactivate{
     border-width: 1px;
     border-color: transparent;
     background-color: #DC2626;

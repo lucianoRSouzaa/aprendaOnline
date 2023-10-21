@@ -71,6 +71,14 @@
             });
         </script>
     @endif
+
+    @if (session('uAreSuspended'))
+        <script>
+            $(document).ready(function () {
+                $('#ModalSuspended').modal('show');
+            });
+        </script>
+    @endif
 @endpush
 
 @section('header')
@@ -99,6 +107,33 @@
             </div>
         </div>
     </div>
+@endif
+
+@if (session()->has('uAreSuspended'))
+<div class="modal fade modal-email" id="ModalSuspended" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex">
+                    <div class="image">
+                        <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                    </div>
+                    <div class="close">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="content">
+                    <span class="title">Erro, ação inválida!</span>
+                    <p class="message">{{ session('uAreSuspended') }}</p>
+                </div>
+                <div class="actions">
+                    <button class="cancel btns-restaurar" data-bs-dismiss="modal" type="button">Cancelar</button>
+                    <button class="btn desactivate btns-restaurar" data-bs-dismiss="modal" type="submit">Recorrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endif
 
 @if (session()->has('verification'))

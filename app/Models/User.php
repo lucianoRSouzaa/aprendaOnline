@@ -24,7 +24,10 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'image'
+        'image',
+        'report_count',
+        'suspended',
+        'suspension_until',
     ];
 
     /**
@@ -52,6 +55,20 @@ class User extends Authenticatable
     public function verificationTokens()
     {
         return $this->hasMany(VerificationToken::class);
+    }
+
+    public function suspend()
+    {
+        $this->suspended = true;
+        $this->suspension_until = now()->addDays(7);
+        $this->save();
+    }
+
+    public function ban()
+    {
+        $this->suspended = true;
+        $this->suspension_until = null;
+        $this->save();
     }
 
     // Relação com os cursos criados pelo usuário

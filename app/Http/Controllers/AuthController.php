@@ -25,6 +25,33 @@ class AuthController extends Controller
             'email.email' => 'O email não é válido',
         ]);
 
+        // Verifique se o email existe no banco de dados
+        $userWithEmail = User::where('email', $request->input('email'))->first();
+
+        if ($userWithEmail && $userWithEmail->suspended) {
+            $suspensionEndTime = $userWithEmail->suspension_until;
+        
+            if ($suspensionEndTime === null) {
+                // Usuário banido permanentemente
+                $message = 'Sua conta foi banida permanentemente devido a violações repetidas de nossas políticas. Agradecemos sua compreensão.';
+                
+                session()->flash('uAreSuspended', $message);
+                return redirect()->back();
+            } elseif ($suspensionEndTime < now()) {
+                // Se a suspensão expirou, então a removemos
+                $userWithEmail->suspended = false;
+                $userWithEmail->save();
+            } 
+            else {
+                // Se o usuário ainda está suspenso, calculamos o tempo restante
+                $remainingTime = now()->diffForHumans($suspensionEndTime, true);
+                $message = 'Você está suspenso. Você será liberado para utilizar a plataforma daqui ' . $remainingTime;
+
+                session()->flash('uAreSuspended', $message);
+                return redirect()->back();
+            }
+        }
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
@@ -38,9 +65,6 @@ class AuthController extends Controller
                 return redirect()->intended(route('courses.viewer'));
             }
         }
-
-        // Verifique se o email existe no banco de dados
-        $userWithEmail = User::where('email', $request->input('email'))->first();
 
         if ($userWithEmail) {
             session()->flash('forgotPasswordText', 'Esqueceu sua senha?');

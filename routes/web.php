@@ -22,7 +22,7 @@ use App\Http\Controllers\ForgotPasswordController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth', 'userVerified'])->group(function () { 
+Route::middleware(['auth', 'userVerified', 'check.suspension'])->group(function () { 
     // Rotas para CRUD de cursos
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create')->middleware('check.course.access');
     Route::post('/courses', [CourseController::class, 'store'])->name('courses.store')->middleware('check.course.access');
