@@ -450,20 +450,34 @@ form{
 
 /* sidebar notification */
 .sidebar {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  height: 100%;
-  width: 320px;
-  padding: 20px 0;
-  background-color: #f1f1f1;
   box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
-  transition: all 0.8s ease;
-  z-index: 100;
-  border-left: 1px solid #0000000e;
+  background-color: rgb(240, 240, 240);
+  width: 350px;
+  border: 1px solid #ddd;
+  padding-top: 12px;
+  right: 30px;
+  border-radius: 5px;
+  top: 60px;
+  position: absolute;
+  z-index: 20;
+  display: none;
 }
+
 .sidebar.open {
-  right: 0;
+  display: block;
+}
+
+.sidebar:after {
+  content: '';
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background-color: rgb(240, 240, 240);
+  top: -6px;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  transform: rotate(45deg);
+  right: 22%;
 }
 
 .sidebar div .fa-xmark{
@@ -481,19 +495,31 @@ form{
   margin-left: 15px;
   margin-bottom: 0;
 }
-
+ 
 .sidebar .notification:not(:last-of-type){
   border-bottom: 2px solid #f1f1f1;
+}
+
+.title-notifications .title-h{
+  margin-left: 15px;
+  margin-bottom: 0;
+  font-size: 1.2rem;
 }
 
 .sidebar .notification p{
   margin: 0;
 }
-
+ 
 .sidebar .notification{
   padding: 18px 5px 18px 8px;
 }
 
 .sidebar .notify{
   background-color: rgba(223, 108, 0, 0.356);
+}
+
+.sidebar .p-no-notiticatiosn{
+  padding-top: 14px;
+  padding-bottom: 16px;
+  margin-bottom: 0;
 }

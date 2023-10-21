@@ -178,7 +178,7 @@
                     @csrf
                     @method('PUT')
                         <div class="modal-header justify-content-center">
-                            <h1 class="modal-title fs-3 text-light" id="exampleModalLabel">Cadastro de módulos</h1>
+                            <h1 class="modal-title fs-3 text-light" id="exampleModalLabel">Editar módulo</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">

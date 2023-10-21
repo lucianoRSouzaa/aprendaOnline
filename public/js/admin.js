@@ -46,6 +46,7 @@ $('.filter-btns2').click(function() {
 
 $('#config').click(function() {
   $('.notification-div').toggleClass('show');
+  $('#sidebar-notify').removeClass('open');
 });
 
 // sidebar notifications
@@ -56,11 +57,17 @@ const navBar = document.getElementById("sidebar-notify"),
 menuBtn.addEventListener("click", mostrar);
 
 function mostrar() {
-  navBar.classList.add("open");
+  navBar.classList.toggle("open");
+  $('.notification-div').removeClass('show');
 
   fetch('/marking-notifications-as-read')
-    .then(response => response.json())
-    .then(data => console.log(data));
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log('Notification marked as read');
+    })
+    .catch(error => console.error(`There has been a problem with your fetch operation: ${error.message}`));
 }
 
 fecharBtn.addEventListener("click", fechar);

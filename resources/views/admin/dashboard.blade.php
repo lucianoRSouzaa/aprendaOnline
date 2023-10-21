@@ -91,44 +91,47 @@
       <!-- Header -->
       <header class="header">
         <div class="menu-icon" onclick="openSidebar()">
-          <span class="material-icons-outlined">menu</span>
+            <span class="material-icons-outlined">menu</span>
         </div>
         <div class="header-left">
-          <span class="material-icons-outlined">search</span>
+            <span class="material-icons-outlined">search</span>
         </div>
         <div class="header-right d-flex">
-          <span id="notifications" class="material-icons-outlined notifications">notifications @if(auth()->user()->unreadNotifications->count() > 0)<span class="ball"></span>@endif</span>
-          <span id="config" class="material-icons-outlined">account_circle</span>
-          <div class="notification-div">
-            <p class="text-center">Menu</p>
-            <hr>
-            <div class="themes d-flex">
-                <div class="theme w-50 d-flex justify-content-center align-items-center">
-                    <i class="fa fa-sun-o fa-xl" aria-hidden="true"></i>
+            <span id="notifications" class="material-icons-outlined notifications">notifications @if(auth()->user()->unreadNotifications->count() > 0)<span class="ball"></span>@endif</span>
+            <span id="config" class="material-icons-outlined">account_circle</span>
+            <div class="notification-div">
+                <p class="text-center">Menu</p>
+                <hr>
+                <div class="themes d-flex">
+                    <div class="theme w-50 d-flex justify-content-center align-items-center">
+                        <i class="fa fa-sun-o fa-xl" aria-hidden="true"></i>
+                    </div>
+                    <span class="line"></span>
+                    <div class="theme w-50 d-flex justify-content-center align-items-center">
+                        <i class="fa-solid fa-moon fa-xl" aria-hidden="true"></i>
+                    </div>                        
                 </div>
-                <span class="line"></span>
-                <div class="theme w-50 d-flex justify-content-center align-items-center">
-                    <i class="fa-solid fa-moon fa-xl" aria-hidden="true"></i>
-                </div>                        
+                <a href="{{ route('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>{{ trans('logout') }}</a>
             </div>
-            <a href="{{ route('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>{{ trans('logout') }}</a>
-        </div>
         </div>
         {{-- sidebar de notificações não lidas --}}
         <div id="sidebar-notify" class="sidebar">
-          <div class="d-flex justify-content-between title-notifications">
-              <h4>Notificações</h4>
-              <i id="fechar-notifications" class="fa-solid fa-xmark fa-xl"></i>
-          </div>
-          <div id="notifications-container">
-              @foreach (auth()->user()->unreadNotifications as $notification)
-                  <div class="notification notify">
-                      <p>{{ $notification->data['data'] }}</p>
-                  </div>
-              @endforeach
-          </div>
+            <div class="d-flex justify-content-between title-notifications">
+                <p class="title-h">Notificações</p>
+                <i id="fechar-notifications" class="fa-solid fa-xmark fa-xl"></i>
+            </div>
+            <div id="notifications-container">
+                @foreach (auth()->user()->unreadNotifications as $notification)
+                    <div class="notification @if($notification->type == 'App\Notifications\ReportRejected') recusada @elseif($notification->type == 'App\Notifications\ReportAccepted') aceita @endif">
+                        <p>{{ $notification->data['data'] }}</p>
+                    </div>
+                @endforeach
+                @if(auth()->user()->unreadNotifications->count() == 0)
+                    <p class="p-no-notiticatiosn text-center">Nenhuma notificação recente</p>
+                @endif
+            </div>
         </div>
-      </header>
+    </header>
       <!-- End Header -->
 
       <!-- Sidebar -->
