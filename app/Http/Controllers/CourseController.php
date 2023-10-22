@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 use App\Events\CourseDeleted;
+use App\Events\CourseViewed;
 
 
 class CourseController extends Controller
@@ -151,24 +152,28 @@ class CourseController extends Controller
 
     public function show($slug, Request $request)
     {
+        // Obtendo o curso com base no slug e seus módulos e suas aulas
+        $course = Course::where('slug', $slug)
+                ->with(['modules' => function ($query) {
+                    $query->orderBy('order');
+                }, 'modules.lessons' => function ($query) {
+                    $query->orderBy('order');
+                }])
+                ->firstOrFail();
+
         $starFilter = null;
         $userIsSubscribed = null;
         $admin = false;
         $user = null;
         $user = auth()->user();
 
+        if ($user && $course->creator->id !== $user->id) {
+            event(new CourseViewed($user, $course));
+        }
+
         if ($user && $user->isAdmin()) {
             $admin = true;
         }
-
-        // Obtendo o curso com base no slug e seus módulos e suas aulas
-        $course = Course::where('slug', $slug)
-            ->with(['modules' => function ($query) {
-                $query->orderBy('order');
-            }, 'modules.lessons' => function ($query) {
-                $query->orderBy('order');
-            }])
-            ->firstOrFail();
 
         $ratingsQuery  = $course->ratings();
 

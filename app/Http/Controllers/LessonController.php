@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Events\LessonCreated;
 use App\Events\LessonDeleted;
+use App\Events\CourseViewed;
+
 
 class LessonController extends Controller
 {
@@ -23,12 +25,16 @@ class LessonController extends Controller
         $user = Auth::user();
 
         $course = Course::where('slug', $courseSlug)
-            ->with(['modules' => function ($query) {
-                $query->orderBy('order');
-            }, 'modules.lessons' => function ($query) {
-                $query->orderBy('order');
-            }])
-            ->firstOrFail();
+                ->with(['modules' => function ($query) {
+                    $query->orderBy('order');
+                }, 'modules.lessons' => function ($query) {
+                    $query->orderBy('order');
+                }])
+                ->firstOrFail();
+
+        if ($user && $course->creator->id !== $user->id) {
+            event(new CourseViewed($user, $course));
+        }
 
         // Calcula a quantidade total de aulas em todos os módulos
         $qtdLessons = $course->modules->sum(function ($module) {

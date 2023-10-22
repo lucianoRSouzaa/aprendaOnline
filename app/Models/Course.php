@@ -25,7 +25,8 @@ class Course extends Model
         'is_completed',
         'total_lessons',
         'category_id',
-        'user_id'
+        'user_id',
+        'views'
     ];
 
     protected $dates = ['deleted_at'];
@@ -95,4 +96,8 @@ class Course extends Model
         $this->save();
     }
 
+    public function views()
+    {
+        return $this->hasMany(CourseView::class);
+    }
 }

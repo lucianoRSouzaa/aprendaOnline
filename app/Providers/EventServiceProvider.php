@@ -12,7 +12,9 @@ use App\Events\LessonDeleted;
 use App\Events\CourseDeleted;
 use App\Events\RestoreOrderEvent;
 use App\Events\LoginSuccessful;
+use App\Events\CourseViewed;
 
+use App\Listeners\CourseViewedListener;
 use App\Listeners\UpdateTotalLessonsOnLessonCreated;
 use App\Listeners\UpdateTotalLessonsOnLessonDeleted;
 use App\Listeners\UpdateTotalLessonsOnCourseDeleted;
@@ -45,6 +47,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         LoginSuccessful::class => [
             LoginSuccessfulListener::class,
+        ],
+        CourseViewed::class => [
+            CourseViewedListener::class,
         ],
     ];
 
