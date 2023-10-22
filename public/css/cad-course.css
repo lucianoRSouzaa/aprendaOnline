@@ -226,9 +226,9 @@ form .page .btns button.submit{
     position: absolute;
     content: '';
     bottom: 11px;
-    right: -292.5px;
+    right: -388.5px;
     height: 3px;
-    width: 280px;
+    width: 365px;
     background: #262626;
   }
 }

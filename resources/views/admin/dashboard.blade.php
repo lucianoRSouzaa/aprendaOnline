@@ -227,7 +227,7 @@
             <a href="{{ route("admin.user.index") }}" class="stretched-link"></a>
           </div>
         </div>
-        <div class="row chartsDiv">
+        <div class="row chartsDiv d-flex justify-content-between">
           @if ($period)
                         
             @if ($period == "hours_24" || $period == "months_11" || $period == "days_14")
@@ -240,7 +240,7 @@
               
           @else
 
-            <div class="mt-2 d-flex flex-column justify-content-center align-items-center card-filter mb-4">
+            <div class="mt-2 d-flex flex-column justify-content-center align-items-center card-filter card-filter-1 mb-4">
                 <h4>Ver quantidade de logins nos últimos:</h4>
                 <form method="POST" action="{{ route('admin.dashboard.form') }}" id="form1">
                 @csrf
@@ -270,7 +270,7 @@
               
           @else
 
-            <div class="mt-2 d-flex flex-column justify-content-center align-items-center card-filter">
+            <div class="mt-2 d-flex flex-column justify-content-center align-items-center card-filter card-filter-2">
                 <h4>Ver cadastros no site nos últimos:</h4>
                 <form method="POST" action="{{ route('admin.dashboard.form') }}" id="form2">
                 @csrf
