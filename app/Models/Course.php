@@ -96,7 +96,7 @@ class Course extends Model
         $this->save();
     }
 
-    public function views()
+    public function courseViews()
     {
         return $this->hasMany(CourseView::class);
     }

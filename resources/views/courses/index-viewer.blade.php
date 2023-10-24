@@ -209,8 +209,33 @@
         </div>
 
         <div class="row justify-content-center">
+
+            <h2>Cursos mais populares:</h2>
+            <div class="wrapper">
+                <i id="left" class="fa-solid fa-angle-left"></i>
+                    <ul class="carousel">
+                        @foreach($popularCourses as $popularCourse)
+                            <div class="card shadow-sm">
+                                <img class="img-card" src="{{ asset('storage/' . $popularCourse->image) }}" alt="Imagem do Card">
+                                <div class="card-content d-flex flex-column justify-content-center">
+                                    <p class="title">{{ $popularCourse->title }}</p>
+                                    <p>{{ trans('madeBy') }} {{ $popularCourse->creator->name }}</p>
+                                    <div class="d-flex align-items-center">
+                                        <p>{{ trans('ratings') }} {{ number_format($popularCourse->average_rating, 1) }}</p>
+                                        <img class="star" src="{{ asset('images/star/star-on.png') }}" alt="estrela da classificação">
+                                    </div>
+                                    
+                                    <a href="{{ route('lessons.index', $popularCourse->slug) }}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </ul>
+                <i id="right" class="fa-solid fa-angle-right"></i>
+            </div>
+            
             @auth
-                <h2>{{ trans('coursesImEnrolledIn') }} </h2>
+                <h2 class="subs">{{ trans('coursesImEnrolledIn') }} </h2>
+                <div class="group-cards">
                 @foreach($subscribedCourses as $subscribedCourse)
                     <div class="card">
                         <img class="img-card" src="{{ asset('storage/' . $subscribedCourse->image) }}" alt="Imagem do Card">
@@ -226,8 +251,10 @@
                         </div>
                     </div>
                 @endforeach
+                </div>
 
-                <h2>{{ trans('myFavoriteCourses') }} </h2>
+                <h2 class="favs">{{ trans('myFavoriteCourses') }} </h2>
+                <div class="group-cards">
                 @foreach($favoriteCourses as $favoriteCourse)
                     <div class="card">
                         <div class="card-overlay">
@@ -249,9 +276,11 @@
                         </div>
                     </div>
                 @endforeach
+                </div>
             @endauth
             
-            <h2>{{ trans('discoverSomeCourses') }} </h2>
+            <h2 class="discover">{{ trans('discoverSomeCourses') }} </h2>
+            <div class="group-cards mb-5">
             @foreach($courses as $course)
                 <div class="card">
                     <div class="card-overlay">
@@ -280,6 +309,7 @@
                     </div>
                 </div>
             @endforeach
+            </div>
         </div>
     </div>
 @endsection

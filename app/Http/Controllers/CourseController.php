@@ -42,7 +42,12 @@ class CourseController extends Controller
         }
 
         $courses = Course::all();
-        return view('courses.index-viewer', compact('courses', 'user', 'favoriteCourses', 'favoriteCourseIds', 'subscribedCourses'));
+        $popularCourses = Course::withCount('courseViews')
+                ->orderBy('course_views_count', 'desc')
+                ->take(8)
+                ->get();
+    
+        return view('courses.index-viewer', compact('courses', 'user', 'favoriteCourses', 'favoriteCourseIds', 'subscribedCourses', 'popularCourses'));
     }
 
     public function indexCreator()

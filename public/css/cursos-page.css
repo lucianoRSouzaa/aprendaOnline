@@ -371,14 +371,31 @@ color: rgb(70, 70, 70);
 }
 
 /* Card */
+.group-cards{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+}
+
 .card {
-  width: 20.5%;
+  width: 22.8%;
   border-radius: 30px;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1), 0px 6px 6px rgba(0, 0, 0, 0.1);
   transition: 0.2s ease-in-out;
   overflow: hidden;
   padding: 0;
-  margin: 0px 0.8rem 0.8rem 0.8rem;
+}
+
+@media (min-width: 1400px){
+  .card {
+    width: 18%;
+    border-radius: 30px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1), 0px 6px 6px rgba(0, 0, 0, 0.1);
+    transition: 0.2s ease-in-out;
+    overflow: hidden;
+    padding: 0;
+  }
 }
 
 .card:hover {
@@ -467,6 +484,7 @@ color: rgb(70, 70, 70);
 
 .card-content{
   padding-bottom: 6px;
+  height: 100%;
 }
 
 .card-content p{
@@ -794,4 +812,84 @@ padding-bottom: 5px;
   border: 1px solid #D1D5DB;
   background-color: #ffffff;
   color: #374151;
+}
+
+.subs{
+  margin-top: 2rem;
+}
+
+.favs, .discover{
+  margin-top: 3rem;
+}
+
+/* slider infinito */
+.wrapper {
+  width: 1140px;
+  padding: 0;
+  position: relative;
+}
+
+.wrapper i {
+  top: 40%;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  position: absolute;
+  text-align: center;
+  line-height: 50px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.23);
+  transform: translateY(-50%);
+  transition: transform 0.1s linear;
+  z-index: 10;
+}
+.wrapper i:active{
+  transform: translateY(-50%) scale(0.85);
+}
+.wrapper i:first-child{
+  left: -22px;
+}
+.wrapper i:last-child{
+  right: -22px;
+}
+.wrapper .carousel{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% / 4) - 23px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 30px;
+  border-radius: 8px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 0;
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+.carousel.no-transition {
+  scroll-behavior: auto;
+}
+.carousel.dragging {
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+
+.carousel .card {
+  scroll-snap-align: start;
+  cursor: pointer;
+  width: auto;
+  margin: 0;
+  box-shadow: none;
+}
+
+@media (min-width: 1550px){
+  .wrapper {
+    width: 1320px;
+  }
+  .wrapper .carousel{
+    grid-auto-columns: calc((100% / 5) - 25px);
+  }
 }
