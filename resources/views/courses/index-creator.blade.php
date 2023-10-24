@@ -212,6 +212,7 @@
         </div>
 
         <div class="row justify-content-center">
+            <div class="group-cards mb-5">
             @foreach($courses as $course)
                 <div class="card">
                     <div class="card-overlay">
@@ -256,6 +257,7 @@
                     </div>
                 </div>
             @endforeach
+            </div>
         </div>
         <div class="floating-container">
             <div class="floating-button"><a href="{{ route('courses.create') }}"><img src="{{ asset('images/plus-svgrepo-com.svg') }}" class="img-add" aria-label="Criar novo curso"></a></div>

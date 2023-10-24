@@ -238,7 +238,7 @@
                         <div class="content">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Endereço de Email</label>
-                                <input type="email" name="email" value="{{ old('email') }}" required autofocus>
+                                <input type="email" readonly name="email" value="{{ session('email') }}" required autofocus>
                                 @error('email')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

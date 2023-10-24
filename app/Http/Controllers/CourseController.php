@@ -42,8 +42,7 @@ class CourseController extends Controller
         }
 
         $courses = Course::all();
-        $popularCourses = Course::withCount('courseViews')
-                ->orderBy('course_views_count', 'desc')
+        $popularCourses = Course::orderBy('views', 'desc')
                 ->take(8)
                 ->get();
     

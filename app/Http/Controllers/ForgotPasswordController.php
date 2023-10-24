@@ -30,6 +30,8 @@ class ForgotPasswordController extends Controller
             $request->only('email'),
         );
 
+        session()->put('email', $request->email);
+
         return $status === Password::RESET_LINK_SENT
                     ? back()->with('successVerification', 'Foi enviado um email para você, veja ele para alterar sua senha!')
                     : back()->withErrors(['error' => trans($status)]);
