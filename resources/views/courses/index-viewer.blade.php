@@ -225,7 +225,7 @@
                                         <img class="star" src="{{ asset('images/star/star-on.png') }}" alt="estrela da classificação">
                                     </div>
                                     
-                                    <a href="{{ route('lessons.index', $popularCourse->slug) }}" class="stretched-link"></a>
+                                    <a href="{{ route('courses.show', $popularCourse->slug) }}" class="stretched-link"></a>
                                 </div>
                             </div>
                         @endforeach

@@ -68,6 +68,8 @@
 
 
                 // GRÁFICO DE COLUNA (AULAS COMPLETAS E INCOMPLETAS POR MÓDULO)
+                @if($chartModuleData)
+                dd('teste')
                 var dataModuleColumn = google.visualization.arrayToDataTable([
                     ['Módulo', 'Aulas Concluídas (%)', 'Aulas Não Concluídas (%)'],
                     @foreach ($chartModuleData as $moduleData)
@@ -103,6 +105,7 @@
 
                 var chartModuleColumn = new google.visualization.ColumnChart(document.getElementById('chart_module_column'));
                 chartModuleColumn.draw(dataModuleColumn, optionsModuleColumn);
+                @endif
 
 
                 // GRÁFICO DE LINHA (CONCLUSÃO DE AULAS)
@@ -165,6 +168,7 @@
                 var barChart = new google.visualization.ColumnChart(document.getElementById('barChart'));
                 barChart.draw(barData, barOptions);
 
+                @if ($lastFiveReviews) 
                 // GRÁFICO DE LINHA (AVALIAÇÕES)
                 var dataLineReviews = google.visualization.arrayToDataTable([
                     ['data', 'Avaliação do usuário', 'Média do curso'],
@@ -188,6 +192,8 @@
                 var lineChartReviews = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
                 lineChartReviews.draw(dataLineReviews, optionsReviews);
+
+                @endif
 
                 @if($period)
                 // GRÁFICO DE LINHAS (INSCRIÇÕES)
@@ -259,9 +265,13 @@
                     @endif
 
                     <div id="barChart" class="mt-2 mb-4" style="width: 50%; height: 400px;"></div>
+                    @if ($lastFiveReviews)
                     <div id="curve_chart" class="mt-2 mb-4" style="width: 50%; height: 400px;"></div>
+                    @endif
                     <div id="line_lessons_chart" class="mt-2 mb-4" style="width: 50%; height: 400px;"></div>
+                    @if($chartModuleData)
                     <div id="chart_module_column" class="mt-2 mb-4" style="width: 50%; height: 400px;"></div>
+                    @endif
                     <div id="barChartCompletion" class="mt-2 mb-4" style="width: 50%; height: 400px;"></div>
                 </div>
             </div>
