@@ -219,7 +219,7 @@ nav .nav-itens > li > a:hover, nav .nav-itens > li > p:hover{
 
 .col-3{
     box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-    min-height: 60vh;
+    min-height: 72vh;
 }
 
 .col-3 .sort{

@@ -100,18 +100,22 @@
     <div class="col-table">
         <div class="row justify-content-center">
             <h2 class="text-center mt-3 mb-3">Dados da categoria: {{ $category->name }}</h2>
-            <div class="d-flex gap-3">
-                <div id="lineChart" class="chartShow"></div>
-                <div class="card card-category-show">
-                    <div class="card-header d-flex w-100 justify-content-center">
-                        <h4>Categoria: {{ $category->name }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Quantidade de cursos relacionados: <span class="estiled-numbers">{{ $qtdCourse }}<span class="estiled-text">cursos<span></span></li>
-                            <li>Classificação da categoria: <span class="estiled-numbers">{{ number_format($category->average_rating, 1) }} <i class="fa-solid fa-star fa-sm"></i></span></li>
-                            <li>Quantidade de usuários na categoria: <span class="estiled-numbers">{{ $users }}<span class="estiled-text">usuário<span></span></li>
-                        </ul>
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div id="lineChart" class="chartShow"></div>
+                </div>
+                <div class="col-4">
+                    <div class="card card-category-show">
+                        <div class="card-header d-flex w-100 justify-content-center">
+                            <h4>Categoria: {{ $category->name }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Quantidade de cursos relacionados: <span class="estiled-numbers">{{ $qtdCourse }}<span class="estiled-text">cursos<span></span></li>
+                                <li>Classificação da categoria: <span class="estiled-numbers">{{ number_format($category->average_rating, 1) }} <i class="fa-solid fa-star fa-sm"></i></span></li>
+                                <li>Quantidade de usuários na categoria: <span class="estiled-numbers">{{ $users }}<span class="estiled-text">usuário<span></span></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

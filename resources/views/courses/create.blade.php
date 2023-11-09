@@ -117,7 +117,7 @@
           </div>
           <div class="field last-field" id="camposInput">
               <label for="campoLearn" class="label">O que seus alunos irão aprender?</label>
-              <input placeholder="Aprender a como programar" type="text" name="learn[]" id="campoLearn">
+              <input placeholder="Ex: Aprender a como programar" type="text" name="learn[]" id="campoLearn">
           </div>
           <span onclick="adicionarCampo()" class="add-response d-flex align-items-start">
               <img src="{{ asset('images/plus.png') }}" class="mt-2" alt="Icone de adicionar campo">

@@ -435,3 +435,9 @@ padding-bottom: 5px;
 .modal-modulo .modal-footer button{
   font-size: 17px;
 }
+
+@media(min-width: 1400px){
+  .col-md-6 .card-body{
+    min-height: 159px;
+  }
+}

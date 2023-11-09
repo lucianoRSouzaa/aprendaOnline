@@ -209,7 +209,7 @@
         </div>
 
         <div class="row justify-content-center">
-
+            @if($popularCourses)
             <h2>Cursos mais populares:</h2>
             <div class="wrapper">
                 <i id="left" class="fa-solid fa-angle-left"></i>
@@ -232,8 +232,10 @@
                     </ul>
                 <i id="right" class="fa-solid fa-angle-right"></i>
             </div>
+            @endif
             
             @auth
+                @if ($subscribedCourses)
                 <h2 class="subs">{{ trans('coursesImEnrolledIn') }} </h2>
                 <div class="group-cards">
                 @foreach($subscribedCourses as $subscribedCourse)
@@ -250,9 +252,11 @@
                             <a href="{{ route('lessons.index', $subscribedCourse->slug) }}" class="stretched-link"></a>
                         </div>
                     </div>
+                    @endif
                 @endforeach
                 </div>
 
+                @if ($favoriteCourses) 
                 <h2 class="favs">{{ trans('myFavoriteCourses') }} </h2>
                 <div class="group-cards">
                 @foreach($favoriteCourses as $favoriteCourse)
@@ -277,6 +281,7 @@
                     </div>
                 @endforeach
                 </div>
+                @endif
             @endauth
             
             <h2 class="discover">{{ trans('discoverSomeCourses') }} </h2>

@@ -127,7 +127,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($reports as $report)
+                    @forelse($reports as $report)
                         <tr>
                             <th scope="row">{{ $report->id }}</th>
                             <td>{{ $report->course->title }}</td>
@@ -137,7 +137,11 @@
                             <td class="descricao">{{ $report->description }}</td>
                             <td class="centralizado"><a href="{{ route('admin.reports.slide', $report->id) }}"><img src="{{ asset('images/entrar.png') }}" alt="Ver mais"></a></td>
                         </tr>
-                    @endforeach
+                    @empty
+                      <tr>
+                        <td colspan="7">Nenhum registro encontrado</td>
+                      </tr>
+                    @endforelse
                 </tbody>
             </table>
             <div class="mt-4 d-flex justify-content-center">

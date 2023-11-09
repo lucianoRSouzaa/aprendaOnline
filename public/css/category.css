@@ -199,8 +199,8 @@ span.txt-add-category{
 
 /* página show */
 .chartShow{
-  width: 60%;
   height: 350px;
+  margin-right: 60px;
 }
 
 .card-category-show{
@@ -254,4 +254,10 @@ span.txt-add-category{
 .div-table{
   margin-top: 4rem;
   width: 61%;
+}
+
+@media (min-width: 1500px){
+  .col-4 .card-category-show{
+    right: 7.5rem;
+  }
 }
