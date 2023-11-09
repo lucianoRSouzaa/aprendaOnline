@@ -63,7 +63,7 @@
 @endpush
 
 @section('header')
-    <div class="container">
+    <div class="header container">
         <div class="d-flex justify-content-between">
             <!-- ***** Logo Start ***** -->
             @auth
@@ -265,7 +265,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container main-details">
         <div class="row align-items-center">
             <div class="col-6 col-descriptions">
                 <h1 class="title">{{ $course->title }}</h1>

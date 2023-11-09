@@ -911,3 +911,21 @@ main .row{
   background-color: #ffffff;
   color: #374151;
 }
+
+@media (min-width: 1400px){
+  .main-details.container{
+    max-width: 1300px;
+  }
+  .header.container{
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1600px){
+  .main-details.container{
+    max-width: 1400px;
+  }
+  .header.container{
+    max-width: 1380px;
+  }
+}

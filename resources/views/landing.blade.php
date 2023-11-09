@@ -474,4 +474,38 @@
             </div>
         </div>
     </section>
+    <section class="container features-section">
+        <div class="d-flex justify-content-center">
+            <h2>Ferramentas</h2>
+        </div>
+        <div class="d-flex justify-content-evenly mt-3">
+            <div class="d-flex flex-column align-items-center feature-card">
+                <div class="icon">
+                    <img src="{{ asset('images/livro-aberto.png') }}">
+                </div>
+                <div class="content d-flex flex-column align-items-center">
+                    <h3>Vídeos e conteúdos</h3>
+                    <p>Os cursos disponíveis são compostos por vídeo-aulas e resumo sobre o conteúdo.</p>
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-center feature-card">
+                <div class="icon">
+                    <img src="{{ asset('images/user-feature.png') }}">
+                </div>
+                <div class="content d-flex flex-column align-items-center">
+                    <h3>Criação de cursos</h3>
+                    <p>Aqui você tem a oportunidade de criar cursos e disponibilizá-los para todos que utilizam a plataforma.</p>
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-center feature-card">
+                <div class="icon">
+                    <img src="{{ asset('images/moedas.png') }}">
+                </div>
+                <div class="content d-flex flex-column align-items-center">
+                    <h3>Plataforma gratuita</h3>
+                    <p>Todos os cursos estão disponiveis de forma gratuita e com qualidade garantida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
