@@ -235,7 +235,7 @@
             @endif
             
             @auth
-                @if ($subscribedCourses)
+                @if ($subscribedCourses->count() > 0)
                 <h2 class="subs">{{ trans('coursesImEnrolledIn') }} </h2>
                 <div class="group-cards">
                 @foreach($subscribedCourses as $subscribedCourse)
@@ -252,11 +252,11 @@
                             <a href="{{ route('lessons.index', $subscribedCourse->slug) }}" class="stretched-link"></a>
                         </div>
                     </div>
-                    @endif
                 @endforeach
                 </div>
+                @endif
 
-                @if ($favoriteCourses) 
+                @if ($favoriteCourses->count() > 0) 
                 <h2 class="favs">{{ trans('myFavoriteCourses') }} </h2>
                 <div class="group-cards">
                 @foreach($favoriteCourses as $favoriteCourse)

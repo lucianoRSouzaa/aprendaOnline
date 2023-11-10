@@ -20,6 +20,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ForgotPasswordController;
 
 use App\Http\Livewire\Chat\Index;
+use App\Http\Livewire\Chat\Chat;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -105,6 +106,7 @@ Route::middleware(['auth', 'userVerified', 'check.suspension'])->group(function 
 
     // rotas do chat
     Route::get('/chat', Index::class)->name('chat.index');
+    Route::get('/chat/{query}', Chat::class)->name('chat');
 });
 
 // rotas do administrador
