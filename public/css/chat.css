@@ -1,0 +1,348 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+.row{
+    margin: 0;
+}
+
+.col-4.conversas{
+    height: 100vh;
+    background-color: #f6faff;
+    padding: 0;
+    overflow-y: auto;
+    border-right: 1px solid #00000018;
+}
+
+.choose-conversation{
+    background-color: #f6faff;
+}
+
+/* scroll bar */
+.barra::-webkit-scrollbar{
+    background-color: #555555;
+    width: 8px;
+}
+
+.main-chat.barra::-webkit-scrollbar{
+    width: 10px;
+}
+
+.barra::-webkit-scrollbar-thumb{
+    background-color: #cccccc;
+    border-radius: 5px;
+}
+
+.main-chat.barra::-webkit-scrollbar-thumb{
+    background-color: #aaaaaa;
+}
+
+.col-8{
+    background-color: #f6faff;
+    padding: 0;
+}
+
+.pesquisar{
+    border-bottom: solid 1px #E0E0E0;
+    padding-bottom: 22px;
+    padding-top: 23px;
+}
+
+.pesquisar .pesquisa{
+    margin-left: 20px;
+    width: 85%;
+}
+
+.pesquisar .pesquisa .searchbar {
+    background-color: #FFF;
+    padding: 0 20px;
+    border-radius: 50px;
+    border: 1px solid #EEEEEE;
+    cursor: pointer;
+}
+  
+.pesquisar .pesquisa .searchbar input {
+    margin-left: 15px;
+    height:40px;
+    width:100%;
+    border:none;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+}
+
+.pesquisar .adicionar{
+    width: 15%;
+}
+
+.pesquisar .adicionar .fa-plus{
+    border: 1px solid #EEEEEE;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.box-conversa{
+    padding: 20px 0;
+    position: relative;
+    border-bottom: solid 1px #E0E0E0;
+}
+
+.box-conversa:hover{
+    background-color: rgb(218, 229, 248);
+    cursor: pointer;
+}
+
+.box-conversa .notification{
+    height: 21px;
+    width: 21px;
+    background-color: rgb(20, 123, 220);
+    border-radius: 50%;
+    color: white;
+
+    position: absolute;
+    right: 25px;
+    top: 35%;
+
+    font-size: small;
+}
+
+.box-conversa .photo, .configs .photo, .modal .photo{
+    margin-left:30px;
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.configs .photo{
+    height: 55px;
+    width: 55px;
+}
+
+.box-conversa .desc-contact {
+  width:65%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.box-conversa .desc-contact .last-message{
+    margin-left: 20px;
+}
+
+.box-conversa .desc-contact .last-message span{
+    margin-right: 5px;
+}
+
+.box-conversa .desc-contact .last-message p{
+    margin: 0;
+    max-width: 250px;
+}
+
+.box-conversa .desc-contact .name {
+  margin: 0 0 0 20px;
+  font-size: 1.18rem;
+
+  color:#181818;
+  font-weight: bold;
+}
+
+.chat{
+    max-height: 100vh;
+    position: relative;
+}
+
+.configs{
+    height: 117px;
+    box-shadow: 0px 3px 2px rgba(0,0,0,0.100);
+    padding-left: 10px;
+}
+
+.configs .name{
+    margin-top: 10px;
+    margin-left: 15px;
+    font-size: 1.4rem;
+}
+
+.configs .fa-ellipsis{
+    position: absolute;
+    right: 30px;
+    top: 49%;
+}
+
+.main-chat{
+    height: 100%;
+    overflow-y: auto;
+}
+
+.main-chat {
+    padding: 25px 35px;
+}
+
+.main-chat .message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.main-chat .text {
+    margin: 0 30px;
+    background-color: #dddddd;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.main-chat .message.response {
+    justify-content: end;
+    padding-left: 20rem;
+}
+
+.main-chat .message.other{
+    padding-right: 20rem;
+}
+
+.main-chat .message.response .text{
+    background-color: #cae3ff;
+}
+
+.input-message{
+    position: relative;
+    height: 100px;
+    background-color: #f6faff;
+    border-top: 2px solid #EEE;
+}
+
+.input-message .write-message {
+    border: none;
+    width: 85%;
+    height: 50px;
+    margin-left: 40px;
+    padding: 10px;
+    background-color: #f6faff;
+    outline: none;
+}
+
+.send {
+    border: none;
+    color:#fff;
+    width: 70px;
+    background-color: #4f6ebd;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.send i{
+    font-size: 14pt;
+    padding: 13px;
+}
+
+.active{
+    border-right: 3px solid blue;
+}
+
+.container-all{
+    max-height: 100vh;
+}
+
+.conversation-div{
+    padding: 0.625rem;
+    height: 100%;
+}
+
+.message-div-position{
+    max-width: 85%;
+}
+
+.message-div{
+    padding: 0.625rem;
+    background-color: #f6f6f8fb;
+    border-radius: 0.75rem;
+}
+
+.message-div-other{
+    border: 1px solid #64646467;
+    border-bottom-left-radius: 0;
+}
+
+.message-div-me{
+    background-color: rgba(80, 80, 255, 0.801);
+    border-bottom-right-radius: 0;
+}
+
+.message-div .text-message{
+    margin: 0;
+    letter-spacing: 0.025em;
+    font-size: 16px;
+}
+
+.hour-message{
+    font-size: small;
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 2px;
+}
+
+.hour-other{
+    color: #6b7280;
+}
+
+.text-gray-200{
+    color: #e5e7eb;
+}
+
+.input-send-message{
+    background-color: #f3f4f6;
+    outline: none;
+}
+
+/* modal termo de responsabilidade */
+.modal{
+  margin-top: 10px;
+  padding: 0 15px;
+}
+
+.modal .modal-dialog {
+  width: auto;
+  max-width: 700px;
+  margin: 1.75rem auto;
+}
+
+.modal .modal-body{
+    padding: 16px 42px;
+}
+
+.modal .modal-body p{
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+
+.modal .modal-body input{
+    outline: none;
+    box-shadow: none;
+}
+
+.modal .modal-body .modal-name{
+    margin: 0;
+}
+
+.div-perfil:first-of-type{
+    padding-top: 16px !important;
+}
+
+.div-perfil:not(:last-of-type){
+    border-bottom: 1px solid gray;
+}
+
+.modal-title{
+    line-height: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.btn-close{
+    --bs-btn-close-focus-shadow: none;
+}

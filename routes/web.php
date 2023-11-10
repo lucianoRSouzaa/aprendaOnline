@@ -19,6 +19,8 @@ use App\Http\Controllers\CourseDataController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ForgotPasswordController;
 
+use App\Http\Livewire\Chat\Index;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -100,6 +102,9 @@ Route::middleware(['auth', 'userVerified', 'check.suspension'])->group(function 
     Route::get('user/edit/{email}', [UserController::class, 'edit'])->name('user.edit');
     // rota para modificar
     Route::put('user/update/{user}', [UserController::class, 'update'])->name('user.update');
+
+    // rotas do chat
+    Route::get('/chat', Index::class)->name('chat.index');
 });
 
 // rotas do administrador
