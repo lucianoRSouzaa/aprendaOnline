@@ -28,7 +28,7 @@
             </div>
 
             <div class="d-flex justify-content-center gap-4">
-                <a href="{{ auth()->user()->isCreator() ? route('courses.creator') : route('courses.viewer') }}" class="btn btn-outline-secondary"><i class="fa-solid fa-circle-arrow-left fa-lg"></i>{{ trans('back') }}</a>
+                <a href="{{ url()->previous() }}" class="btn btn-outline-secondary"><i class="fa-solid fa-circle-arrow-left fa-lg"></i>{{ trans('back') }}</a>
                 <a href="{{ route('logout') }}" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>{{ trans('logout') }}</a>
             </div>
         </div>

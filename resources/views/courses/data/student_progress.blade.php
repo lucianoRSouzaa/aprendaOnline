@@ -135,7 +135,7 @@
 
 @section('main')
     <div class="row">
-        <a href="{{ route('course.data.index', $course->slug) }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('back') }}</a>
+        <a href="{{ url()->previous() }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('back') }}</a>
         <div class="col-12">
             <div class="row justify-content-center">
                 <h2 class="text-center mt-3 mb-3">{{ trans('courseData') }} {{ $course->title }}</h2>

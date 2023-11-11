@@ -147,7 +147,7 @@
     </div>
 @endif
 
-    <a href="{{ route('user.show', $user->email) }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar</a>
+    <a href="{{ url()->previous() }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar</a>
     <div class="container d-flex flex-column justify-content-center edit-page">
         <div class="card shadow-sm">
             <form action="{{ route('user.update', $user) }}" method="post" enctype="multipart/form-data">

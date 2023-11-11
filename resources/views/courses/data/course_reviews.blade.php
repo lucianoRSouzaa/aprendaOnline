@@ -47,7 +47,7 @@
         <div class="d-flex justify-content-between">
             <!-- ***** Logo Start ***** -->
             @auth
-                <a href="{{ route('modules.index', $course->slug) }}" class="logo">
+                <a href="{{ route('course.data.index', $course->slug) }}" class="logo">
                     <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
                 </a>   
             @endauth

@@ -39,7 +39,7 @@
 @section('header')
     <div class="container">
         <div class="d-flex justify-content-between">
-            <a href="{{ auth()->user()->isCreator() ? route('courses.creator') : route('courses.viewer') }}" class="logo">
+            <a href="{{ route('modules.index', $course->slug) }}" class="logo">
                 <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
             </a> 
             <div class="search-container d-flex justify-content-end align-items-center">

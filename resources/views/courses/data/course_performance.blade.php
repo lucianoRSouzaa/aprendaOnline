@@ -69,7 +69,6 @@
 
                 // GRÁFICO DE COLUNA (AULAS COMPLETAS E INCOMPLETAS POR MÓDULO)
                 @if($chartModuleData)
-                dd('teste')
                 var dataModuleColumn = google.visualization.arrayToDataTable([
                     ['Módulo', 'Aulas Concluídas (%)', 'Aulas Não Concluídas (%)'],
                     @foreach ($chartModuleData as $moduleData)
@@ -230,7 +229,7 @@
 
 @section('main')
     <div class="row">
-        <a href="{{ route('course.data.index', $course->slug) }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('back') }}</a>
+        <a href="{{ url()->previous() }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('back') }}</a>
         <div class="col-12">
             <div class="row justify-content-center">
                 <h2 class="text-center mt-3 mb-3">{{ trans('courseData') }} {{ $course->title }}</h2>
