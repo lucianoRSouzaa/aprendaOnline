@@ -32,25 +32,39 @@
         </div>
     </div>
 
-    <div class="box-conversa d-flex active">
-        <img class="photo" src="{{ asset('images/defaultUser.jpg') }}"></img>
-        <div class="desc-contact d-flex align-items-center">
-            <p class="name">Luciano</p>
+    @forelse ($conversations as $conversation)
+        <div 
+            id="conversation-{{ $conversation->id }}" wire:key="{{ $conversation->id }}"
+            class="box-conversa d-flex {{ $conversation->id == $selectedConversation?->id ? 'active' : '' }}"
+        >
+            <img class="photo" src="{{ asset($conversation->getReceiver()->image) }}"></img>
+            <div class="desc-contact">
+                <p class="name">{{ $conversation->getReceiver()->name }}</p>
+                <div class="d-flex last-message align-items-center">
+                    {{-- double tick  --}}
+                    {{-- <span class="text-black">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16">
+                            <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z"/>
+                            <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z"/>
+                        </svg>
+                    </span> --}}
+                    {{-- single tick  --}}
+                    <span class="text-black">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                    </span>
+                    <p class="text-truncate">{{$conversation->messages?->last()?->body??' '}}</p>
+                    <a href="{{ route('chat', $conversation->id) }}" class="stretched-link"></a>
+                </div>
+            </div>
+            @if ($conversation->unreadMessagesCount()>0)
+                <span class="notification d-flex justify-content-center align-items-center">{{ $conversation->unreadMessagesCount() }}</span>
+            @endif
         </div>
-        <span class="notification d-flex justify-content-center align-items-center">2</span>
-    </div>
-    <div class="box-conversa d-flex">
-        <img class="photo" src="{{ asset('images/defaultUser.jpg') }}"></img>
-        <div class="desc-contact d-flex align-items-center">
-            <p class="name">Gustavo</p>
+    @empty
+        <div>
+            <p class="text-center mt-4">Nenhuma conversa encontrada</p>
         </div>
-        <span class="notification d-flex justify-content-center align-items-center">3</span>
-    </div>
-    <div class="box-conversa d-flex">
-        <img class="photo" src="{{ asset('images/defaultUser.jpg') }}"></img>
-        <div class="desc-contact d-flex align-items-center">
-            <p class="name">Leandro</p>
-        </div>
-        <span class="notification d-flex justify-content-center align-items-center">1</span>
-    </div>
+    @endforelse
 </section>

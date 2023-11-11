@@ -1,7 +1,7 @@
 <div class="row">
 
-    <livewire:chat.chat-list>
+    <livewire:chat.chat-list :selectedConversation="$selectedConversation" :query="$query">
 
-    <livewire:chat.chat-box>
+    <livewire:chat.chat-box :selectedConversation="$selectedConversation">
 
 </div>
