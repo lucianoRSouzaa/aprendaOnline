@@ -301,7 +301,7 @@
 
 /* modal termo de responsabilidade */
 .modal{
-  margin-top: 10px;
+  margin-top: 18px;
   padding: 0 15px;
 }
 
@@ -312,7 +312,11 @@
 }
 
 .modal .modal-body{
-    padding: 16px 42px;
+    padding: 16px 42px 16px 42px;
+}
+
+.modal .modal-body .notFound{
+    margin-top: 14px;
 }
 
 .modal .modal-body p{
@@ -327,6 +331,21 @@
 
 .modal .modal-body .modal-name{
     margin: 0;
+    padding-left: 12px;
+}
+
+.modal .modal-body .div-perfils{
+    max-height: 58vh;
+    overflow-y: auto;
+    padding-top: 7px;
+}
+
+.modal .modal-body .btns{
+    padding-right: 20px;
+}
+
+.modal .modal-body .btns a.btn-dark{
+    margin-right: 4px;
 }
 
 .div-perfil:first-of-type{
@@ -334,7 +353,7 @@
 }
 
 .div-perfil:not(:last-of-type){
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(170, 170, 170);
 }
 
 .modal-title{
