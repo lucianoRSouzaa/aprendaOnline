@@ -1,4 +1,23 @@
-<div class="col-8">
+<div
+    x-data="{
+        height:0,
+        conversationElement:document.getElementById('conversation'),
+        markAsRead:null
+    }"
+    
+    x-init="
+        height= conversationElement.scrollHeight;
+        $nextTick(()=>conversationElement.scrollTop= height);
+    "
+
+    @scroll-bottom.window="
+        $nextTick(()=>
+            conversationElement.scrollTop= conversationElement.scrollHeight
+        );
+    "
+
+    class="col-8"
+>
     <div class="container-all border-bottom d-flex flex-column flex-grow-1 h-100">
         {{-- header --}}
         <div class="configs w-100">
@@ -29,22 +48,22 @@
                         wire:key="{{time().$key}}"
                         @class([
                                 'message-div-position d-flex w-auto gap-2 position-relative mt-2',
-                                'ms-auto'=> true,
+                                'ms-auto'=> $message->sender_id === auth()->id(),
                             ]) >
 
                         {{-- avatar --}}
                         <div @class([
                                     'flex-shrink-0',
-                                    'invisible'=> false,
-                                    'visually-hidden'=> true
+                                    'invisible'=> $previousMessage?->sender_id == $message->sender_id,
+                                    'visually-hidden'=> $message->sender_id === auth()->id()
                                 ])>
                             <x-avatar src="{{ asset($selectedConversation->getReceiver()->image) }}"  />
                         </div>
 
                         {{-- messsage body --}}
                         <div @class(['message-div d-flex flex-column flex-wrap text-black',
-                                    'message-div-other'=> false,
-                                    'message-div-me text-white'=> true
+                                    'message-div-other'=> !($message->sender_id=== auth()->id()),
+                                    'message-div-me text-white'=> $message->sender_id=== auth()->id(),
                         ])>
 
                             <p class="text-message">{{ $message->body }}</p>
@@ -52,18 +71,22 @@
                             <div class="ms-auto d-flex align-items-center gap-2">
                                 <p @class([
                                         'hour-message',
-                                        'hour-other'=> false,
-                                        'text-white'=> true,
+                                        'hour-other'=> !($message->sender_id=== auth()->id()),
+                                        'text-white'=> $message->sender_id=== auth()->id(),
                                     ]) >
 
                                     {{$message->created_at->format('g:i a')}}
                                 </p>
 
                                 {{-- message status , only show if message belongs auth --}}
-                                @if ($message->sender_id=== auth()->id())
-                                    <div> 
+                                @if ($message->sender_id === auth()->id())
+                                    <div
+                                        x-data="{
+                                            markAsRead:@json($message->isRead())
+                                        }"
+                                    > 
                                         {{-- double ticks --}}
-                                        <span @class('text-gray-200')>
+                                        <span x-cloak x-show="markAsRead" @class('text-gray-200')>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16">
                                                 <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z"/>
                                                 <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z"/>
@@ -71,11 +94,11 @@
                                         </span>
 
                                         {{-- single ticks --}}
-                                        {{-- <span x-show="!markAsRead" @class('text-gray-200')>
+                                        <span x-show="!markAsRead" @class('text-gray-200')>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
                                                 <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
                                             </svg>
-                                        </span> --}}
+                                        </span>
                                     </div>
                                 @endif
                             </div>

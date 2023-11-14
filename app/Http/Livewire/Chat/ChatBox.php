@@ -10,6 +10,7 @@ use App\Models\Message;
 class ChatBox extends Component
 {
     public $selectedConversation;
+    public $body;
     public $loadedMessages;
     public $paginate_var = 10;
 
@@ -39,6 +40,33 @@ class ChatBox extends Component
                 ->get();
 
         return $this->loadedMessages;
+    }
+
+    public function sendMessage()
+    {
+        $this->validate(['body' => 'required|string']);
+
+        $createdMessage = Message::create([
+            'conversation_id' => $this->selectedConversation->id,
+            'sender_id' => auth()->id(),
+            'receiver_id' => $this->selectedConversation->getReceiver()->id,
+            'body' => $this->body
+        ]);
+
+        $this->reset('body');
+
+        // scroll to bottom
+        $this->dispatchBrowserEvent('scroll-bottom');
+
+        // push the message
+        $this->loadedMessages->push($createdMessage);
+
+        // update conversation model
+        $this->selectedConversation->updated_at = now();
+        $this->selectedConversation->save();
+
+        // refresh chatlist
+        $this->emitTo('chat.chat-list', 'refresh');
     }
 
     public function mount()
