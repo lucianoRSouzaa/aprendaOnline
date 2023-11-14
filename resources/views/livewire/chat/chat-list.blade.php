@@ -1,8 +1,20 @@
 <section
     x-data="{
+        type:'all',
+        query:@entangle('query'),
         modal: null
     }"
     x-init="
+        setTimeout(()=>{
+            conversationElement = document.getElementById('conversation-'+query);
+
+            if(conversationElement)
+            {
+                //scroll to the element
+                conversationElement.scrollIntoView({'behavior':'smooth'});
+            }
+        },200);
+
         modal = new bootstrap.Modal($refs.modal);
     "
     class="col-4 conversas barra"
@@ -24,7 +36,7 @@
         <div class="pesquisa">
             <div class="searchbar d-flex align-items-center">
                 <i class="fa fa-search" aria-hidden="true"></i>
-                <input type="text" placeholder="Pesquisar conversa">
+                <input type="text" placeholder="Pesquisar conversa" wire:model="filter">
             </div>
         </div>
         <div class="adicionar d-flex justify-content-center" @click="modal.show()">
