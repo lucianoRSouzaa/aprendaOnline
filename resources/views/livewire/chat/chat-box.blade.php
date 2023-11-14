@@ -1,34 +1,123 @@
-<section class="col-8 chat d-flex justify-content-between flex-column">
-    <div class="configs d-flex">
-        <div class="d-flex align-items-center">
-            <img class="photo" src="https://images.unsplash.com/photo-1497551060073-4c5ab6435f12?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80"></img>
-            <p class="name">Leonardo</p>
+<div class="col-8">
+    <div class="container-all border-bottom d-flex flex-column flex-grow-1 h-100">
+        {{-- header --}}
+        <div class="configs w-100">
+            <div class="d-flex align-items-center h-100"> 
+                <img class="photo" src="{{ asset($selectedConversation->getReceiver()->image) }}"></img>
+                <p class="name">{{ $selectedConversation->getReceiver()->name }}</p>
+            </div>
+        </div>
+
+        {{-- body --}}
+        <div id="conversation"  class="d-flex flex-column flex-grow-1 conversation-div gap-3 overflow-y-auto w-100 mb-auto">
+
+            @if ($loadedMessages)
+
+                @php
+                    $previousMessage= null;
+                @endphp
+
+                @foreach ($loadedMessages as $key => $message)
+                
+                @if ($key>0)
+                    @php
+                        $previousMessage= $loadedMessages->get($key-1)
+                    @endphp 
+                @endif
+                
+                    <div 
+                        wire:key="{{time().$key}}"
+                        @class([
+                                'message-div-position d-flex w-auto gap-2 position-relative mt-2',
+                                'ms-auto'=> true,
+                            ]) >
+
+                        {{-- avatar --}}
+                        <div @class([
+                                    'flex-shrink-0',
+                                    'invisible'=> false,
+                                    'visually-hidden'=> true
+                                ])>
+                            <x-avatar src="{{ asset($selectedConversation->getReceiver()->image) }}"  />
+                        </div>
+
+                        {{-- messsage body --}}
+                        <div @class(['message-div d-flex flex-column flex-wrap text-black',
+                                    'message-div-other'=> false,
+                                    'message-div-me text-white'=> true
+                        ])>
+
+                            <p class="text-message">{{ $message->body }}</p>
+                            
+                            <div class="ms-auto d-flex align-items-center gap-2">
+                                <p @class([
+                                        'hour-message',
+                                        'hour-other'=> false,
+                                        'text-white'=> true,
+                                    ]) >
+
+                                    {{$message->created_at->format('g:i a')}}
+                                </p>
+
+                                {{-- message status , only show if message belongs auth --}}
+                                @if ($message->sender_id=== auth()->id())
+                                    <div> 
+                                        {{-- double ticks --}}
+                                        <span @class('text-gray-200')>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16">
+                                                <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z"/>
+                                                <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z"/>
+                                            </svg>
+                                        </span>
+
+                                        {{-- single ticks --}}
+                                        {{-- <span x-show="!markAsRead" @class('text-gray-200')>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                            </svg>
+                                        </span> --}}
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
+        {{-- send message  --}}
+        <div class="flex-shrink-0 bg-white">
+            <div class="border-top p-3">
+                <form
+                    x-data="{
+                        body: @entangle('body').defer
+                    }"
+                    @submit.prevent="$wire.sendMessage"
+                    method="POST" autocapitalize="off"
+                >
+                @csrf
+
+                    <input type="hidden" autocomplete="false" style="display:none">
+                    <div class="row px-3">
+                        <input 
+                                x-model="body"
+                                type="text"
+                                autocomplete="off"
+                                autofocus
+                                placeholder="Escreva sua mensagem aqui"
+                                maxlength="1700"
+                                class="col-11 input-send-message border-0 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg  focus:outline-none"
+                        >
+                        <button x-bind:disabled="!body.trim()" type='submit' class="send col-1">
+                            <i class="icon fa fa-paper-plane-o" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </form>
+
+                @error('body')
+                    <p> {{$message}} </p> 
+                @enderror
+            </div>
         </div>
     </div>
-    <div class="main-chat barra">
-        <div class="message other">
-            <p class="text"> Hi, how are you ? </p>
-        </div>
-        <div class="message other">
-            <p class="text"> How are you doing? </p>
-        </div>
-        <div class="message response">
-            <p class="text"> I am good, and u? </p>
-        </div>
-        <div class="message response">
-            <p class="text"> Are you good too? </p>
-        </div>
-        <div class="message other">
-            <p class="text"> How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? </p>
-        </div>
-        <div class="message response">
-            <p class="text"> How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? How are you doing? </p>
-        </div>
-    </div>
-    <div class="input-message d-flex align-items-center">
-        <input type="text" class="write-message" placeholder="Digite sua mensagem aqui">
-        <button class="send">
-            <i class="icon fa fa-paper-plane-o" aria-hidden="true"></i>
-        </button>
-    </div>
-</section>
+</div>
