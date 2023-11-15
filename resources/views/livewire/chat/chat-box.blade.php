@@ -8,6 +8,14 @@
     x-init="
         height= conversationElement.scrollHeight;
         $nextTick(()=>conversationElement.scrollTop= height);
+
+        Echo.private('users.{{Auth()->User()->id}}')
+        .notification((notification)=>{
+            if(notification['type']== 'App\\Notifications\\MessageRead' && notification['conversation_id']== {{$this->selectedConversation->id}})
+            {
+                markAsRead=true;
+            }
+        });
     "
 
     @scroll-bottom.window="

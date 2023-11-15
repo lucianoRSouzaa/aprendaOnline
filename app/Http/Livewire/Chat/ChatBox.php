@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Chat;
 
 use Livewire\Component;
 use App\Notifications\MessageSent;
+use App\Notifications\MessageRead;
+
 
 use App\Models\Message;
 
@@ -36,6 +38,14 @@ class ChatBox extends Component
 
                 // push message
                 $this->loadedMessages->push($newMessage);
+
+                // mark as read
+                $newMessage->read_at = now();
+                $newMessage->save();
+
+                // broadcast 
+                $this->selectedConversation->getReceiver()
+                    ->notify(new MessageRead($this->selectedConversation->id));
             }
         }
     }
