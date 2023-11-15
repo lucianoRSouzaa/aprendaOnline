@@ -14,6 +14,10 @@ class ChatBox extends Component
     public $loadedMessages;
     public $paginate_var = 10;
 
+    protected $listeners = [
+        'loadMore'
+    ];
+
     public function loadMore(): void
     {
         // increment 

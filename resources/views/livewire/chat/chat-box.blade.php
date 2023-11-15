@@ -4,7 +4,7 @@
         conversationElement:document.getElementById('conversation'),
         markAsRead:null
     }"
-    
+
     x-init="
         height= conversationElement.scrollHeight;
         $nextTick(()=>conversationElement.scrollTop= height);
@@ -28,7 +28,26 @@
         </div>
 
         {{-- body --}}
-        <div id="conversation"  class="d-flex flex-column flex-grow-1 conversation-div gap-3 overflow-y-auto w-100 mb-auto">
+        <div 
+            @scroll="
+                scropTop = $el.scrollTop;
+
+                if(scropTop <= 0){
+                    window.livewire.emit('loadMore');
+                }
+            "
+
+            @update-chat-height.window="
+                newHeight = $el.scrollHeight;
+
+                oldHeight = height;
+                $el.scrollTop = newHeight- oldHeight;
+
+                height = newHeight;
+            "
+
+            id="conversation"  class="d-flex flex-column flex-grow-1 conversation-div gap-3 overflow-y-auto w-100 mb-auto"
+        >
 
             @if ($loadedMessages)
 
