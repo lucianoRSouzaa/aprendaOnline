@@ -120,6 +120,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // rota de aceitar e recusar denuncia
     Route::get('/admin/reports/{report}/accept', [ReportController::class, 'acceptReporting'])->name('admin.reports.accept');
     Route::get('/admin/reports/{report}/decline', [ReportController::class, 'declineReporting'])->name('admin.reports.decline');
+    // chat com autor da denuncia
+    Route::get('/chat/report/author/{authorId}', [ReportController::class, 'chatWithAuthor'])->name('report.chat.author');
     
     // rota que dá acesso as exclusões
     Route::get('/admin/deletes', [AdminController::class, 'deletes'])->name('admin.deletes');

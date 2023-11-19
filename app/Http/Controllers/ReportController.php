@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Report;
 use App\Models\Course;
 use App\Models\User;
+use App\Models\Conversation;
 
 use App\Notifications\ReportRejected;
 use App\Notifications\ReportAccepted;
@@ -155,5 +156,33 @@ class ReportController extends Controller
         $madeBy->notify(new ReportRejected($report->course->title));
 
         return redirect()->route('admin.reports')->with('success', 'Denúncia recusada com sucesso!');
+    }
+
+    public function chatWithAuthor($authorId)
+    {
+        $adminId = auth()->id();
+
+        // Check if conversation already exists
+        $existingConversation = Conversation::where(function ($query) use ($adminId, $authorId) {
+                $query->where('sender_id', $adminId)
+                    ->where('receiver_id', $authorId);
+                })
+                ->orWhere(function ($query) use ($adminId, $authorId) {
+                    $query->where('sender_id', $authorId)
+                        ->where('receiver_id', $adminId);
+                })->first();
+            
+        if ($existingConversation) {
+            // Conversation already exists, redirect to existing conversation
+            return redirect()->route('chat', ['query' => $existingConversation->id]);
+        }
+    
+        // Create new conversation
+        $createdConversation = Conversation::create([
+            'sender_id' => $adminId,
+            'receiver_id' => $authorId,
+        ]);
+ 
+        return redirect()->route('chat', ['query' => $createdConversation->id]);
     }
 }

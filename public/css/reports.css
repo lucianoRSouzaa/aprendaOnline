@@ -257,14 +257,14 @@ table th, .centralizado, table tbody td {
 
 /* botões */
 .slide .card-body .btn-outline-primary{
-  border-color: #3ab5dbaf;
-  color: #3ab5dbd0;
+  border-color: #1583a5af;
+  color: #1a88aad0;
   margin: 0 3px;
   transition: all ease-in-out 0.3s;
 }
 
 .slide .card-body .btn-outline-primary:hover{
-  background-color: #3ab5dbd0;
+  background-color: #25b2ddd0;
   color: rgb(236, 236, 236);
 }
 

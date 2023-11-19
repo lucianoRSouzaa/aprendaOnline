@@ -198,7 +198,7 @@
                     </div>
                     <h4 class="acoes">Ações:</h4>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="#" class="btn btn-outline-primary">Chat com o autor</a>
+                        <a href="{{ route('report.chat.author', $report->course->creator->id) }}" class="btn btn-outline-primary">Chat com o autor</a>
                         <button class="btn btn-outline-primary delete-course" data-bs-target="#ModalConfirmacaoExclusaoCurso" data-bs-toggle="modal" data-course-slug="{{ $report->course->slug }}">Excluir curso denunciado</a>
                         @if($report->lesson)
                             <button class="btn btn-outline-primary delete-lesson" data-bs-target="#ModalConfirmacaoExclusaoAula" data-bs-toggle="modal" data-module-slug="{{ $report->lesson->module->slug }}" data-lesson-slug="{{ $report->lesson->slug }}">Excluir aula denunciada</a>
