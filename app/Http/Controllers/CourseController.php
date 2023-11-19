@@ -190,6 +190,7 @@ class CourseController extends Controller
         }
 
         $ratingsQuery  = $course->ratings();
+        $ratingsCount = $course->ratings->count();
 
         if ($request->has('starFilter')) {
             // Aqui, você pode aplicar o filtro com base no valor enviado pelo formulário.
@@ -197,7 +198,7 @@ class CourseController extends Controller
             $ratingsQuery->where('rating', $starFilter);
         }
 
-        $ratings = $ratingsQuery->get();
+        $ratings = $ratingsQuery->paginate(5)->appends(['starFilter' => $starFilter]);
 
         // categoria do curso
         $category = $course->category->name;
@@ -216,7 +217,7 @@ class CourseController extends Controller
 
         $whatWillLeran = json_decode($course->what_students_learn);
 
-        return view('courses.show', compact('course', 'ratings', 'averageRatingsPerScore', 'userIsSubscribed', 'user', 'category', 'admin', 'starFilter', 'whatWillLeran'));
+        return view('courses.show', compact('course', 'ratings', 'averageRatingsPerScore', 'userIsSubscribed', 'user', 'category', 'admin', 'starFilter', 'whatWillLeran', 'ratingsCount'));
     }
 
     public function showDeleted($slug, Request $request)

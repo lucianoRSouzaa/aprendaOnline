@@ -35,6 +35,14 @@
     <script>
         const courseTitle = '{{ $course->title }}';
         $('#input-href-page').val(window.location.href);
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Quando o conteúdo for carregado, verifique se a URL contém "?page"
+            if(window.location.href.indexOf("?page") > -1 || window.location.href.indexOf("starFilter") > -1) {
+                // Se sim, role para a parte inferior da página
+                window.scrollTo(0,document.body.scrollHeight);
+            }
+        });
     </script>
     <script src="{{ asset('js/detalhes-curso.js') }}"></script>
     <script>
@@ -44,12 +52,6 @@
                 readOnly: true,
                 score: {{ number_format($course->average_rating, 2) }},
             });
-
-            @if($starFilter)
-                $('html, body').animate({
-                    scrollTop: $(document).height()
-                }, 500);
-            @endif
 
             @if(session()->has('error'))
                 $('#ModalError').modal('show');
@@ -79,8 +81,8 @@
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <div class="search-container">
-                <form action="curso.php" method="POST" class="search-bar">
-                    <input type="text" name="searchTerm" id="search-input" placeholder="{{ trans('searchPlaceholder') }}">
+                <form action="{{ route('courses.search') }}" method="GET" class="search-bar">
+                    <input type="text" name="title" id="search-input" placeholder="{{ trans('searchPlaceholder') }}">
                     <button type="submit" id="search-button"><i class="fa fa-search"></i></button>
                 </form>
             </div>    
@@ -269,7 +271,9 @@
         <div class="row align-items-center">
             <div class="col-6 col-descriptions">
                 <h1 class="title">{{ $course->title }}</h1>
-                <p>{{ $course->description }}</p>
+                <p class="mb-0 mt-2">{{ $course->views }} visualizações</p>
+                <p class="mb-0 mt-0">Criador por: {{ $course->creator->name }}</p>
+                <p class="mt-1">{{ $course->description }}</p>
                 @auth
                     @if ($user->subscriptions()->where('course_id', $course->id)->exists())
                         <form action="{{ route('courses.unsubscribe', $course->slug) }}" method="POST" style="display: inline;">
@@ -375,7 +379,7 @@
 
                             </div>
                         </div>
-                        <p>{{count($ratings)}} {{ trans('ratingsInThisCourse') }}</p>
+                        <p>{{$ratingsCount}} {{ trans('ratingsInThisCourse') }}</p>
                     </div>
                 </div>
                 <div class="box-filtrar">
@@ -411,7 +415,15 @@
                         <p class="ordenar-text">ordenar por</p>
                     </div>
                 </div>
-                <div class="comments">
+                <div class="comments pb-0">
+                    @if (count($ratings) > 0 && $starFilter)
+                        <div class="d-flex align-items-center">
+                            <p class="ps-3 mb-0 mt-1">{{ count($ratings) }} avaliações encontradas com {{ $starFilter }} estrelas:</p>
+                            <div class="d-flex justify-content-center ps-1">
+                                <a class="cancel-search" href="{{ route("courses.show", $course->slug) }}"><i class="fa-regular fa-circle-xmark fa-lg"></i></a>
+                            </div>
+                        </div>
+                    @endif
                     @forelse ($ratings as $rating)
                         <div class="comment">
                             <h4>{{ $rating->user->name }}</h4>
@@ -436,6 +448,9 @@
                             @endif
                         </div>
                     @endforelse
+                    <div class="d-flex justify-content-center align-items-end pt-3">
+                        {{ $ratings->links() }}
+                    </div>
                 </div>
             </div>
         </div>
