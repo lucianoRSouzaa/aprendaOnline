@@ -287,13 +287,13 @@ class LessonController extends Controller
     {
         $user = Auth::user();
         $lessonId = $request->input('lesson_completed');
+        $course = Lesson::find($lessonId)->module->course;
 
         // Verifica se o usuário ainda não concluiu essa aula
-        if (!$user->completedLessons->contains($lessonId)) {
+        if (!$user->completedLessons->contains($lessonId) && !$user->isAdmin() && $user->id != $course->creator->id) {
             $user->completedLessons()->attach($lessonId, ['completed_at' => now()]);
 
             // Verifica se o usuário concluiu todas as aulas do curso
-            $course = Lesson::find($lessonId)->module->course;
             $completedLessonsCount = $user->completedLessonsInCourseByUser($course);
             
             if ($completedLessonsCount === $course->total_lessons && $course->is_completed === 1) {

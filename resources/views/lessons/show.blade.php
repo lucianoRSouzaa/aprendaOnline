@@ -92,9 +92,19 @@
 
     <div class="row">
         <aside class="col-3 barra">
+            @if (auth()->user()->isCreator() && !session()->has('user_role'))
+            <a href="{{ route('courses.creator') }}" class="d-flex align-items-center header">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i><p class="ml-2">{{ trans('back') }}</p>
+            </a>
+            @elseif (auth()->user()->isAdmin())
             <a href="{{ url()->previous() }}" class="d-flex align-items-center header">
                 <i class="fa fa-chevron-left" aria-hidden="true"></i><p class="ml-2">{{ trans('back') }}</p>
             </a>
+            @else
+            <a href="{{ route('courses.viewer') }}" class="d-flex align-items-center header">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i><p class="ml-2">{{ trans('back') }}</p>
+            </a>
+            @endif
             <div class="curso-nome mt-2 pb-3">
                 <p>{{ $course->title }}</p>
                 <p class="num-aulas">{{ $qtdLessons }} {{ trans('lessons') }}</p>
