@@ -50,7 +50,7 @@
                   </li>
                   <li class="sidebar-list-item d-flex">
                     <a href="#" >
-                      <span class="material-icons-outlined">settings</span> Configurações
+                      <span class="material-icons-outlined">chat</span> Suporte
                     </a>
                   </li>
                 </ul>
@@ -84,7 +84,7 @@
                   </tr>
               </thead>
               <tbody>
-                  @foreach($users as $user)
+                  @forelse($users as $user)
                       <tr>
                           <th scope="row">{{ $user->id }}</th>
                           <td>{{ $user->name }}</td>
@@ -92,7 +92,11 @@
                           <td>{{ $user->created_at->format('d-m-Y H:i') }}</td>
                           <td class="centralizado"><a href="{{ route('user.show', $user->email) }}"><img src="{{ asset('images/entrar.png') }}" alt="Ver mais"></a></td>
                       </tr>
-                  @endforeach
+                  @empty
+                    <td colspan="5">
+                      <h4 class="pt-2">Nenhum registro encotrado.</h4>
+                    </td>
+                  @endforelse
               </tbody>
           </table>
           <div class="mt-4 d-flex justify-content-center">

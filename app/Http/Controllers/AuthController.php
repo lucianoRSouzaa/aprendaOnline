@@ -57,7 +57,10 @@ class AuthController extends Controller
 
             event(new LoginSuccessful(Auth::user()->id));
 
-            if (auth()->user()->isCreator()) {
+            if (auth()->user()->isAdmin()){
+                return redirect()->route('admin.dashboard');
+            }
+            elseif (auth()->user()->isCreator()) {
                 return redirect()->intended(route('courses.creator'));
     
             } elseif (auth()->user()->isViewer()) {

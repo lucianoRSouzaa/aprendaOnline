@@ -280,7 +280,7 @@
             <ul class="nav-itens">
                 <!-- itens -->
                 <li><a href="#">Cursos</a></li>
-                <li><a href="#">Ferramentas</a></li>
+                <li><a href="#ferramentas">Ferramentas</a></li>
                 <li><a href="#">Suporte</a></li>
             </ul>
         </div>
@@ -474,7 +474,7 @@
             </div>
         </div>
     </section>
-    <section class="container features-section">
+    <section id="ferramentas" class="container features-section">
         <div class="d-flex justify-content-center">
             <h2>Ferramentas</h2>
         </div>

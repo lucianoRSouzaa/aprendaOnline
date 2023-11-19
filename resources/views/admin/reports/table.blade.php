@@ -87,7 +87,7 @@
                   </li>
                   <li class="sidebar-list-item d-flex">
                     <a href="#" >
-                      <span class="material-icons-outlined">settings</span> Configurações
+                      <span class="material-icons-outlined">chat</span> Suporte
                     </a>
                   </li>
                 </ul>

@@ -370,3 +370,7 @@ padding-bottom: 5px;
 .ball.ativo{
   background-color: rgb(0, 148, 25);
 }
+
+.deleted{
+  color: red;
+}

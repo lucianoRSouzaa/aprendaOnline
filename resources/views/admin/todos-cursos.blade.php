@@ -55,7 +55,7 @@
                   </li>
                   <li class="sidebar-list-item d-flex">
                     <a href="#" >
-                      <span class="material-icons-outlined">settings</span> Configurações
+                      <span class="material-icons-outlined">chat</span> Suporte
                     </a>
                   </li>
                 </ul>
@@ -79,6 +79,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Curso</th>
+                        <th scope="col">Criador</th>
                         <th scope="col">Status</th>
                         <th scope="col">Ver</th>
                     </tr>
@@ -88,6 +89,7 @@
                         <tr onclick="toggleModulesLessonsDeleted({{ $curso->id }})">
                             <th scope="row">{{ $curso->id }}</th>
                             <td class="exclusao-titulo">{{ $curso->title }}</td>
+                            <td>{{ $curso->creator->name }}</td>
                             @if ($curso->trashed()) 
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center excluido border-curso">
@@ -110,12 +112,12 @@
                         @if($curso->modules->count() > 0)
                           <tr class="exclusoes modulos-excluidos" id="modulo-{{ $curso->id }}">
                             <td colspan="4">
-                              <h5>Módulos e aulas excluídos de: {{ $curso->title }}</h5>
+                              <h5>Módulos e aulas de: {{ $curso->title }}</h5>
                               <ul class="box-modules-lessons-deleted fa-ul">
                                 @foreach ($curso->modules as $modules)
-                                  <li class="module-title"><i class="fa-li fa fa-book fa-lg"></i><p>{{ $modules->title }} {{ $modules->trashed() ? "(excluído)" : ''}}</p></li>
+                                  <li class="module-title"><i class="fa-li fa fa-book fa-lg"></i><p>{{ $modules->title }} @if($modules->trashed()) <span class="deleted">(excluído)</span> @endif</p></li>
                                   @foreach ($modules->lessons as $lesson)
-                                    <li class="lesson-title"><i class="fa-li fa fa-video"></i>{{ $lesson->title }} {{ $lesson->trashed() ? "(excluído)" : ''}}</li>
+                                    <li class="lesson-title"><i class="fa-li fa fa-video"></i>{{ $lesson->title }} @if($lesson->trashed()) <span class="deleted">(excluído)</span> @endif</li>
                                   @endforeach
                                 @endforeach
                               </ul>
@@ -123,7 +125,7 @@
                           </tr>
                         @endif
                     @empty
-                    <td colspan="4">
+                    <td colspan="5">
                       <h4 class="pt-2">Nenhum registro encotrado.</h4>
                     </td>
                     @endforelse

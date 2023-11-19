@@ -338,6 +338,7 @@ class AdminController extends Controller
                     $query->orderBy('order');
                 }]);
             },
+            'creator',
         ])->withTrashed();
 
         if ($searchTerm) {

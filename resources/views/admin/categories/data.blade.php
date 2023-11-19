@@ -174,7 +174,7 @@
                   </li>
                   <li class="sidebar-list-item d-flex">
                     <a href="#" >
-                      <span class="material-icons-outlined">settings</span> Configurações
+                      <span class="material-icons-outlined">chat</span> Suporte
                     </a>
                   </li>
                 </ul>
@@ -190,7 +190,7 @@
 
                 @empty($data)
                 <div class="mt-4">
-                  <h5>Pesquise pela quantidade de inscrições em cursos de determinadas categorias em cada mês:</h5>
+                  <h5>Selecione categorias e um intervalo de meses para visualizar as inscrições em cursos por mês:</h5>
                     <form action="{{ route('admin.categories.data') }}" method="POST">
                     @csrf
                       <div>
