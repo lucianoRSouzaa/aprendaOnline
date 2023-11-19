@@ -28,7 +28,7 @@
             <ul class="nav-itens">
                 <!-- itens -->
                 @auth
-                <li><a href="#">Favoritos</a></li>
+                <li><a href="{{ route('courses.favorited') }}">Favoritos</a></li>
                 @endauth
                 <li><a href="{{ route('courses.completed') }}">Cursos concluídos</a></li>
                 @auth

@@ -38,6 +38,8 @@ Route::middleware(['auth', 'userVerified', 'check.suspension'])->group(function 
     Route::post('/courses/{course}/uncomplete', [CourseController::class, 'unmarkComplete'])->name('courses.unmark-complete')->middleware('check.course.access');
     // Rota para usuário ver os cursos concluídos por ele
     Route::get('/courses/completed', [CourseController::class, 'CompletedCourses'])->name('courses.completed');
+    // rota para usuário ver cursos favoritados por ele
+    Route::get('/courses/favorited', [CourseController::class, 'favoritedCourses'])->name('courses.favorited');
     // rota para criador de curso
     Route::get('/courses/creator', [CourseController::class, 'indexCreator'])->name('courses.creator')->middleware('auth');
     Route::get('/courses/creator/toggle/mode', [CourseController::class, 'toggleMode'])->name('courses.toggleMode')->middleware('auth', 'can:manage-courses');

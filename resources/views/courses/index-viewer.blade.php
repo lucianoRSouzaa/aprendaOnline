@@ -78,7 +78,7 @@
             <ul class="nav-itens d-flex align-items-center">
                 <!-- itens -->
                 @auth
-                    <li><a href="#">Favoritos</a></li>
+                    <li><a href="{{ route('courses.favorited') }}">Favoritos</a></li>
                     <li><a href="{{ route('courses.completed') }}">Cursos concluídos</a></li>
                     <li class="d-flex align-items-center profile" id="config"><img src="{{ asset($user->image) }}" class="rounded-circle avatar" alt=""><p class="nameUser">{{$user->name}} <i class="fa fa-angle-down" aria-hidden="true"></i></p></li>
                     <div class="notification-div">
