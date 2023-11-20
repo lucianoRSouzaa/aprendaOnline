@@ -91,13 +91,13 @@
                         <a href="{{ route('user.show', auth()->user()->email) }}"><i class="fa fa-user fa-lg" aria-hidden="true"></i>{{ trans('profile') }}</a>
                         <a href="{{ route('configs') }}"><i class="fa fa-cog fa-lg" aria-hidden="true"></i>{{ trans('settings') }}</a>
                         <div class="themes d-flex">
-                            <div class="theme w-50 d-flex justify-content-center align-items-center">
+                            <a href="{{ route('theme', 'light') }}" class="theme w-50 d-flex justify-content-center align-items-center">
                                 <i class="fa fa-sun-o fa-xl" aria-hidden="true"></i>
-                            </div>
+                            </a>
                             <span class="line"></span>
-                            <div class="theme w-50 d-flex justify-content-center align-items-center">
+                            <a href="{{ route('theme', 'dark') }}" class="theme w-50 d-flex justify-content-center align-items-center">
                                 <i class="fa-solid fa-moon fa-xl" aria-hidden="true"></i>
-                            </div>                        
+                            </a>                        
                         </div>
                         <a href="{{ route('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>{{ trans('logout') }}</a>
                     </div>

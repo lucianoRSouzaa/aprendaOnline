@@ -12,7 +12,7 @@
 
     <title>AprendaOnline</title>
 </head>
-<body>
+<body class="{{ Cookie::get('theme_preference', 'light') === 'dark' ? 'dark' : '' }}">
     @yield('body')
     <header>
         @yield('header')

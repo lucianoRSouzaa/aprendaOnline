@@ -21,4 +21,13 @@ class ConfigsController extends Controller
         // Caso o idioma não seja suportado, redirecione para a página inicial
         return redirect('/');
     }
+
+    public function setTheme($theme)
+    {
+        if ($theme === 'light' || $theme === 'dark') {
+            return redirect()->route('courses.creator')->withCookie(cookie()->forever('theme_preference', $theme));
+        }
+
+        return redirect('/');
+    }
 }

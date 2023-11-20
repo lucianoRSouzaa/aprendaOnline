@@ -168,7 +168,10 @@ Route::get('/courses/page/search', [CourseController::class, 'search'])->name('c
 
 // rota de configurações
 Route::get('/configs', [ConfigsController::class, 'index'])->name('configs');
+// rota para escolha de idioma
 Route::get('/{locale?}', [ConfigsController::class, 'setLang'])->where('locale', 'en|pt|es')->name('lang');
+// rota para escolha de tema
+Route::get('/{theme?}', [ConfigsController::class, 'setTheme'])->where('theme', 'light|dark')->name('theme');
 
 // rota para verificação de email
 Route::get('/verify-email/{token}', [EmailController::class, 'verifyEmail'])->name('verification.verify');
