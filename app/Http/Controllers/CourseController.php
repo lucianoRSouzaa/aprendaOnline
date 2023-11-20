@@ -31,12 +31,16 @@ class CourseController extends Controller
         $favoriteCourses = null;
         $subscribedCourses = null;
         $user = null;
+        $totalUnreadMessages = null;
 
         if (Auth::check()) {
             $user = auth()->user();
 
             $favoriteCourseIds = $user->favorites()->pluck('course_id')->toArray();
             $favoriteCourses = Course::whereIn('id', $favoriteCourseIds)->get();
+
+            // get total messages unread
+            $totalUnreadMessages = $user->totalUnreadMessagesCount();
 
             $subscribedCourses = $user->subscribedCourses()->get();
         }
@@ -46,7 +50,7 @@ class CourseController extends Controller
                 ->take(8)
                 ->get();
     
-        return view('courses.index-viewer', compact('courses', 'user', 'favoriteCourses', 'favoriteCourseIds', 'subscribedCourses', 'popularCourses'));
+        return view('courses.index-viewer', compact('courses', 'user', 'favoriteCourses', 'favoriteCourseIds', 'subscribedCourses', 'popularCourses', 'totalUnreadMessages'));
     }
 
     public function indexCreator()
@@ -61,8 +65,11 @@ class CourseController extends Controller
 
         $user = auth()->user();
 
+        // get total messages unread
+        $totalUnreadMessages = $user->totalUnreadMessagesCount();
+
         $courses = $user->courses()->get();
-        return view('courses.index-creator', compact('courses', 'user'));
+        return view('courses.index-creator', compact('courses', 'user', 'totalUnreadMessages'));
     }
 
     public function toggleMode()

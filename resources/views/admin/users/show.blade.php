@@ -111,7 +111,7 @@
 @endpush
 
 @section('main')
-    <a href="{{ url()->previous() }}" class="back-btn page-show"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('back') }}</a>
+    <a href=" @if(auth()->user()->isAdmin()) {{ url()->previous() }} @elseif(auth()->user()->isCreator() && !session()->has('user_role')) {{ route('courses.creator') }} @else {{ route('courses.viewer') }} @endif" class="back-btn page-show"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('back') }}</a>
     <div class="container card-all">
         <div class="row shadow mb-3">
             <section class="col-12 dados-div">

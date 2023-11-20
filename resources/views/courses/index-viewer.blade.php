@@ -78,6 +78,7 @@
             <ul class="nav-itens d-flex align-items-center">
                 <!-- itens -->
                 @auth
+                    <li class="ball-li"><a href="{{ route('chat.index') }}">Chat @if($totalUnreadMessages)<span class="ball">{{ $totalUnreadMessages }}</span>@endif</a></li>
                     <li><a href="{{ route('courses.favorited') }}">Favoritos</a></li>
                     <li><a href="{{ route('courses.completed') }}">Cursos concluídos</a></li>
                     <li class="d-flex align-items-center profile" id="config"><img src="{{ asset($user->image) }}" class="rounded-circle avatar" alt=""><p class="nameUser">{{$user->name}} <i class="fa fa-angle-down" aria-hidden="true"></i></p></li>

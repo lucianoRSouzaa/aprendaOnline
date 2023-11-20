@@ -57,7 +57,7 @@
         <div class="links">
             <ul class="nav-itens d-flex align-items-center">
                 <!-- itens -->
-                <li><a href="#">{{ trans('myCourses') }}</a></li>
+                <li class="ball-li"><a href="{{ route('chat.index') }}">Chat @if($totalUnreadMessages)<span class="ball">{{ $totalUnreadMessages }}</span>@endif</a></li>
                 <li><a href="#">{{ trans('support') }}</a></li>
                 <li class="d-flex align-items-center profile" id="config"><img src="{{ asset($user->image) }}" class="rounded-circle avatar" alt=""><p class="nameUser">{{$user->name}} <i class="fa fa-angle-down" aria-hidden="true"></i></p></li>
                 <div class="notification-div">
@@ -260,7 +260,7 @@
             </div>
         </div>
         <div class="floating-container">
-            <div class="floating-button"><a href="{{ route('courses.create') }}"><img src="{{ asset('images/plus-svgrepo-com.svg') }}" class="img-add" aria-label="Criar novo curso"></a></div>
+        <div class="floating-button"><a class="stretched-link" href="{{ route('courses.create') }}"><img src="{{ asset('images/plus-svgrepo-com.svg') }}" class="img-add" aria-label="Criar novo curso"></a></div>
         </div>
     </div>
 @endsection

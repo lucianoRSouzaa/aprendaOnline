@@ -176,6 +176,17 @@ class User extends Authenticatable
         return $this->hasMany(Conversation::class,'sender_id')->orWhere('receiver_id',$this->id)->whereNotDeleted();
     }
 
+    // get total unread messages
+    public function totalUnreadMessagesCount() : int {
+        $totalUnreadMessages = 0;
+    
+        foreach($this->conversations as $conversation) {
+            $totalUnreadMessages += $conversation->unreadMessagesCount();
+        }
+    
+        return $totalUnreadMessages;
+    }
+
     /**
      * The channels the user receives notification broadcasts on
      */

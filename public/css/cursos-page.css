@@ -523,16 +523,8 @@ color: rgb(70, 70, 70);
   margin: 35px 25px;
 }
 
-.floating-container:hover {
-  height: 300px;
-}
-
 .floating-container:hover .floating-button {
-  box-shadow: 0 10px 25px rgba(44, 179, 240, 0.6);
-  -webkit-transform: translatey(5px);
-          transform: translatey(5px);
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  box-shadow: 6px 10px 20px rgba(44, 179, 240, 0.6);
 }
 
 .floating-container .floating-button {
@@ -552,8 +544,6 @@ color: rgb(70, 70, 70);
   z-index: 100;
   box-shadow: 0 10px 25px -5px rgba(44, 179, 240, 0.6);
   cursor: pointer;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
 }
 
 /* Modal erro */
@@ -892,4 +882,22 @@ padding-bottom: 5px;
   .wrapper .carousel{
     grid-auto-columns: calc((100% / 5) - 25px);
   }
+}
+
+.ball-li{
+  position: relative;
+}
+
+.ball-li .ball{
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background-color: #3498db;
+  top: -5px;
+  right: 10px;
+
+  font-size: 9px;
+  color: white;
+  text-align: center;
 }
