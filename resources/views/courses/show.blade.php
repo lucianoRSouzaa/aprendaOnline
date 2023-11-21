@@ -70,12 +70,20 @@
             <!-- ***** Logo Start ***** -->
             @auth
                 <a href="{{ auth()->user()->isCreator() ? route('courses.creator') : route('courses.viewer') }}" class="logo">
-                    <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
+                    @if (Cookie::get('theme_preference', 'light') === 'dark')
+                        <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                    @else
+                        <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                    @endif
                 </a>   
             @endauth
             @guest
                 <a href="{{ route('courses.viewer') }}" class="logo">
-                    <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
+                    @if (Cookie::get('theme_preference', 'light') === 'dark')
+                        <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                    @else
+                        <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                    @endif
                 </a>  
             @endguest
             <!-- ***** Logo End ***** -->
@@ -272,7 +280,7 @@
             <div class="col-6 col-descriptions">
                 <h1 class="title">{{ $course->title }}</h1>
                 <p class="mb-0 mt-2">{{ $course->views }} visualizações</p>
-                <p class="mb-0 mt-0">Criador por: {{ $course->creator->name }}</p>
+                <p class="mb-2 mt-0">Criador por: {{ $course->creator->name }}</p>
                 <p class="mt-1">{{ $course->description }}</p>
                 @auth
                     @if ($user->subscriptions()->where('course_id', $course->id)->exists())
@@ -321,7 +329,7 @@
         <div class="modulos_aulas_title">
             <h2>{{ trans('modulesAndLessons') }}</h2>
         </div>
-        <div class="row align-items-center">
+        <div class="row align-items-center div-modulos-aulas">
             <div class="col-md-8 col-sm-12">
                 <div class="box mt-4">
                     @foreach ($course->modules as $module)

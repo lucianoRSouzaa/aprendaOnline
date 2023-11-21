@@ -15,6 +15,15 @@
             z-index: 100;
             height: 98px;
         }
+
+        body.dark{
+            background: #111827;
+        }
+
+        body.dark header{
+            background: #111827;
+            border-bottom: 1px solid rgba(160, 160, 160, 0.267);
+        }
     </style>
 @endpush
 
@@ -38,9 +47,13 @@
 
 @section('header')
     <div class="container">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between header-alter">
             <a href="{{ route('modules.index', $course->slug) }}" class="logo">
-                <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
+                @if (Cookie::get('theme_preference', 'light') === 'dark')
+                    <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                @else
+                    <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @endif
             </a> 
             <div class="search-container d-flex justify-content-end align-items-center">
                 <a class="active" href="{{ route('modules.index', $course->slug) }}">{{ trans('modulesAndLessons') }}</a>

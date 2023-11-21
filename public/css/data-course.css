@@ -27,3 +27,11 @@ form{
     top: 23px;
     left: 45%;
 }
+
+body.dark{
+    background: #111827;
+}
+
+body.dark .back-btn, body.dark h2, body.dark h4{
+    color: #cecece;
+}

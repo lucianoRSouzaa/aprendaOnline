@@ -12,6 +12,10 @@
     border: 1px solid #dadada;
 }
 
+.theme{
+    text-decoration: none !important;
+}
+
 hr {
     margin: 0px;
     border: none;
@@ -43,4 +47,29 @@ hr {
 
 .card div a i{
     margin-right: 8px;
+}
+
+body.dark{
+    background: #192235;
+}
+
+body.dark .card{
+    background: #26324d;
+    color: #cecece;
+    border-color: #dadada;
+}
+
+body.dark .themes .theme .fa-moon{
+    color: #ff9100;
+}
+
+body.dark .btn-outline-primary{
+    border-color: #736bdb;
+    color: #736bdb;
+}
+
+body.dark .btn-outline-primary:hover{
+    border-color: #736bdb;
+    color: #fff;
+    background-color: #746dda;
 }

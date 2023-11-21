@@ -21,7 +21,11 @@
         <!-- logo -->
         <div class="logo">
             <a href="{{ route('courses.viewer') }}">
-                <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @if (Cookie::get('theme_preference', 'light') === 'dark')
+                    <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                @else
+                    <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @endif
             </a>
         </div>
         <div class="links">
@@ -35,19 +39,6 @@
                 <li><a href="{{ route('logout') }}">{{$nameUser}} <i class="fa fa-angle-down" aria-hidden="true"></i></a></li>
                 @endauth
             </ul>
-        </div>
-
-        <!-- botão do menu responsivo -->
-        <div class="toggle_btn">
-            <i class="fa fa-bars" aria-hidden="true"></i>
-        </div>
-
-        <!-- links dentro do menu responsivo -->
-        <div class="dropdown_menu">
-            <li><a href="#">Cursos</a></li>
-            <li><a href="#">Ferramentas</a></li>
-            <li><a href="#">Suporte</a></li>
-            <li><a href="#" class="gradient-button" data-bs-target="#Modal1" data-bs-toggle="modal">Entrar</a></li>
         </div>
     </nav>
 @endsection

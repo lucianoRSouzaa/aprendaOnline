@@ -2,6 +2,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/category.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('css/data-course.css') }}"> 
     <style>
         .back-btn {
             position: absolute;
@@ -35,7 +36,7 @@
                 var optionsPie = {
                     title: 'Taxa de Conclusão do Curso',
                     is3D: true,
-                    backgroundColor: '#eeeef6',
+                    backgroundColor: @if (Cookie::get('theme_preference', 'light') === 'dark') '#a0b1d6' @else '#eeeef6' @endif,
                     colors:['#66b5ff','#ff80ae'],
                     fontSize: 13,
                     titleTextStyle: {
@@ -64,7 +65,7 @@
 
                 var barOptions = {
                     title: 'Quantidade de alunos que concluíram cada aula',
-                    backgroundColor: '#eeeef6',
+                    backgroundColor: @if (Cookie::get('theme_preference', 'light') === 'dark') '#a0b1d6' @else '#eeeef6' @endif,
                     hAxis: {
                         title: 'Aulas',
                         textStyle: {fontSize: 13}
@@ -115,7 +116,7 @@
       
                 var optionsLine = {
                     title: 'Conclusões de Aulas por usuários de acordo com a Hora do Dia',
-                    backgroundColor: '#eeeef6',
+                    backgroundColor: @if (Cookie::get('theme_preference', 'light') === 'dark') '#a0b1d6' @else '#eeeef6' @endif,
                     pointSize: 3,
                     pointShape: 'circle',
                     hAxis: {

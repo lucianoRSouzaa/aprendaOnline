@@ -229,7 +229,7 @@
 .send {
     border: none;
     color:#fff;
-    width: 70px;
+    width: 65px;
     background-color: #4f6ebd;
     border-radius: 50px;
     cursor: pointer;
@@ -295,7 +295,7 @@
 }
 
 .input-send-message{
-    background-color: #f3f4f6;
+    background-color: #ffffff;
     outline: none;
 }
 

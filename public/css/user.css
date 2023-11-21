@@ -558,3 +558,72 @@ div .result-pesquisa a .fa-circle-xmark{
     top: 20px;
     left: 25px;
 }
+
+body.dark{
+    background: #111827;
+}
+
+body.dark .dados-div{
+    color: #cecece;
+}
+
+body.dark .back-btn.page-show{
+    color: #cecece;
+}
+
+body.dark .row.shadow{
+    background: #192235;
+}
+
+body.dark .nav-div{
+    background: #374151;
+    color: #cecece;
+}
+
+.input-group input:hover, .input-group input:focus{
+    box-shadow: none !important;
+}
+
+body.dark .input-group input{
+    background: #192235;
+    color: #cecece;
+}
+
+body.dark .input-group input::placeholder{
+    color: #cecece;
+}
+
+body.dark .slider .card{
+    background: #192235;
+    border-color: #5f7191;
+}
+
+body.dark .slider .card .card-content p{
+    color: #cecece;
+}
+
+body.dark .edit-perfil{
+    background: #757575;
+}
+
+body.dark .card.shadow-sm{
+    background: #26324d;
+    border: 2px solid #0d6efd;
+}
+
+body.dark .card .col-5, body.dark .card .col-7{
+    color: #cecece;
+}
+
+body.dark .col-5, body.dark .col-7{
+    border: none !important;
+}
+
+body.dark .back-btn{
+    color: #cecece;
+}
+
+body.dark .col-7 div input{
+    background: #374151;
+    color: #cecece;
+}

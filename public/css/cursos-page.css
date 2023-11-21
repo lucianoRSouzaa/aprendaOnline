@@ -901,3 +901,58 @@ padding-bottom: 5px;
   color: white;
   text-align: center;
 }
+
+
+/* tema escuro */
+body.dark{
+  background: #111827;
+}
+
+body.dark header{
+  border-bottom: 1px solid rgba(160, 160, 160, 0.267);
+}
+
+body.dark #search-input{
+  background: #111827;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+body.dark #search-input::placeholder{
+  color: #cecece;
+}
+
+body.dark #search-button{
+  background: #111827;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+body.dark #search-button i{
+  color: #cecece;
+}
+
+body.dark nav .nav-itens > li > a, body.dark nav .nav-itens > li > p{
+  color: #cecece;
+}
+
+body.dark h2{
+  color: #cecece;
+}
+
+body.dark .card{
+  background: #111827;
+  border-color: #5f7191;
+}
+
+body.dark .card-content p.title{
+  color: #cecece;
+}
+
+body.dark .card-content p{
+  color: #aaaaaa;
+}
+
+body.dark .notifications{
+  color: #cecece;
+}

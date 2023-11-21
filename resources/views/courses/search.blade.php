@@ -62,7 +62,11 @@
         <div class="logo">
             @auth
             <a href="{{ route('courses.creator') }}" aria-label="Ir para o menu da página de criadores de conteúdo">
-                <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @if (Cookie::get('theme_preference', 'light') === 'dark')
+                    <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                @else
+                    <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @endif
             </a>
             @endauth
             @guest
@@ -86,17 +90,17 @@
                         <a href="{{ route('courses.toggleMode') }}"><i class="fa-solid fa-user-graduate fa-lg"></i>{{ trans('toggleModeStudent') }}</a>
                     @endif
                     @auth
-                    <a href="{{ route('user.show', auth()->user()->id) }}"><i class="fa fa-user fa-lg" aria-hidden="true"></i>{{ trans('profile') }}</a>
+                    <a href="{{ route('user.show', auth()->user()->email) }}"><i class="fa fa-user fa-lg" aria-hidden="true"></i>{{ trans('profile') }}</a>
                     @endauth
                     <a href="{{ route('configs') }}"><i class="fa fa-cog fa-lg" aria-hidden="true"></i>{{ trans('settings') }}</a>
                     <div class="themes d-flex">
-                        <div class="theme w-50 d-flex justify-content-center align-items-center">
+                        <a href="{{ route('theme', 'light') }}" class="theme w-50 d-flex justify-content-center align-items-center">
                             <i class="fa fa-sun-o fa-xl" aria-hidden="true"></i>
-                        </div>
+                        </a>
                         <span class="line"></span>
-                        <div class="theme w-50 d-flex justify-content-center align-items-center">
+                        <a href="{{ route('theme', 'dark') }}" class="theme w-50 d-flex justify-content-center align-items-center">
                             <i class="fa-solid fa-moon fa-xl" aria-hidden="true"></i>
-                        </div>                        
+                        </a>                        
                     </div>
                     <a href="{{ route('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>{{ trans('logout') }}</a>
                 </div>
@@ -124,7 +128,7 @@
         <div class="container pt-4 pb-5">
             <h3>Encontre o curso que você procura!</h3>
             <div class="box-search shadow mt-2">
-                <div class="d-flex">
+                <div class="d-flex all-inputs">
                     <div class="input-txt d-flex align-items-center">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <input class="w-100 border-none first-input" value="{{ $courseTitleSearch }}" type="text" name="title" placeholder="Pesquise pelo nome do curso">
@@ -141,7 +145,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row main-div">
         <div class="col-3 pt-4 pb-5">
             <h4 class="text-center">Filtrar por:</h4>
             <div class="d-flex align-items-center justify-content-between sort mt-3">
@@ -203,7 +207,7 @@
                 @forelse ($filteredCourses as $course)
                     <div class="card mt-3">
                         <img class="img-card" src="{{ asset('storage/' . $course->image) }}" alt="Imagem do Card">
-                        <div class="card-content">
+                        <div class="card-content d-flex justify-content-center h-100">
                             <p class="title">{{ $course->title }}</p>
                             <p>{{ trans('madeBy') }} {{ $course->creator->name }}</p>
                             <div class="d-flex align-items-center">

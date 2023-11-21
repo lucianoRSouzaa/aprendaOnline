@@ -148,7 +148,7 @@
                 @csrf
 
                     <input type="hidden" autocomplete="false" style="display:none">
-                    <div class="row px-3">
+                    <div class="row justify-content-between px-3">
                         <input 
                                 x-model="body"
                                 type="text"
@@ -156,9 +156,9 @@
                                 autofocus
                                 placeholder="Escreva sua mensagem aqui"
                                 maxlength="1700"
-                                class="col-11 input-send-message border-0 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg  focus:outline-none"
+                                class="col-10 input-send-message border-0 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg  focus:outline-none"
                         >
-                        <button x-bind:disabled="!body.trim()" type='submit' class="send col-1">
+                        <button x-bind:disabled="!body.trim()" type='submit' class="send d-flex justify-content-center col-1">
                             <i class="icon fa fa-paper-plane-o" aria-hidden="true"></i>
                         </button>
                     </div>

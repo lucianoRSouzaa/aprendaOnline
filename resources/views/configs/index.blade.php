@@ -11,13 +11,13 @@
 
             <h5>{{ trans('chooseTheme') }}</h5>
             <div class="themes d-flex">
-                <div class="theme w-50 d-flex justify-content-center align-items-center">
+                <a href="{{ route('theme', 'light') }}" class="theme w-50 d-flex justify-content-center align-items-center">
                     <i class="fa fa-sun-o fa-xl" aria-hidden="true"></i>
-                </div>
+                </a>
                 <span class="line"></span>
-                <div class="theme w-50 d-flex justify-content-center align-items-center">
+                <a href="{{ route('theme', 'dark') }}" class="theme w-50 d-flex justify-content-center align-items-center">
                     <i class="fa-solid fa-moon fa-xl" aria-hidden="true"></i>
-                </div>                        
+                </a>                        
             </div>
 
             <h5 class="mt-4">{{ trans('chooseLang') }}</h5>
@@ -27,8 +27,8 @@
                 <a href="{{ route('lang', 'es') }}" class="btn btn-outline-primary">Español</a>
             </div>
 
-            <div class="d-flex justify-content-center gap-4">
-                <a href="{{ url()->previous() }}" class="btn btn-outline-secondary"><i class="fa-solid fa-circle-arrow-left fa-lg"></i>{{ trans('back') }}</a>
+            <div class="d-flex justify-content-center gap-4 pb-3">
+                <a href="{{ route('courses.creator') }}" class="btn btn-outline-secondary"><i class="fa-solid fa-circle-arrow-left fa-lg"></i>{{ trans('back') }}</a>
                 <a href="{{ route('logout') }}" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>{{ trans('logout') }}</a>
             </div>
         </div>

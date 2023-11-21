@@ -441,3 +441,25 @@ padding-bottom: 5px;
     min-height: 159px;
   }
 }
+
+body.dark{
+  background: #111827;
+}
+
+body.dark header{
+  background: #111827;
+  border-bottom: 1px solid rgba(160, 160, 160, 0.267);
+}
+
+body.dark header a, body.dark h2, body.dark .box, body.dark .box i, body.dark .box p,
+body.dark .col-table .card, body.dark .col-12 .card, body.dark .overview{
+  color: #cecece;
+}
+
+body.dark header a.active{
+  color: #4ce9e9;
+}
+
+body.dark .box, body.dark .col-table .card, body.dark .col-12 .card{
+  background: #192235;
+}

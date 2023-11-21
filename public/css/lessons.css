@@ -603,3 +603,26 @@ a:hover .fa-circle-arrow-left{
   background-color: #ffffff;
   color: #374151;
 }
+
+
+body.dark .header-alter a, body.dark .page-order h2, body.dark .box#aulas-list .div-principal .info-modulo .texto-principal{
+  color: #cecece;
+}
+
+body.dark header a.active{
+  color: #4ce9e9;
+}
+
+body.dark .page-order .box#aulas-list{
+  background: #192235;
+}
+
+body.dark .btn-outline-dark{
+  background: transparent;
+  color: #473ea7;
+  border-color: #4039a5;
+}
+
+body.dark .btn-outline-dark i{
+  color: #473ea7;
+}

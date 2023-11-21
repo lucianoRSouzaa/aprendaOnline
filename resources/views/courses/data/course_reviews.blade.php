@@ -48,12 +48,20 @@
             <!-- ***** Logo Start ***** -->
             @auth
                 <a href="{{ route('course.data.index', $course->slug) }}" class="logo">
-                    <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
+                    @if (Cookie::get('theme_preference', 'light') === 'dark')
+                        <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                    @else
+                        <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                    @endif
                 </a>   
             @endauth
             @guest
                 <a href="{{ route('courses.viewer') }}" class="logo">
-                    <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
+                    @if (Cookie::get('theme_preference', 'light') === 'dark')
+                        <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                    @else
+                        <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                    @endif
                 </a>  
             @endguest
             <!-- ***** Logo End ***** -->

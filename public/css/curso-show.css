@@ -929,3 +929,44 @@ main .row{
     max-width: 1380px;
   }
 }
+
+body.dark{
+  background: #111827;
+}
+
+body.dark header{
+  background: #111827;
+  border-bottom: 1px solid rgba(160, 160, 160, 0.267);
+}
+
+body.dark header #search-input{
+  background: #111827;
+  color: #cecece;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+body.dark header #search-button{
+  background: #111827;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+body.dark .col-descriptions, body.dark .modulos_aulas_title, body.dark .div-modulos-aulas, 
+body.dark .div-modulos-aulas ul .titulo_modulo i, body.dark .div-modulos-aulas ul .titulo_modulo p,
+body.dark .learn_title, body.dark .box li, body.dark .avaliacoes_title, body.dark header #search-input::placeholder,
+body.dark header #search-button i, body.dark .box-avaliacoes{
+  color: #cecece;
+}
+
+body.dark .box, body.dark .box-avaliacoes{
+  background: #192235;
+}
+
+body.dark .bar-empty{
+  background: #7093df38;
+}
+
+body.dark .box-avaliacoes svg{
+  filter: invert(0.9);
+}

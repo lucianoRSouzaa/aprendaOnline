@@ -25,7 +25,7 @@ class ConfigsController extends Controller
     public function setTheme($theme)
     {
         if ($theme === 'light' || $theme === 'dark') {
-            return redirect()->route('courses.creator')->withCookie(cookie()->forever('theme_preference', $theme));
+            return redirect()->back()->withCookie(cookie()->forever('theme_preference', $theme));
         }
 
         return redirect('/');

@@ -9,14 +9,18 @@
         <!-- logo -->
         <div class="logo">
             <a href="{{ route('courses.viewer') }}">
-                <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @if (Cookie::get('theme_preference', 'light') === 'dark')
+                    <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                @else
+                    <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @endif
             </a>
         </div>
         <div class="links">
             <ul class="nav-itens">
                 <!-- itens -->
                 @auth
-                <li><a href="#">Favoritos</a></li>
+                <li><a href="{{ route('courses.favorited') }}">Favoritos</a></li>
                 @endauth
                 <li><a href="{{ route('courses.completed') }}">Cursos concluídos</a></li>
                 @auth

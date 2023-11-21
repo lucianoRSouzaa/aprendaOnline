@@ -51,7 +51,11 @@
         <!-- logo -->
         <div class="logo">
             <a href="{{ route('courses.creator') }}" aria-label="Ir para o menu da página de criadores de conteúdo">
-                <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @if (Cookie::get('theme_preference', 'light') === 'dark')
+                    <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                @else
+                    <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @endif
             </a>
         </div>
         <div class="links">

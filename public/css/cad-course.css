@@ -387,3 +387,38 @@ div.border-rounded div .text-xs {
 input.input-will-learn:not(:first-of-type){
   margin-top: 0.5rem;
 }
+
+body.dark, body.dark input, body.dark textarea, body.dark select{
+  background: #111827;
+  color: #cecece;
+}
+
+body.dark div.border-rounded{
+  border-color: #cecece;
+}
+
+body.dark button.prev{
+  background: transparent;
+  color: #473ea7;
+  border-color: #4039a5;
+}
+
+body.dark .progress-bar .step .bullet{
+  border-color: white;
+}
+
+body.dark .progress-bar .step .bullet.active{
+  border-color: black;
+}
+
+body.dark .progress-bar .step p{
+  color: white;
+}
+
+body.dark .progress-bar .step .bullet:before, body.dark .progress-bar .step .bullet:after{
+  background: rgba(46, 149, 187, 0.178);
+}
+
+body.dark .progress-bar .step .bullet.active:after{
+  background: #119972;
+}

@@ -47,7 +47,7 @@
 
                 var barOptionsCompletion = {
                     title: 'Quantidade de conclusões do curso nos últimos 5 meses',
-                    backgroundColor: '#eeeef6',
+                    backgroundColor: @if (Cookie::get('theme_preference', 'light') === 'dark') '#a0b1d6' @else '#eeeef6' @endif,
                     hAxis: {
                         title: 'Meses',
                         textStyle: {fontSize: 13}
@@ -88,7 +88,7 @@
                 var optionsModuleColumn = {
                     title: 'Taxa de conclusão de Aulas por Módulo (%)',
                     isStacked: true,
-                    backgroundColor: '#eeeef6',
+                    backgroundColor: @if (Cookie::get('theme_preference', 'light') === 'dark') '#a0b1d6' @else '#eeeef6' @endif,
                     titleTextStyle: {
                       fontSize: 15,
                     },
@@ -118,7 +118,7 @@
                 // Opções do gráfico de linha
                 var optionsLineLessons = {
                     title: 'Conclusão de Aulas por Mês',
-                    backgroundColor: '#eeeef6',
+                    backgroundColor: @if (Cookie::get('theme_preference', 'light') === 'dark') '#a0b1d6' @else '#eeeef6' @endif,
                     pointSize: 2,
                     pointShape: 'circle',
                     titleTextStyle: {
@@ -148,7 +148,7 @@
 
                 var barOptions = {
                     title: 'Quantidade de favoritação do curso nos últimos 5 meses',
-                    backgroundColor: '#eeeef6',
+                    backgroundColor: @if (Cookie::get('theme_preference', 'light') === 'dark') '#a0b1d6' @else '#eeeef6' @endif,
                     hAxis: {
                         title: 'Meses',
                         textStyle: {fontSize: 13}
@@ -179,7 +179,7 @@
                 var optionsReviews = {
                     title: 'Avaliações do Curso',
                     curveType: 'function',
-                    backgroundColor: '#eeeef6',
+                    backgroundColor: @if (Cookie::get('theme_preference', 'light') === 'dark') '#a0b1d6' @else '#eeeef6' @endif,
                     pointSize: 2,
                     pointShape: 'circle',
                     titleTextStyle: {
@@ -205,7 +205,7 @@
       
                 var optionsLine = {
                     title: 'Quantidade de inscrições nos últimos {{ $titleLine }}',
-                    backgroundColor: '#eeeef6',
+                    backgroundColor: @if (Cookie::get('theme_preference', 'light') === 'dark') '#a0b1d6' @else '#eeeef6' @endif,
                     pointSize: 3,
                     pointShape: 'circle',
                     titleTextStyle: {
@@ -229,7 +229,7 @@
 
 @section('main')
     <div class="row">
-        <a href="{{ url()->previous() }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('back') }}</a>
+        <a href="{{ route('modules.index', $course->slug) }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('back') }}</a>
         <div class="col-12">
             <div class="row justify-content-center">
                 <h2 class="text-center mt-3 mb-3">{{ trans('courseData') }} {{ $course->title }}</h2>

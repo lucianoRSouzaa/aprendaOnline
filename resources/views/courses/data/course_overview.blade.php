@@ -8,7 +8,11 @@
     <div class="container">
         <div class="d-flex justify-content-between">
             <a href="{{ route('modules.index', $course->slug) }}" class="logo">
-                <img src="{{ asset('images/logoMenu2.png') }}" alt="Logo do site">
+                @if (Cookie::get('theme_preference', 'light') === 'dark')
+                    <img class="logo2" src="{{ asset('images/logoMenu.png') }}" alt="">
+                @else
+                    <img class="logo2" src="{{ asset('images/logoMenu2.png') }}" alt="">
+                @endif
             </a>       
             <div class="search-container d-flex justify-content-end align-items-center">
                 <a href="{{ route('modules.index', $course->slug) }}">{{ trans('modulesAndLessons') }}</a>
@@ -20,7 +24,7 @@
 @endsection
 
 @section('main')
-    <div class="container">
+    <div class="container overview">
         <h3 class="text-center mt-3">{{ $course->title }}</h3>
         <h5>Classificação:</h5>
         <ul>

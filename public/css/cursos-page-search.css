@@ -346,7 +346,6 @@ nav .nav-itens > li > a:hover, nav .nav-itens > li > p:hover{
     overflow: hidden;
     padding: 0;
     margin: 0px 0.8rem 0.8rem 0.8rem;
-    padding-bottom: 5px;
 }
 
 @media (min-width: 1450px){
@@ -417,13 +416,14 @@ nav .nav-itens > li > a:hover, nav .nav-itens > li > p:hover{
 
 
 .card-content{
-    padding: 5px 10px 10px 3px !important;
+    padding: 5px 10px 12px 3px !important;
 }
 
 .card-content p{
     margin: 0;
     margin-left: 1em;
     color: #5a5a5a;
+    text-align: start;
 }
 
 .card-content > p.title {
@@ -442,4 +442,84 @@ nav .nav-itens > li > a:hover, nav .nav-itens > li > p:hover{
 .page-link:focus {
   background-color: unset;
   box-shadow: none;
+}
+
+body.dark .main-div{
+    color: #cecece;
+}
+
+body.dark .main-div{
+    background: #111827;
+}
+
+body.dark header{
+    background: #192235;
+    border-bottom: 1px solid rgba(160, 160, 160, 0.267);
+}
+
+body.dark .serach{
+    background: #192235;
+}
+
+body.dark .col-3{
+    box-shadow: 2px 0 15px rgba(255, 255, 255, 0.15);
+}
+
+body.dark .col-9{
+    box-shadow: 5px 0 15px rgba(255, 255, 255, 0.15);
+}
+
+body.dark nav .nav-itens > li > a, body.dark nav .nav-itens > li > p{
+    color: #cecece;
+}
+
+body.dark h3{
+    color: #cecece;
+}
+
+body.dark .all-inputs{
+    background: #192235;
+}
+
+body.dark .box-search.shadow{
+    box-shadow: 0 .3rem 1rem rgba(255, 255, 255, 0.15)!important;
+}
+
+body.dark .box-search .input-txt:first-child {
+    border-right: 1px solid #5e5e5e;
+}
+
+body.dark .all-inputs input{
+    color: #cecece;
+}
+
+body.dark .all-inputs input::placeholder{
+    color: #b4b4b4;
+}
+
+body.dark .all-inputs .btns a{
+    color: #cecece;
+}
+
+body.dark .all-inputs .btns .btn-primary{
+    background-color: #322994;
+    border-color: #2d2785;
+}
+
+body.dark .card{
+  background: #111827;
+  border-color: #5f7191;
+}
+
+body.dark .card-content p.title{
+  color: #cecece;
+}
+
+body.dark .card-content p{
+  color: #aaaaaa;
+}
+
+body.dark .col-9 div select{
+    background: #111827;
+    color: #cecece;
 }

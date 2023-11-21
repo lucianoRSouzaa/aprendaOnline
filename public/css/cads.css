@@ -110,3 +110,20 @@ div p.pl-1 {
 div.border-rounded div .text-xs {
   font-size: 0.75rem;
 }
+
+body.dark{
+  background: #111827;
+}
+
+body.dark .card, body.dark .card input, body.dark .card textarea{
+  background: #1d273d;
+  color: #cecece;
+}
+
+body.dark .card-header{
+  background: #192235;
+}
+
+body.dark div.border-rounded{
+  border-color: #cecece;
+}
