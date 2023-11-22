@@ -607,7 +607,7 @@ ul.viewer .sidebar{
     gap: 20px;
 }
 
-#ModalCreatorErro .actions button, #ModalCreatorErro .actions a{
+#ModalCreatorErro .actions button, #ModalCreatorErro .actions a, #ModalErrorEnrollment .actions a{
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-size: 1rem;
@@ -618,7 +618,7 @@ ul.viewer .sidebar{
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-#ModalCreatorErro .actions a{
+#ModalCreatorErro .actions a, #ModalErrorEnrollment .actions a{
   text-decoration: none;
 }
 
@@ -720,7 +720,7 @@ padding-bottom: 5px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-#ModalConfirmacaoExclusao .desactivate, #ModalError .desactivate {
+#ModalConfirmacaoExclusao .desactivate, #ModalError .desactivate, #ModalErrorEnrollment .desactivate{
     border-width: 1px;
     border-color: transparent;
     background-color: #DC2626;
@@ -735,22 +735,22 @@ padding-bottom: 5px;
 
 /* modal sucesso */
 
-#ModalSucess, #ModalError{
+#ModalSucess, #ModalError, #ModalErrorEnrollment{
   margin-top: 60px;
 }
 
-#ModalSucess .modal-dialog, #ModalError .modal-dialog{
+#ModalSucess .modal-dialog, #ModalError .modal-dialog, #ModalErrorEnrollment .modal-dialog{
   width: 550px !important;
   max-width: 800px;
 }
 
-#ModalSucess .close, #ModalError .close{
+#ModalSucess .close, #ModalError .close, #ModalErrorEnrollment .close{
   position: absolute;
   right: 18px;
   top: 18px;
 }
 
-#ModalSucess .image, #ModalError .image{
+#ModalSucess .image, #ModalError .image, #ModalErrorEnrollment .image{
   margin-left: auto;
   margin-right: auto;
 }
@@ -760,14 +760,14 @@ padding-bottom: 5px;
   text-align: center;
 }
 
-#ModalSucess .title, #ModalError .title{
+#ModalSucess .title, #ModalError .title, #ModalErrorEnrollment .title{
   color: #111827;
   font-size: 1.2rem;
   font-weight: 600;
   line-height: 1.5rem;
 }
 
-#ModalSucess .message, #ModalError .message{
+#ModalSucess .message, #ModalError .message, #ModalErrorEnrollment .message{
   margin-top: 0.3rem;
   color: #6B7280;
   font-size: 0.96rem;
@@ -776,20 +776,20 @@ padding-bottom: 5px;
   margin-right: 16px;
 }
 
-#ModalSucess .message + p, #ModalError .message + p{
+#ModalSucess .message + p, #ModalError .message + p, #ModalErrorEnrollment .message + p{
   text-align: start;
   margin-left: 40px;
   margin-bottom: 7px;
 }
 
-#ModalSucess .actions, #ModalError .actions{
+#ModalSucess .actions, #ModalError .actions, #ModalErrorEnrollment .actions{
   margin: 1.3rem 1.5rem 0.75rem 1.8rem;
   display: flex;
   justify-content: center;
   gap: 20px;
 }
 
-#ModalSucess .actions button, #ModalError .actions button{
+#ModalSucess .actions button, #ModalError .actions button, #ModalErrorEnrollment .actions button{
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: 1rem;
@@ -807,7 +807,7 @@ padding-bottom: 5px;
   background-color: #198754;
 }
 
-#ModalSucess .cancel, #ModalError .cancel{
+#ModalSucess .cancel, #ModalError .cancel, #ModalErrorEnrollment .cancel{
   border: 1px solid #D1D5DB;
   background-color: #ffffff;
   color: #374151;

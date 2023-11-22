@@ -33,6 +33,9 @@ class CheckCourseEnrollment
             return $next($request);
         }
 
+        session()->flash('errorEnrollment', 'Você não pode assitir aula de um curso que você não está inscrito!');
+        session()->flash('courseEnrollment', $courseSlug);
+
         return redirect()->back();
     }
 }

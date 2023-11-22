@@ -34,6 +34,10 @@
             @if (session()->has('error'))
                 $('#ModalError').modal('show');
             @endif
+
+            @if (session()->has('errorEnrollment'))    
+                $('#ModalErrorEnrollment').modal('show');
+            @endif
         });
     </script>
 @endpush
@@ -167,6 +171,33 @@
                     <div class="actions">
                         <button class="cancel btns-restaurar" data-bs-dismiss="modal" type="button">Fechar</button>
                         <button class="btn success btns-restaurar" data-bs-dismiss="modal" type="button">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+@if (session()->has('errorEnrollment'))
+    <div class="modal fade" id="ModalErrorEnrollment" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/warning.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content d-flex flex-column align-items-center">
+                        <span class="title text-center">Ação proíbida!</span>
+                        <p class="message mt-2 mb-0">{{ session('errorEnrollment') }}</p>
+                    </div>
+                    <div class="actions">
+                        <button class="cancel w-50" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                        <a href="{{ route('courses.show', session('courseEnrollment')) }}" class="desactivate text-center w-50">Inscrever-se</a>
                     </div>
                 </div>
             </div>
