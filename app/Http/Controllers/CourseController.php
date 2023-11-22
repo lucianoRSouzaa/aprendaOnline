@@ -84,25 +84,21 @@ class CourseController extends Controller
     }
 
     public function CompletedCourses(){
-        $nameUser = null;
-
         $user = User::find(auth()->user()->id);
         $completedCourses = $user->completions->pluck('course');
 
         $nameUser = $user->name;
 
-        return view('courses.completed', compact('completedCourses', 'nameUser'));
+        return view('courses.completed', compact('completedCourses', 'user'));
     }
     
     public function favoritedCourses(){
-        $nameUser = null;
-
         $user = User::find(auth()->user()->id);
         $favoritedCourses = $user->favorites->pluck('course');
 
         $nameUser = $user->name;
 
-        return view('courses.favorited', compact('favoritedCourses', 'nameUser'));
+        return view('courses.favorited', compact('favoritedCourses', 'user'));
     }
 
     public function create()

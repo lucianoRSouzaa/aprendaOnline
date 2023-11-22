@@ -79,6 +79,10 @@ nav .nav-itens > li > a:hover, nav .nav-itens > li > p:hover{
   display: none;
 }
 
+.nav-itens-other .notification-div {
+  right: -4px;
+}
+
 .nav-itens .notification-div.show{
   display: block;
 }
@@ -169,13 +173,18 @@ color: rgb(70, 70, 70);
   width: 350px;
   border: 1px solid #ddd;
   padding-top: 5px;
-  right: -8%;
+  right: -9.4%;
   border-radius: 5px;
   top: 42px;
   position: absolute;
   z-index: 20;
   display: none;
 }
+
+ul.viewer .sidebar{
+  right: -6.5%;
+}
+
 
 .sidebar:after {
   content: '';

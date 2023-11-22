@@ -79,7 +79,7 @@
             </a>
         </div>
         <div class="links">
-            <ul class="nav-itens d-flex align-items-center">
+            <ul class="nav-itens d-flex align-items-center viewer">
                 <!-- itens -->
                 @auth
                     <li class="ball-li"><a href="{{ route('chat.index') }}">Chat @if($totalUnreadMessages)<span class="ball">{{ $totalUnreadMessages }}</span>@endif</a></li>

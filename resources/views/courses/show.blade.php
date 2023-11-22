@@ -332,7 +332,7 @@
         <div class="row align-items-center div-modulos-aulas">
             <div class="col-md-8 col-sm-12">
                 <div class="box mt-4">
-                    @foreach ($course->modules as $module)
+                    @forelse ($course->modules as $module)
                         <div class="div-principal" onclick="toggleDivs(this)">
                             <div class="botoes">
                                 <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -353,7 +353,9 @@
                         </div>
 
                         <div class="linha"></div>
-                    @endforeach
+                    @empty
+                        <p class="mb-0">Nenhum módulo foi criado ainda</p>
+                    @endforelse
                 </div>
             </div>
         </div>
