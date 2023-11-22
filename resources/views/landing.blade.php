@@ -508,4 +508,39 @@
             </div>
         </div>
     </section>
+    <section class="container desenvolvedores-section mb-5">
+        <div class="d-flex justify-content-center">
+            <h2>Desenvolvedores</h2>
+        </div>
+        <div class="row gap-3 justify-content-center mt-2">
+            <div class="card col-3 shadow-sm">
+                <div class="d-flex justify-content-center pt-3">
+                    <img src="{{ asset('images/foto-vitoria.jpeg') }}" class="img-card-desenvolvedores" alt="Imagem do desenvolvedor Luciano">
+                </div>
+                <h6 class="mb-0 text-center">Vitória Giovanna Recanelli</h6>
+                <p class="mb-0 pb-3 text-center">Documentação e design</p>
+            </div>
+            <div class="card col-3 shadow-sm">
+                <div class="d-flex justify-content-center pt-3">
+                    <img src="{{ asset('images/foto-clara.jpeg') }}" class="img-card-desenvolvedores" alt="Imagem do desenvolvedor Luciano">
+                </div>
+                <h6 class="mb-0 text-center">Clara Raiane Botelho Alves</h6>
+                <p class="mb-0 pb-3 text-center">Diário de bordo e design</p>
+            </div>
+            <div class="card col-3 shadow-sm">
+                <div class="d-flex justify-content-center pt-3">
+                    <img src="{{ asset('images/foto-luciano.jpeg') }}" class="img-card-desenvolvedores" alt="Imagem do desenvolvedor Luciano">
+                </div>
+                <h6 class="mb-0 text-center">Luciano Rodrigues De Souza</h6>
+                <p class="mb-0 pb-3 text-center">Programação e banco de dados</p>
+            </div>
+            <div class="card col-3 shadow-sm">
+                <div class="d-flex justify-content-center pt-3">
+                    <img src="{{ asset('images/foto-priscila.jpeg') }}" class="img-card-desenvolvedores" alt="Imagem do desenvolvedor Luciano">
+                </div>  
+                <h6 class="mb-0 text-center">Priscilla Martins Reis</h6>
+                <p class="mb-0 pb-3 text-center">Documentação e design</p>
+            </div>
+        </div>
+    </section>
 @endsection

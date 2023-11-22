@@ -548,6 +548,7 @@ nav.sticky .nav-itens > li{
     text-align: start;
     margin-left: 3.5em;
     margin-right: 3.5em;
+    text-align: center;
   }
   .slider .block p + a{
     color: white;
@@ -712,3 +713,34 @@ div .content > :last-child {
       padding: 275px 0;
     }
   }
+
+/* desenvolvedores section */
+.desenvolvedores-section .row{
+  padding: 0;
+  margin: 0;
+}
+
+.desenvolvedores-section .row .col-3{
+  width: 23%;
+}
+
+.desenvolvedores-section .row .col-3 .img-card-desenvolvedores{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.desenvolvedores-section .row .col-3:hover{
+  background: #00000015;
+  scale: 1.03;
+}
+
+.desenvolvedores-section .row .col-3 h6{
+  margin-top: 8px;
+}
+
+.desenvolvedores-section .row .col-3 p{
+  margin-top: 2px;
+  color: #666;
+}
