@@ -92,7 +92,7 @@
 
                             </div>
                         </div>
-                        <p>{{count($ratings)}} {{ trans('ratingsInThisCourse') }}</p>
+                        <p>{{ $ratingsCount }} {{ trans('ratingsInThisCourse') }}</p>
                     </div>
                 </div>
                 <div class="box-filtrar">
@@ -129,6 +129,14 @@
                     </div>
                 </div>
                 <div class="comments">
+                    @if (count($ratings) > 0 && $starFilter)
+                        <div class="d-flex align-items-center">
+                            <p class="ps-3 mb-0 mt-1">{{ count($ratings) }} avaliações encontradas com {{ $starFilter }} estrelas:</p>
+                            <div class="d-flex justify-content-center ps-1">
+                                <a class="cancel-search" href="{{ route("courses.show", $course->slug) }}"><i class="fa-regular fa-circle-xmark fa-lg"></i></a>
+                            </div>
+                        </div>
+                    @endif
                     @forelse ($ratings as $rating)
                         <div class="comment">
                             <h4>{{ $rating->user->name }}</h4>
@@ -153,6 +161,9 @@
                             @endif
                         </div>
                     @endforelse
+                    <div class="d-flex justify-content-center align-items-end pt-3">
+                        {{ $ratings->links() }}
+                    </div>
                 </div>
             </div>
         </div>

@@ -363,7 +363,9 @@ class CourseDataController extends Controller
         $starFilter = null;
         
         $course = Course::where('slug', $courselug)->firstOrFail();
+
         $ratingsQuery  = $course->ratings();
+        $ratingsCount = $course->ratings->count();
 
         if ($request->has('starFilter')) {
             // Aqui, você pode aplicar o filtro com base no valor enviado pelo formulário.
@@ -371,7 +373,7 @@ class CourseDataController extends Controller
             $ratingsQuery->where('rating', $starFilter);
         }
 
-        $ratings = $ratingsQuery->get();
+        $ratings = $ratingsQuery->paginate(5)->appends(['starFilter' => $starFilter]);
 
         $allRatings = $course->ratings;
         // Calculando a média das classificações por nota
@@ -381,7 +383,7 @@ class CourseDataController extends Controller
             return ($scoreCount / $totalCount) * 100;
         });
 
-        return view('courses.data.course_reviews', compact('course', 'ratings', 'averageRatingsPerScore', 'starFilter'));
+        return view('courses.data.course_reviews', compact('course', 'ratings', 'averageRatingsPerScore', 'starFilter', 'ratingsCount'));
     }
 
     public function studentProgress($courselug)

@@ -155,7 +155,7 @@
                 @if ($role == "inscrito")
                     <div class="result-pesquisa">
                         <h5>{{ trans('registersFoundFromTerm') }} {{ $searchTerm }}</h5>
-                        <a href="{{ route('user.show', ['id' => $user->id]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
+                        <a href="{{ route('user.show', ['email' => $user->email]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
                     </div>
                 @endif
 
@@ -188,7 +188,7 @@
                 @if ($role == "criados")
                     <div class="result-pesquisa">
                         <h5>{{ trans('registersFoundFromTerm') }} {{ $searchTerm }}</h5>
-                        <a href="{{ route('user.show', ['id' => $user->id]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
+                        <a href="{{ route('user.show', ['email' => $user->email]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
                     </div>
                 @endif
 
@@ -221,7 +221,7 @@
                 @if ($role == "concluido")
                     <div class="result-pesquisa">
                         <h5>{{ trans('registersFoundFromTerm') }} {{ $searchTerm }}</h5>
-                        <a href="{{ route('user.show', ['id' => $user->id]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
+                        <a href="{{ route('user.show', ['email' => $user->email]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
                     </div>
                 @endif
 
@@ -254,7 +254,7 @@
                 @if ($role == "favoritado")
                     <div class="result-pesquisa">
                         <h5>{{ trans('registersFoundFromTerm') }} {{ $searchTerm }}</h5>
-                        <a href="{{ route('user.show', ['id' => $user->id]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
+                        <a href="{{ route('user.show', ['email' => $user->email]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
                     </div>
                 @endif
 
@@ -287,7 +287,7 @@
                 @if ($role == "denuncias")
                     <div class="result-pesquisa">
                         <h5>{{ trans('complaintsFoundFromTerm') }} {{ $searchTerm }}</h5>
-                        <a href="{{ route('user.show', ['id' => $user->id]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
+                        <a href="{{ route('user.show', ['email' => $user->email]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
                     </div>
                 @endif
 
@@ -311,7 +311,7 @@
                 @if ($role == "avaliacoes")
                     <div class="result-pesquisa mb-2">
                         <h5>{{ trans('reviewsFoundFromTerm') }} {{ $searchTerm }}</h5>
-                        <a href="{{ route('user.show', ['id' => $user->id]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
+                        <a href="{{ route('user.show', ['email' => $user->email]) }}"><i class="fa-regular fa-circle-xmark fa-xl"></i></a>
                     </div>
                 @endif
 
