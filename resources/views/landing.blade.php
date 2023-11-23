@@ -279,9 +279,9 @@
         <div class="links">
             <ul class="nav-itens">
                 <!-- itens -->
-                <li><a href="#">Cursos</a></li>
+                <li><a href="{{ route('courses.viewer') }}">Cursos</a></li>
                 <li><a href="#ferramentas">Ferramentas</a></li>
-                <li><a href="#">Suporte</a></li>
+                <li><a href="{{ route('support') }}">Suporte</a></li>
             </ul>
         </div>
         <!-- botão entrar que chama o modal1 -->

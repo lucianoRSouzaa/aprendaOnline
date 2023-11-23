@@ -71,6 +71,31 @@
         </div>
     @endif
 
+    <div class="modal fade" id="ModalSuporte" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/confirmation.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">Você tem certeza que deseja continuar?</span>
+                        <p class="message">Se continuar, será inciada uma conversa com o administrador da plataforma para te dar o suporte necessário</p>
+                    </div>
+                    <div class="actions">
+                        <button class="cancel" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                        <a href="{{ route('support') }}" class="confirmation text-center">Iniciar suporte</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <nav class="navbar-dark container">
         <!-- logo -->
         <div class="logo">
@@ -87,6 +112,7 @@
                 <!-- itens -->
                 @auth
                     <li class="ball-li"><a href="{{ route('chat.index') }}">Chat @if($totalUnreadMessages)<span class="ball">{{ $totalUnreadMessages }}</span>@endif</a></li>
+                    <li><a href="#" data-bs-target="#ModalSuporte" data-bs-toggle="modal">{{ trans('support') }}</a></li>
                     <li><a href="{{ route('courses.favorited') }}">Favoritos</a></li>
                     <li><a href="{{ route('courses.completed') }}">Cursos concluídos</a></li>
                     <li class="d-flex align-items-center profile" id="config"><img src="{{ asset($user->image) }}" class="rounded-circle avatar" alt=""><p class="nameUser">{{$user->name}} <i class="fa fa-angle-down" aria-hidden="true"></i></p></li>

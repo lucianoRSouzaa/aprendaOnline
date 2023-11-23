@@ -556,11 +556,11 @@ ul.viewer .sidebar{
 }
 
 /* Modal erro */
-#ModalCreatorErro{
+#ModalCreatorErro, #ModalSuporte{
   z-index: 10000;
   margin-top: 80px;
 }
-#ModalCreatorErro .close{
+#ModalCreatorErro .close, #ModalSuporte .close{
   position: absolute;
   right: 18px;
   top: 18px;
@@ -570,28 +570,28 @@ ul.viewer .sidebar{
   --bs-btn-close-focus-shadow: none;
 }
 
-#ModalCreatorErro .modal-dialog {
+#ModalCreatorErro .modal-dialog, #ModalSuporte .modal-dialog{
   width: 480px;
 }
 
-#ModalCreatorErro .image {
+#ModalCreatorErro .image, #ModalSuporte .image{
   margin-left: auto;
   margin-right: auto;
 }
   
-#ModalCreatorErro .content {
+#ModalCreatorErro .content, #ModalSuporte .content{
     margin-top: 0.95rem;
     text-align: center;
 }
 
-#ModalCreatorErro .title {
+#ModalCreatorErro .title, #ModalSuporte .title{
     color: #111827;
     font-size: 1.3rem;
     font-weight: 600;
     line-height: 1.5rem;
 }
 
-#ModalCreatorErro .message {
+#ModalCreatorErro .message, #ModalSuporte .message{
     margin-top: 0.3rem;
     color: #6B7280;
     font-size: 0.9rem;
@@ -600,14 +600,16 @@ ul.viewer .sidebar{
     margin-right: 16px;
 }
 
-#ModalCreatorErro .actions {
+#ModalCreatorErro .actions, #ModalSuporte .actions{
     margin: 1.1rem 1rem 0.3rem 1rem;
     display: flex;
     justify-content: center;
     gap: 20px;
 }
 
-#ModalCreatorErro .actions button, #ModalCreatorErro .actions a, #ModalErrorEnrollment .actions a{
+#ModalCreatorErro .actions button, #ModalCreatorErro .actions a,
+#ModalErrorEnrollment .actions a,
+#ModalSuporte .actions button, #ModalSuporte .actions a{
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-size: 1rem;
@@ -618,7 +620,7 @@ ul.viewer .sidebar{
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-#ModalCreatorErro .actions a, #ModalErrorEnrollment .actions a{
+#ModalCreatorErro .actions a, #ModalErrorEnrollment .actions a, #ModalSuporte .actions a{
   text-decoration: none;
 }
 
@@ -629,10 +631,15 @@ ul.viewer .sidebar{
     color: #ffffff;
 }
 
-#ModalCreatorErro .cancel {
+#ModalCreatorErro .cancel, #ModalSuporte .cancel{
     border: 1px solid #D1D5DB;
     background-color: #ffffff;
     color: #374151;
+}
+
+#ModalSuporte .confirmation{
+  background-color: #43a2b1;
+  color: #fff;
 }
 
 /* Modal confirmação exclusão */
@@ -800,7 +807,7 @@ padding-bottom: 5px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-#ModalSucess .success, #ModalError .success{
+#ModalSucess .success, #ModalError .success, #ModalSuporte .success{
   border-width: 1px;
   border-color: transparent;
   color: #ffffff;

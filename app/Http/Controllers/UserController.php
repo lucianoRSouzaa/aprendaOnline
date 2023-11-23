@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
 
 use App\Models\User;
+use App\Models\Conversation;
 
 class UserController extends Controller
 {
@@ -168,5 +169,36 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('user.edit', $user->email)->with('success', 'Dados atualizados com sucesso!');
+    }
+
+    public function support()
+    {
+        $admin = User::where('role', 'admin')->first();
+        $adminId = $admin->id;
+
+        $authId = auth()->id();
+
+        // Check if conversation already exists
+        $existingConversation = Conversation::where(function ($query) use ($adminId, $authId) {
+            $query->where('sender_id', $adminId)
+                ->where('receiver_id', $authId);
+            })
+            ->orWhere(function ($query) use ($adminId, $authId) {
+                $query->where('sender_id', $authId)
+                    ->where('receiver_id', $adminId);
+            })->first();
+        
+        if ($existingConversation) {
+            // Conversation already exists, redirect to existing conversation
+            return redirect()->route('chat', ['query' => $existingConversation->id]);
+        }
+
+        // Create new conversation
+        $createdConversation = Conversation::create([
+            'sender_id' => $adminId,
+            'receiver_id' => $authId,
+        ]);
+
+        return redirect()->route('chat', ['query' => $createdConversation->id]);
     }
 }

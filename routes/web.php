@@ -181,3 +181,6 @@ Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPass
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
+
+// rota para suporte
+Route::get('/support', [UserController::class, 'support'])->name('support')->middleware('auth');
