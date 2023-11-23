@@ -17,6 +17,9 @@ class UserController extends Controller
         $searchType = $request->input('search_type');
         $searchTerm = $request->input('search_term');
 
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
+
         $query = User::query();
 
         if ($searchType && $searchTerm) {
@@ -32,7 +35,7 @@ class UserController extends Controller
 
         $users = $query->paginate(10)->appends(['search_type' => $searchType, 'search_term' => $searchTerm]);
 
-        return view('admin.users.index', compact('users', 'searchTerm'));
+        return view('admin.users.index', compact('users', 'searchTerm', 'qtdMsg'));
     }
 
     public function show($email, Request $request)

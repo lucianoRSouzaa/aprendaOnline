@@ -29,6 +29,9 @@ class AdminController extends Controller
         $qtdCursos = Course::withTrashed()->count();
         $qtdUsers = User::all()->count();
 
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
+
         // gráfico de login diário
         $period = null;
         $countDate = null;
@@ -90,7 +93,7 @@ class AdminController extends Controller
             $countDate2 = $this->calculateCounts($registers, $startDate2, $endDate2, $period2);
         }
 
-        return view('admin.dashboard', compact('qtdDenuncia', 'qtdTotalExcluido', 'qtdCursos', 'qtdUsers', 'period', 'countDate', 'titleLine', 'period2', 'titleLine2', 'countDate2'));
+        return view('admin.dashboard', compact('qtdDenuncia', 'qtdTotalExcluido', 'qtdCursos', 'qtdUsers', 'period', 'countDate', 'titleLine', 'period2', 'titleLine2', 'countDate2', 'qtdMsg'));
     }
 
     private function calculateCounts($data, $startDate, $endDate, $period)
@@ -217,13 +220,19 @@ class AdminController extends Controller
         $qtdModulosExcluido = Module::onlyTrashed()->count();
         $qtdAulasExcluido = Lesson::onlyTrashed()->count();
 
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
+
         $qtdTotalExcluido = $qtdCursosExcluido + $qtdModulosExcluido + $qtdAulasExcluido;
 
-        return view('admin.deletes.index', compact('qtdCursosExcluido', 'qtdModulosExcluido', 'qtdAulasExcluido', 'qtdTotalExcluido'));
+        return view('admin.deletes.index', compact('qtdCursosExcluido', 'qtdModulosExcluido', 'qtdAulasExcluido', 'qtdTotalExcluido', 'qtdMsg'));
     }
 
     public function registrosExcluidos(Request $request, $tipo)
     {
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
+
         $searchTerm = $request->input('search_term');
 
         if ($tipo === 'cursos') {
@@ -260,7 +269,7 @@ class AdminController extends Controller
                 return $registro;
             });
 
-            return view('admin.deletes.registros_excluidos', compact('registros', 'tipo', 'searchTerm'));
+            return view('admin.deletes.registros_excluidos', compact('registros', 'tipo', 'searchTerm', 'qtdMsg'));
         }
 
         if ($searchTerm) {
@@ -269,11 +278,14 @@ class AdminController extends Controller
 
         $registros = $registrosQuery->paginate(8)->appends(['search_term' => $searchTerm]);
 
-        return view('admin.deletes.registros_excluidos', compact('registros', 'tipo', 'searchTerm'));
+        return view('admin.deletes.registros_excluidos', compact('registros', 'tipo', 'searchTerm', 'qtdMsg'));
     }
 
     public function todosRegistrosExcluidos(Request $request)
     {
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
+
         $searchTerm = $request->input('search_term');
         $searchType = $request->input('search_type');
 
@@ -320,12 +332,15 @@ class AdminController extends Controller
             $resultados = $cursos->concat($modulos)->concat($aulas);
         }
 
-        return view('admin.deletes.todos_registros_excluidos', compact('resultados', 'searchTerm'));
+        return view('admin.deletes.todos_registros_excluidos', compact('resultados', 'searchTerm', 'qtdMsg'));
     }
 
     public function todosCursos(Request $request)
     {
         $searchTerm = $request->input('search_term');
+
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
 
         $registrosQuery = Course::with([
             'modules' => function ($query) {
@@ -347,7 +362,7 @@ class AdminController extends Controller
 
         $cursos = $registrosQuery->paginate(8)->appends(['search_term' => $searchTerm]);
 
-        return view('admin.todos-cursos', compact('cursos', 'searchTerm'));
+        return view('admin.todos-cursos', compact('cursos', 'searchTerm', 'qtdMsg'));
     }
 
     public function restore(Request $request, $id, $type)

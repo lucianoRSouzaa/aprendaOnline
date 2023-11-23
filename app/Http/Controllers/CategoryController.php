@@ -15,11 +15,17 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return view('admin.categories.index');
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
+
+        return view('admin.categories.index', compact('qtdMsg'));
     }
 
     public function create(Request $request)
     {
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
+
         $searchTerm = $request->input('search_term');
 
         $query = Category::query();
@@ -30,7 +36,7 @@ class CategoryController extends Controller
 
         $categories = $query->paginate(8)->appends(['search_term' => $searchTerm]);
 
-        return view('admin.categories.create', compact('categories', 'searchTerm'));
+        return view('admin.categories.create', compact('categories', 'searchTerm', 'qtdMsg'));
     }
 
     public function store(Request $request)
@@ -57,6 +63,9 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $queryCourses = $category->courses();
         $qtdCourse = $category->courses->count();
+
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
 
         // pegando média de clasificações
         $category->average_rating = $queryCourses->avg('average_rating');
@@ -97,7 +106,7 @@ class CategoryController extends Controller
             $data[] = [$translatedMonth, $totalCreated, $coursesCreatedInMonth];
         }
 
-        return view('admin.categories.show', compact('category', 'data', 'qtdCourse', 'users', 'courses', 'searchTerm'));
+        return view('admin.categories.show', compact('category', 'data', 'qtdCourse', 'users', 'courses', 'searchTerm', 'qtdMsg'));
     }
   
     public function data(Request $request)
@@ -112,6 +121,9 @@ class CategoryController extends Controller
                 'year' => 'required',
             ]);        
         }
+
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
 
         $categories = Category::all();
 
@@ -160,7 +172,7 @@ class CategoryController extends Controller
             $data = $this->generateChartData($startDate, $endDate, $category1, $category2, $category3);
         }
 
-        return view('admin.categories.data', compact('categories', 'categoriesChart', 'categoriesBarChart', 'data', 'category1Name', 'category2Name', 'category3Name'));
+        return view('admin.categories.data', compact('categories', 'categoriesChart', 'categoriesBarChart', 'data', 'category1Name', 'category2Name', 'category3Name', 'qtdMsg'));
     }
 
     private function translateMonth($month)

@@ -222,8 +222,8 @@
                     </a>
                   </li>
                   <li class="sidebar-list-item d-flex">
-                    <a href="#" >
-                      <span class="material-icons-outlined">chat</span> Suporte
+                    <a href="{{ route('chat.index') }}" >
+                      <span class="material-icons-outlined">chat</span> Suporte <span class="ball-msg-unread">{{ $qtdMsg }}</span>
                     </a>
                   </li>
                 </ul>

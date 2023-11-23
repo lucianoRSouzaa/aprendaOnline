@@ -542,3 +542,11 @@ padding-bottom: 5px;
   color: #ffffff;
   background-color: #198754;
 }
+
+.ball-msg-unread{
+  background: #696cff;
+  border-radius: 50%;
+  padding: 1px 6px;
+  color: #fff;
+  margin-left: 5px;
+}

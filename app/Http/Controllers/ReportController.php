@@ -20,6 +20,9 @@ class ReportController extends Controller
     public function reportsTable(Request $request){
         $searchType = $request->input('search_type');
         $searchTerm = $request->input('search_term');
+
+        // total de mensagens não lidas 
+        $qtdMsg = auth()->user()->totalUnreadMessagesCount();
     
         $query = Report::where('status', 'pendente')
             ->with(['course' => function ($query) {
@@ -60,7 +63,7 @@ class ReportController extends Controller
     
         $reports = $query->paginate(8)->appends(['search_type' => $searchType, 'search_term' => $searchTerm]);
         
-        return view('admin.reports.table', compact('reports', 'searchTerm'));
+        return view('admin.reports.table', compact('reports', 'searchTerm', 'qtdMsg'));
     }    
 
     public function reportsSlides(){
