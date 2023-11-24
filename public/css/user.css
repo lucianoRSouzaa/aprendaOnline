@@ -38,17 +38,20 @@ section.col-12 div .dados p{
     margin-bottom: 5px;
 }
 
-section.col-12 .edit-perfil{
-    position: absolute;
-    top: 42%;
-    right: 30px;
-
+section.col-12 .btn-show-link{
     border-radius: 5px;
     border: none;
-    background: #2b2b2b;
     color: #FFF;
     padding: 7px 12px;
     text-decoration: none;
+}
+
+section.col-12 .edit-perfil{
+    background: #2b2b2b;
+}
+
+section.col-12 .chat{
+    background: #0703e6;
 }
 
 section.col-12 .edit-perfil .fa-pen{

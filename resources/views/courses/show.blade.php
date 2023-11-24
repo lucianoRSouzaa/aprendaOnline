@@ -62,6 +62,33 @@
             @endif
         });
     </script>
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.min.js"></script>
+
+    <script>
+        tippy('#perfil', {
+            content: `
+                    <div class="shadow tooltip-box" style="width: 300px;">
+                        <div class="d-flex justify-content-center mt-1">
+                            <img src="{{ asset($course->creator->image) }}" alt="Imagem">
+                        </div>
+                        <p class="text-center fs-6">{{ $course->creator->name }}</p>
+                        <div class="d-flex gap-2 mb-2">
+                            <a href="{{ route('start.chat', $course->creator->id) }}" class="btn btn-primary w-100"><i class="fa-regular fa-comment-dots pe-2"></i>Inciar chat</a>
+                            <a href="{{ route('user.show', $course->creator->email) }}" class="btn btn-dark w-100"><i class="fa-regular fa-user pe-2"></i>Ver perfil</a>
+                        </div>
+                    </div>
+                `,
+            allowHTML: true,
+            interactive: true,
+            placement: 'right-end',
+            delay: 200,
+            arrow: false,
+            theme: 'light',
+            inertia: true,
+        });
+    </script>
 @endpush
 
 @section('header')
@@ -280,7 +307,7 @@
             <div class="col-6 col-descriptions">
                 <h1 class="title">{{ $course->title }}</h1>
                 <p class="mb-0 mt-2">{{ $course->views }} visualizações</p>
-                <p class="mb-2 mt-0">Criador por: {{ $course->creator->name }}</p>
+                <p id="perfil" class="mb-2 mt-0">Criador por: <span class="name-creator">{{ $course->creator->name }}</span></p>
                 <p class="mt-1">{{ $course->description }}</p>
                 @auth
                     @if ($user->subscriptions()->where('course_id', $course->id)->exists())

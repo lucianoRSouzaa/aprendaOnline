@@ -114,7 +114,7 @@
     <a href=" @if(auth()->user()->isAdmin()) {{ url()->previous() }} @elseif(auth()->user()->isCreator() && !session()->has('user_role')) {{ route('courses.creator') }} @else {{ route('courses.viewer') }} @endif" class="back-btn page-show"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('back') }}</a>
     <div class="container card-all">
         <div class="row shadow mb-3">
-            <section class="col-12 dados-div">
+            <section class="col-12 dados-div d-flex justify-content-between">
                 <div class="d-flex align-items-center">
                     <img class="photo" src="{{ asset($user->image) }}" alt="Foto do usuário"></img>
                     <div class="dados">
@@ -123,12 +123,20 @@
                         <p>{{ trans('userType') }} {{ $user->role }}</p>
                     </div>
                 </div>
-                @can('edit-profile', $user->email)
-                    <a href="{{ route('user.edit', $user->email) }}" class="edit-perfil">
-                        <i class="fa-solid fa-pen fa-xs"></i>
-                        {{ trans('editData') }}
-                    </a>
-                @endcan
+                <div class="d-flex flex-column justify-content-center gap-3">
+                    @can('edit-profile', $user->email)
+                        <a href="{{ route('user.edit', $user->email) }}" class="btn-show-link edit-perfil">
+                            <i class="fa-solid fa-pen fa-xs pe-2"></i>
+                            {{ trans('editData') }}
+                        </a>
+                    @endcan
+                    @cannot('edit-profile', $user->email)
+                        <a href="{{ route('start.chat', $user->id) }}" class="btn-show-link chat">
+                            <i class="fa-regular fa-comment-dots pe-2"></i>
+                            Iniciar Chat
+                        </a>
+                    @endcannot
+                </div>
             </section>
             <section class="col-12 nav-div">
                 <ul class="d-flex nav gap-5">

@@ -109,6 +109,9 @@ Route::middleware(['auth', 'userVerified', 'check.suspension'])->group(function 
     Route::get('user/edit/{email}', [UserController::class, 'edit'])->name('user.edit');
     // rota para modificar
     Route::put('user/update/{user}', [UserController::class, 'update'])->name('user.update');
+
+    // rota para iniciar chat
+    Route::get('start/chat/{userId}', [UserController::class, 'startChat'])->name('start.chat');
 });
 
 // rotas do chat
