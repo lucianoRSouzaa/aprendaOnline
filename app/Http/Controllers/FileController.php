@@ -49,6 +49,18 @@ class FileController extends Controller
         return true;
     }
 
+    public function download($filename)
+    {
+        $file = Storage::disk('google')->get($filename); 
+
+        $headers = [
+            'Content-Type' => Storage::disk('google')->mimeType($filename),
+            'Content-Disposition' => 'attachment; filename=' . $filename,
+        ];
+
+        return response($file, 200, $headers);
+    }
+
     public function delete($videoName)
     {
         $deleted = Storage::disk('google')->delete($videoName);

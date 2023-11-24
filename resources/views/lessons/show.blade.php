@@ -149,6 +149,9 @@
             <div class="d-flex align-items-center justify-content-between header">
                 <h2 class="">AprendaOnline</h2>
                 <div class="btns-marg">
+                    @if ($lesson->lessonFiles)
+                        <a href="{{ route('download.file', $lesson->lessonFiles->name) }}" class="btn btn-outline-primary">Baixar arquivos da aula</a>
+                    @endif
                     <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#RateModal">{{ trans('rateCourse') }}</button>
                     <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalDenuncia">{{ trans('report') }}</button>
                     <button id="progress" class="btn btn-outline-primary">{{ trans('viewProgress') }}</button>
