@@ -128,7 +128,7 @@
                 </div>
                 <div class="actions">
                     <button class="cancel btns-restaurar" data-bs-dismiss="modal" type="button">Cancelar</button>
-                    <button class="btn desactivate btns-restaurar" data-bs-dismiss="modal" type="submit">Recorrer</button>
+                    <a href="{{ route('support') }}" class="btn desactivate btns-restaurar">Recorrer</a>
                 </div>
             </div>
         </div>
@@ -281,7 +281,12 @@
                 <!-- itens -->
                 <li><a href="{{ route('courses.viewer') }}">Cursos</a></li>
                 <li><a href="#ferramentas">Ferramentas</a></li>
-                <li><a href="{{ route('support') }}">Suporte</a></li>
+                @guest
+                    <li><a href="{{ route('support') }}">Suporte</a></li>
+                @endguest
+                @auth
+                    <li><a href="#" data-bs-target="#ModalSuporte" data-bs-toggle="modal">Suporte</a></li>
+                @endauth
             </ul>
         </div>
         <!-- botão entrar que chama o modal1 -->
@@ -331,6 +336,31 @@
                 <div class="modal-footer">
                     <button class="btn btn-primary" id="abrir-modal-login">Login</button>
                     <button class="btn btn-primary" id="abrir-modal-cad">{{ trans('register') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalSuporte" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="image">
+                            <img src="{{ asset('images/confirmation.png') }}" alt="" srcset="">
+                        </div>
+                        <div class="close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <span class="title">Você tem certeza que deseja continuar?</span>
+                        <p class="message">Se continuar, será inciada uma conversa com o administrador da plataforma para te dar o suporte necessário</p>
+                    </div>
+                    <div class="actions">
+                        <button class="cancel" data-bs-dismiss="modal" type="button">{{ trans('cancel') }}</button>
+                        <a href="{{ route('support') }}" class="confirmation text-center">Iniciar suporte</a>
+                    </div>
                 </div>
             </div>
         </div>

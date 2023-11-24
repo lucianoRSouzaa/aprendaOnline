@@ -385,25 +385,25 @@ nav.sticky .nav-itens > li{
   }
 
 /* Modal erro */
-#ModalErro, .password{
+#ModalErro, .password, #ModalSuporte{
   margin-top: 80px;
 }
-#ModalErro .close, .password .close{
+#ModalErro .close, .password .close, #ModalSuporte .close{
   position: absolute;
   right: 18px;
   top: 18px;
 }
 
-#ModalErro .modal-dialog, .password .modal-dialog{
+#ModalErro .modal-dialog, .password .modal-dialog, #ModalSuporte .modal-dialog{
   width: 480px;
 }
 
-#ModalErro .image, .password .image{
+#ModalErro .image, .password .image, #ModalSuporte .image{
   margin-left: auto;
   margin-right: auto;
 }
   
-#ModalErro .content, .password .content{
+#ModalErro .content, .password .content, #ModalSuporte .content{
     margin-top: 0.95rem;
     text-align: center;
 }
@@ -416,14 +416,14 @@ nav.sticky .nav-itens > li{
   margin-left: 22px;
 }
 
-#ModalErro .title, .password .title{
+#ModalErro .title, .password .title, #ModalSuporte .title{
     color: #111827;
     font-size: 1.3rem;
     font-weight: 600;
     line-height: 1.5rem;
 }
 
-#ModalErro .message, .password .message{
+#ModalErro .message, .password .message, #ModalSuporte .message{
     margin-top: 0.3rem;
     color: #6B7280;
     font-size: 0.9rem;
@@ -432,14 +432,15 @@ nav.sticky .nav-itens > li{
     margin-right: 16px;
 }
 
-#ModalErro .actions, .password .actions{
+#ModalErro .actions, .password .actions, #ModalSuporte .actions{
     margin: 1.1rem 1rem 1.5rem 1rem;
     display: flex;
     justify-content: center;
     gap: 20px;
 }
 
-#ModalErro .actions button, .password .actions button{
+#ModalErro .actions button, .password .actions button, #ModalSuporte .actions button,
+#ModalSuporte .actions a, #ModalSuspended .actions a{
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-size: 1rem;
@@ -457,10 +458,19 @@ nav.sticky .nav-itens > li{
     color: #ffffff;
 }
 
-#ModalErro .cancel, .password .cancel{
+#ModalErro .cancel, .password .cancel, #ModalSuporte .cancel{
     border: 1px solid #D1D5DB;
     background-color: #ffffff;
     color: #374151;
+}
+
+#ModalSuporte .confirmation{
+  background-color: #43a2b1;
+  color: #fff;
+}
+
+#ModalSuporte .actions a{
+  text-decoration: none;
 }
 
 .password .restore {

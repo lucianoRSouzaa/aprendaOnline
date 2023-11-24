@@ -36,7 +36,7 @@ class AuthController extends Controller
                 $message = 'Sua conta foi banida permanentemente devido a violações repetidas de nossas políticas. Agradecemos sua compreensão.';
                 
                 session()->flash('uAreSuspended', $message);
-                return redirect()->back();
+                
             } elseif ($suspensionEndTime < now()) {
                 // Se a suspensão expirou, então a removemos
                 $userWithEmail->suspended = false;
@@ -48,7 +48,6 @@ class AuthController extends Controller
                 $message = 'Você está suspenso. Você será liberado para utilizar a plataforma daqui ' . $remainingTime;
 
                 session()->flash('uAreSuspended', $message);
-                return redirect()->back();
             }
         }
 

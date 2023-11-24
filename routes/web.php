@@ -109,11 +109,11 @@ Route::middleware(['auth', 'userVerified', 'check.suspension'])->group(function 
     Route::get('user/edit/{email}', [UserController::class, 'edit'])->name('user.edit');
     // rota para modificar
     Route::put('user/update/{user}', [UserController::class, 'update'])->name('user.update');
-
-    // rotas do chat
-    Route::get('/chat', Index::class)->name('chat.index');
-    Route::get('/chat/{query}', Chat::class)->name('chat');
 });
+
+// rotas do chat
+Route::get('/chat', Index::class)->name('chat.index')->middleware('auth', 'userVerified');
+Route::get('/chat/{query}', Chat::class)->name('chat')->middleware('auth', 'userVerified');
 
 // rotas do administrador
 Route::middleware(['auth', 'admin'])->group(function () {
