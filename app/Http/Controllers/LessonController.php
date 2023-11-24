@@ -126,6 +126,10 @@ class LessonController extends Controller
 
         $module->lessons()->save($lesson);
 
+        if ($request->file('file-lesson')) {
+            $fileController->file($request->file('file-lesson'), $lesson->id);
+        }
+
         // despachando o evento que atualiza qtd de aulas do curso
         event(new LessonCreated($lesson));
 
@@ -134,6 +138,8 @@ class LessonController extends Controller
 
     public function edit($moduleSlug, $lessonSlug)
     {
+        $fileName = null;
+
         $module = Module::where('slug', $moduleSlug)->firstOrFail();
         $lesson = $module->lessons()->where('slug', $lessonSlug)->firstOrFail();
 
@@ -144,7 +150,13 @@ class LessonController extends Controller
         // cortando tudo o que vem antes do primeiro "_" (Para ficar só o nome do arquivo mesmo)
         $videoName = substr($videoNameBd, $pos + 1);
 
-        return view('lessons.edit', compact('module', 'lesson', 'videoName'));
+        if ($lesson->lessonFiles) {
+            $fileNameBd = $lesson->lessonFiles->name;
+            $posFile = strpos($fileNameBd, "_");
+            $fileName = substr($fileNameBd, $posFile + 1);
+        }
+
+        return view('lessons.edit', compact('module', 'lesson', 'videoName', 'fileName'));
     }
 
     public function update(Request $request, $moduleSlug, $lessonSlug)
@@ -164,21 +176,22 @@ class LessonController extends Controller
         $uniqueSlug = $slug;
         $count = 2;
 
+        $fileController = new FileController();
+
         while (Lesson::where('slug', $uniqueSlug)->where('id', '!=', $lesson->id)->withTrashed()->exists()) {
             $uniqueSlug = $slug . '-' . $count;
             $count++;
         }
 
-        // ==========================================================================================
-        //   PRECISA EXCLUIR O VÍDEO DO GOOGLE DRIVE ANTIGO AINDA (NÃO IMPLATDA ESSA FUNCIONALIDADE)
-        // ==========================================================================================
-        // se foi mudado o vídeo da aula
         if ($request->file('video') != null) {
             // Upload do vídeo para o GoogleDrive
-            $fileController = new FileController();
             $videoId = $fileController->upload($request->file('video'));
 
             $lesson->video_id = $videoId;
+        }
+
+        if ($request->file('file-lesson') != null) {
+            $fileController->file($request->file('file-lesson'), $lesson->id);
         }
 
         $lesson->slug = $uniqueSlug;

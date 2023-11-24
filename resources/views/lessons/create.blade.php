@@ -113,6 +113,11 @@
                     @enderror
                     <br>
 
+                    <label class="mt-2">Arquivos da aula:</label>
+                    <input class="form-control" type="file" name="file-lesson">
+
+                    <br>
+
                     <label class="form-label" for="texto">Descrição da aula:</label>
                     <textarea class="form-control" name="description" id="texto" rows="3">{{ old('description') }}</textarea>
                     @error('description')

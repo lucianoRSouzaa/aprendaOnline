@@ -18,6 +18,8 @@ use App\Http\Controllers\ConfigsController;
 use App\Http\Controllers\CourseDataController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\FileController;
+
 
 use App\Http\Livewire\Chat\Index;
 use App\Http\Livewire\Chat\Chat;
@@ -79,6 +81,8 @@ Route::middleware(['auth', 'userVerified', 'check.suspension'])->group(function 
     Route::get('/module/{moduleSlug}/lessons/alter/order', [LessonController::class, 'alterOrder'])->name('lesson.order')->middleware('check.course.access', 'check.course.user');
     // rota para reordenar ordem no banco de dados
     Route::post('/reorder-aulas', [LessonController::class, 'reorder'])->name('lesson.reorder');
+    // rota de download de arquivos da aula
+    Route::get('download/{fileId}', [FileController::class, 'download'])->name('download.file');
 
     // Rota referente a favoritação
     Route::post('/courses/{courseSlug}/favorite', [FavoriteController::class, 'toggleFavorite'])->name('courses.favorite.toggle');

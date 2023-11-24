@@ -109,6 +109,14 @@
                     @enderror
                     <br>
 
+                    <label class="mt-2">Arquivos da aula:</label>
+                    @if ($fileName)
+                        <p>Arquivo atual: {{ $fileName }}</p>
+                    @endif
+                    <input class="form-control" type="file" name="file-lesson">
+
+                    <br>
+                    
                     <label class="form-label" for="texto">Descrição da aula:</label>
                     <textarea class="form-control" name="description" id="texto" rows="3">{{ $lesson->description }}</textarea>
                     @error('description')
