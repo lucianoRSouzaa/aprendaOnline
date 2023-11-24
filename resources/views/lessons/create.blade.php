@@ -15,6 +15,9 @@
     <script>
         // Input file drag and drop
         $(document).ready(function() {
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
             // Get the file input element, box element, and file name element
             const fileInput = $('#file-upload')[0];
             const box = $('.border-dashed');
@@ -113,7 +116,7 @@
                     @enderror
                     <br>
 
-                    <label class="mt-2">Arquivos da aula:</label>
+                    <label class="mt-2">Arquivos da aula (não obrigatório):</label><i class="ps-2 fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Se houver mais de 1 arquivo, compacte-os em um único arquivo."></i>
                     <input class="form-control" type="file" name="file-lesson">
 
                     <br>
