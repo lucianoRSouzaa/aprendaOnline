@@ -25,9 +25,13 @@ class RestoreOrderListener
 
          // Recalcula a ordem dos registros relacionados
         if ($model->module) {
+            // para recalcular ordem das aulas
             $module = $model->module;
             $this->recalculateOrder($module->lessons());
+
         } elseif ($model->course) {
+            
+            // para recalcular ordem dos módulos
             $course = $model->course;
             $this->recalculateOrder($course->modules());
         }

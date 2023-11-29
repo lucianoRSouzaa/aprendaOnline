@@ -85,18 +85,22 @@ class CourseController extends Controller
 
     public function CompletedCourses(){
         $user = User::find(auth()->user()->id);
-        $completedCourses = $user->completions->pluck('course');
-
         $nameUser = $user->name;
+
+        $completedCourses = $user->completions->map(function ($completion) {
+            return $completion->course()->withTrashed()->first();
+        });
 
         return view('courses.completed', compact('completedCourses', 'user'));
     }
     
     public function favoritedCourses(){
         $user = User::find(auth()->user()->id);
-        $favoritedCourses = $user->favorites->pluck('course');
-
         $nameUser = $user->name;
+
+        $favoritedCourses = $user->favorites->map(function ($favorite) {
+            return $favorite->course()->withTrashed()->first();
+        });
 
         return view('courses.favorited', compact('favoritedCourses', 'user'));
     }
@@ -196,7 +200,7 @@ class CourseController extends Controller
         $ratingsCount = $course->ratings->count();
 
         if ($request->has('starFilter')) {
-            // Aqui, você pode aplicar o filtro com base no valor enviado pelo formulário.
+            // Aplicando o filtro com base no valor enviado pelo formulário.
             $starFilter = $request->input('starFilter');
             $ratingsQuery->where('rating', $starFilter);
         }
@@ -245,7 +249,7 @@ class CourseController extends Controller
         $ratings = $course->ratings;
 
         if ($request->has('starFilter')) {
-            // Aqui, você pode aplicar o filtro com base no valor enviado pelo formulário.
+            // Aplicando o filtro com base no valor enviado pelo formulário.
             $starFilter = $request->input('starFilter');
             $ratingsQuery->where('rating', $starFilter);
         }
@@ -336,6 +340,7 @@ class CourseController extends Controller
 
         $course->slug = $uniqueSlug;
         $course->what_students_learn = json_encode($cleanedLearnData);
+        $course->contact_email = $data['contact_email'];
         $course->save();
 
         return redirect()->route('courses.creator')->with('success', 'Curso editado com sucesso');

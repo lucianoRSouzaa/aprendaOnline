@@ -32,11 +32,12 @@ class AdminController extends Controller
         // total de mensagens não lidas 
         $qtdMsg = auth()->user()->totalUnreadMessagesCount();
 
-        // gráfico de login diário
+        // gráfico de login
         $period = null;
         $countDate = null;
         $titleLine = null;
 
+        // gráfico de cadastro
         $period2 = null;
         $countDate2 = null;
         $titleLine2 = null;
@@ -62,6 +63,9 @@ class AdminController extends Controller
                 $endDate = now();
             }
             else{
+                // preg_replace() => usado para pesquisas e substituições
+                // "/[^0-9]/" => qualquer caractere que não seja um dígito de 0 a 9
+                // 2o param => pelo o que será substituido
                 $startDate = now()->subMonth(preg_replace("/[^0-9]/", "", $period));
                 $endDate = now()->endOfMonth();
             }
@@ -118,21 +122,23 @@ class AdminController extends Controller
             // Obtém a hora do dia
             $hourOfDay = $loginTime->format('H') . ':00'; 
 
+            // ex: 0 => "17:00", 1 => "17:00", 2 => "19:00"
             $loginTimes[] = $hourOfDay;
         }
 
+        // hora vira chave e quantidade vira valor. ex: "17:00" => 2
         $hourCounts = array_count_values($loginTimes);
 
         $totalHours = 24;
 
-        // Inicialize um novo array com valores padrão zero.
+        // Inicializz um novo array com valores padrão zero.
         $filledHourCounts = [];
         for ($i = 0; $i < $totalHours; $i++) {
             $j = $i . ':00';
             $filledHourCounts[$j] = 0;
         }
 
-        // Substitua os valores padrão com os valores reais onde estiverem definidos.
+        // Substitui os valores padrão pelos valores reais onde estiverem definidos.
         foreach ($hourCounts as $hour => $count) {
             $filledHourCounts[$hour] = $count;
         }
@@ -142,11 +148,11 @@ class AdminController extends Controller
 
     private function calculateDailyCounts($logins, $startDate, $endDate)
     {
-        // Inicialize um array vazio para armazenar as contagens diárias
         $dailyCounts = [];
 
-        // Percorra cada dia no intervalo de datas
+        // Percorre cada dia no intervalo de datas
         $currentDate = clone $startDate;
+        // lte = “less than or equal to”
         while ($currentDate->lte($endDate)) {
             $formattedDate = $currentDate->format('d/m');
             $dailyCounts[$formattedDate] = 0; // Inicialize com zero inscrições
@@ -191,6 +197,7 @@ class AdminController extends Controller
 
         // Percorra cada mês no intervalo de datas
         $currentDate = clone $startDate;
+        // lte = “less than or equal to”
         while ($currentDate->lte($endDate)) {
             $startOfMonth = $currentDate->copy()->startOfMonth();
             $endOfMonth = $currentDate->copy()->endOfMonth();
@@ -264,6 +271,7 @@ class AdminController extends Controller
             $registros->map(function ($registro) {
                 $videoNameBd = $registro->video->name;
                 $pos = strpos($videoNameBd, "_");
+                // corta tudo o que vem antes do "_"
                 $registro->video->name = substr($videoNameBd, $pos + 1);
 
                 return $registro;
@@ -368,6 +376,7 @@ class AdminController extends Controller
     public function restore(Request $request, $id, $type)
     {
         $password = $request->input('password');
+
         if (!Hash::check($password, auth()->user()->password)) {
             return redirect()->back()->with('errorPassword', 'A senha inserida está incorreta.');
         }
@@ -397,6 +406,7 @@ class AdminController extends Controller
 
                 $modulo->restore();
 
+                // restaura ordem dos módulos
                 event(new RestoreOrderEvent($modulo));
 
                 break;
@@ -421,6 +431,7 @@ class AdminController extends Controller
                 $lesson->restore();
                 $video->restore();
 
+                // restaura ordem das aulas
                 event(new RestoreOrderEvent($lesson));
 
                 break;

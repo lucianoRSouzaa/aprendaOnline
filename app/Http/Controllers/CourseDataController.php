@@ -34,7 +34,7 @@ class CourseDataController extends Controller
         $course = Course::where('slug', $courselug)->firstOrFail();
         $courseId = $course->id;
 
-        // % de conclusão de aulas de cada módulo
+        // gráfico % de conclusão de aulas de cada módulo
         $modules = Module::where('course_id', $courseId)->get();
         $moduleData = [];
         foreach ($modules as $module) {
@@ -368,7 +368,7 @@ class CourseDataController extends Controller
         $ratingsCount = $course->ratings->count();
 
         if ($request->has('starFilter')) {
-            // Aqui, você pode aplicar o filtro com base no valor enviado pelo formulário.
+            // aplicando o filtro com base no valor enviado pelo formulário.
             $starFilter = $request->input('starFilter');
             $ratingsQuery->where('rating', $starFilter);
         }

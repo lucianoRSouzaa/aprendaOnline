@@ -145,15 +145,9 @@ class AuthController extends Controller
         Auth::login($user);
 
         $emailController = new EmailController();
-
         $emailController->sendVerificationEmail($user);
 
         return redirect()->route('home')->with('verification', 'Um link de verificação foi enviado para o seu email! Clique em confirmar para ter acesso total a plataforma');
-
-        // if ($role == 'creator') {
-        //     return redirect()->intended(route('courses.creator'));
-        // }
-        // return redirect()->intended(route('courses.viewer'));
     }
 
 
@@ -163,7 +157,6 @@ class AuthController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');

@@ -53,11 +53,14 @@ class FileController extends Controller
     {
         $file = Storage::disk('google')->get($filename); 
 
+        // definindo os cabeçalhos da resposta HTTP
         $headers = [
             'Content-Type' => Storage::disk('google')->mimeType($filename),
+            // indica que o arquivo deve ser baixado, e o nome do arquivo é definido como o guardado na variável
             'Content-Disposition' => 'attachment; filename=' . $filename,
         ];
 
+        // retornando código de sucesso
         return response($file, 200, $headers);
     }
 
