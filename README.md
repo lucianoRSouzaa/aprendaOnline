@@ -3,6 +3,7 @@ A plataforma "aprendaOnline" é um projeto educacional inovador que visa criar u
 
 ### Tecnologias Utilizadas
 - Laravel: Framework PHP.
+- Livewire: Framework front-end do Laravel para criação de interfaces dinâmicas.
 - MySQL: Banco de dados relacional para armazenamento de dados.
 - Pusher: WebSocket que facilita a implementação de chat em tempo real.
 - Google Drive: Serviço para armazenamento de vídeos, proporcionando uma solução escalável
